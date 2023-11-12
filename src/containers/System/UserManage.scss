@@ -1,0 +1,66 @@
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers tr:hover {
+  background-color: #cccaca;
+}
+
+#customers td,
+#customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers .custom-header {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #48e912;
+  color: white;
+}
+
+#customers .custom-header:hover {
+  background-color: #48e912 !important;
+}
+
+#customers {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+.title-page {
+  color: #197af5;
+  margin: 30px 0;
+  font-weight: 600;
+}
+
+.style-modal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-icon {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.btn-icon:hover {
+  background: transparent !important;
+  color: #197af5 !important;
+}
+
+.btn-edit {
+  margin: 0 8px;
+  color: orange;
+}
+
+.btn-delete {
+  margin: 0 8px;
+  color: red;
+}
