@@ -13,16 +13,184 @@ class ModalCreateUser extends Component {
       email: "",
       password: "",
       address: "",
-      phoneNumber: "",
-      gender: "",
-      roleId: "",
     };
   }
+
+  handleOnchange = (name, value) => {
+    let data = { ...this.state };
+    data[name] = value;
+    this.setState({ ...data });
+  };
+
+  handleOnchangeEdit = (name, value) => {
+    let data = { ...this.state };
+    data[name] = value;
+    this.setState({ ...data });
+    if (this.props.dataUserEdit.email) {
+      this.props.dataUserEdit[name] = value;
+    }
+    this.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      address: "",
+    });
+  };
+
+  handleSave = async () => {
+    try {
+      await this.props.handleCreateUser(this.state);
+      if (this.props.arrKeysEmpty.length <= 0) {
+        this.setState({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          address: "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  handleEdit = async () => {
+    try {
+      await this.props.handleEditUser(this.props.dataUserEdit);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   async componentDidMount() {}
 
   render() {
-    return (
+    return this.props.isShowModalEdit ? (
+      <Modal isOpen={this.props.isOpen} size="lg" centered>
+        <ModalHeader
+          toggle={() => {
+            this.props.toggle();
+            this.setState({
+              firstName: "",
+              lastName: "",
+              email: "",
+              password: "",
+              address: "",
+            });
+          }}
+        >
+          Edit new user
+        </ModalHeader>
+        <ModalBody>
+          <div class="container">
+            <div class="row">
+              <form action="/submit-login" method="POST">
+                <div class="form-row">
+                  <div className="wrapper-form-group">
+                    <div class="form-group">
+                      <label for="inputEmail4">First Name</label>
+                      <input
+                        name="firstName"
+                        type="text"
+                        class="form-control"
+                        placeholder="firstName"
+                        value={
+                          this.state.firstName
+                            ? this.state.firstName
+                            : this.props.dataUserEdit.firstName
+                        }
+                        onChange={(e) =>
+                          this.handleOnchangeEdit("firstName", e.target.value)
+                        }
+                      />
+                      {this.props.arrKeysEmpty.some(
+                        (e) => e === "firstName"
+                      ) && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường firstName rỗng`}</span>
+                        </div>
+                      )}
+                    </div>
+                    <div class="form-group">
+                      <label for="inputEmail4">Last Name</label>
+                      <input
+                        name="lastName"
+                        type="text"
+                        class="form-control"
+                        placeholder="lastName"
+                        value={
+                          this.state.lastName
+                            ? this.state.lastName
+                            : this.props.dataUserEdit.lastName
+                        }
+                        onChange={(e) =>
+                          this.handleOnchangeEdit("lastName", e.target.value)
+                        }
+                      />
+                      {this.props.arrKeysEmpty.some(
+                        (e) => e === "lastName"
+                      ) && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường lastName rỗng`}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="inputAddress">Address</label>
+                  <input
+                    name="address"
+                    type="text"
+                    class="form-control"
+                    placeholder="1234 Main St"
+                    value={
+                      this.state.address
+                        ? this.state.address
+                        : this.props.dataUserEdit.address
+                    }
+                    onChange={(e) =>
+                      this.handleOnchangeEdit("address", e.target.value)
+                    }
+                  />
+                  {this.props.arrKeysEmpty.some((e) => e === "address") && (
+                    <div className="login-error">
+                      <span className="login-error-message">{`Trường address rỗng`}</span>
+                    </div>
+                  )}
+                </div>
+              </form>
+            </div>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            color="primary"
+            className="btn-save px-3"
+            onClick={() => this.handleEdit()}
+          >
+            Edit User
+          </Button>{" "}
+          <Button
+            color="secondary"
+            className="px-3"
+            onClick={() => {
+              this.props.toggle();
+              this.setState({
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                address: "",
+              });
+            }}
+          >
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    ) : (
       <Modal isOpen={this.props.isOpen} size="lg" centered>
         <ModalHeader toggle={() => this.props.toggle()}>
           Create new user
@@ -33,100 +201,100 @@ class ModalCreateUser extends Component {
               <form action="/submit-login" method="POST">
                 <div class="form-row">
                   <div className="wrapper-form-group">
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
                       <label for="inputEmail4">First Name</label>
                       <input
                         name="firstName"
                         type="text"
                         class="form-control"
                         placeholder="firstName"
-                        onChange={(e) => {
-                          this.setState({ firstName: e.target.value });
-                        }}
+                        onChange={(e) =>
+                          this.handleOnchange("firstName", e.target.value)
+                        }
                       />
+                      {this.props.arrKeysEmpty.some(
+                        (e) => e === "firstName"
+                      ) && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường firstName rỗng`}</span>
+                        </div>
+                      )}
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
                       <label for="inputEmail4">Last Name</label>
                       <input
                         name="lastName"
                         type="text"
                         class="form-control"
                         placeholder="lastName"
-                        onChange={(e) => {
-                          this.setState({ lastName: e.target.value });
-                        }}
+                        onChange={(e) =>
+                          this.handleOnchange("lastName", e.target.value)
+                        }
                       />
+                      {this.props.arrKeysEmpty.some(
+                        (e) => e === "lastName"
+                      ) && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường lastName rỗng`}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="wrapper-form-group">
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
                       <label for="inputEmail4">Email</label>
                       <input
                         name="email"
                         type="email"
                         class="form-control"
                         placeholder="Email"
-                        onChange={(e) => {
-                          this.setState({ email: e.target.value });
-                        }}
+                        onChange={(e) =>
+                          this.handleOnchange("email", e.target.value)
+                        }
                       />
+                      {this.props.arrKeysEmpty.some((e) => e === "email") && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường email rỗng`}</span>
+                        </div>
+                      )}
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group">
                       <label for="inputPassword4">Password</label>
                       <input
                         name="password"
                         type="password"
                         class="form-control"
                         placeholder="Password"
-                        onChange={(e) => {
-                          this.setState({ password: e.target.value });
-                        }}
+                        onChange={(e) =>
+                          this.handleOnchange("password", e.target.value)
+                        }
                       />
+                      {this.props.arrKeysEmpty.some(
+                        (e) => e === "password"
+                      ) && (
+                        <div className="login-error">
+                          <span className="login-error-message">{`Trường password rỗng`}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="wrapper-form-group">
-                  <div class="form-group col-md-6">
-                    <label for="inputAddress">Address</label>
-                    <input
-                      name="address"
-                      type="text"
-                      class="form-control"
-                      placeholder="1234 Main St"
-                      onChange={(e) => {
-                        this.setState({ address: e.target.value });
-                      }}
-                    />
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPhoneNumber">Phone number</label>
-                    <input
-                      name="phoneNumber"
-                      type="text"
-                      class="form-control"
-                      placeholder="Phone number"
-                      onChange={(e) => {
-                        this.setState({ phoneNumber: e.target.value });
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="wrapper-form-group">
-                  <div class="form-group col-md-6">
-                    <label for="inputState">Gender</label>
-                    <select name="gender" class="form-control">
-                      <option value="0">Female</option>
-                      <option value="1">Male</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputRole">Role</label>
-                    <select name="roleId" class="form-control">
-                      <option value="1">Admin</option>
-                      <option value="2">Doctor</option>
-                      <option value="3">Patient</option>
-                    </select>
-                  </div>
+                <div class="form-group col-md-12">
+                  <label for="inputAddress">Address</label>
+                  <input
+                    name="address"
+                    type="text"
+                    class="form-control"
+                    placeholder="1234 Main St"
+                    onChange={(e) =>
+                      this.handleOnchange("address", e.target.value)
+                    }
+                  />
+                  {this.props.arrKeysEmpty.some((e) => e === "address") && (
+                    <div className="login-error">
+                      <span className="login-error-message">{`Trường address rỗng`}</span>
+                    </div>
+                  )}
                 </div>
               </form>
             </div>
@@ -136,14 +304,16 @@ class ModalCreateUser extends Component {
           <Button
             color="primary"
             className="btn-save px-3"
-            onClick={() => console.log(this.state)}
+            onClick={() => this.handleSave()}
           >
             Save
           </Button>{" "}
           <Button
             color="secondary"
             className="px-3"
-            onClick={() => this.props.toggle()}
+            onClick={() => {
+              this.props.toggle();
+            }}
           >
             Cancel
           </Button>

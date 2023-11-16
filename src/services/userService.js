@@ -12,4 +12,12 @@ const deleteUser = (userId) => {
   return axios.get(`delete-user?id=${userId}`);
 };
 
-export { handleLogin, getAllUsers, deleteUser };
+const createUser = (dataUser) => {
+  return axios.post("/api/create-new-user", dataUser);
+};
+
+const editUser = (dataUser) => {
+  return axios.post("/api/put-edit-user", dataUser);
+};
+
+export { handleLogin, getAllUsers, deleteUser, createUser, editUser };

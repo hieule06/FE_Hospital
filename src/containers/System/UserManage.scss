@@ -1,3 +1,5 @@
+@import "../../styles/common.scss";
+
 #customers {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -30,6 +32,10 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
+}
+
+.text-center {
+  margin: 0 20px;
 }
 
 .style-modal {
@@ -75,6 +81,7 @@
 
 .form-group {
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .btn-save {
@@ -100,4 +107,13 @@
 .btn-delete {
   margin: 0 8px;
   color: red;
+}
+
+.login-error {
+  width: 100%;
+  margin: 6px 0;
+  text-align: left;
+  .login-error-message {
+    color: red;
+  }
 }

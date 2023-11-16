@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import { getAllUsers, deleteUser } from "../../services/userService";
+import {
+  getAllUsers,
+  deleteUser,
+  createUser,
+  editUser,
+} from "../../services/userService";
 import "./UserManage.scss";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import ModalCreateUser from "./ModalCreateUser";
@@ -12,15 +17,18 @@ class UserManage extends Component {
       dataAllUsers: [],
       userEdit: {},
       modal: false,
+      arrKeysEmpty: [],
+      dataUserEdit: {},
+      isShowModalEdit: false,
     };
   }
 
-  async componentDidMount() {
+  getAllUsers = async () => {
     let response = await getAllUsers("All");
     if (response && response.data.errCode === 0) {
       this.setState({ dataAllUsers: response.data.users });
     }
-  }
+  };
 
   handleDeleteUser = async (item) => {
     try {
@@ -34,20 +42,63 @@ class UserManage extends Component {
     }
   };
 
-  handleEditUser = async (item) => {
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+    this.setState({ arrKeysEmpty: [] });
+    this.setState({ isShowModalEdit: false });
+  };
+
+  handleCreateUser = async (data) => {
     try {
-      let user = await getAllUsers(item.id);
-      if (user && user.data.errCode === 0) {
-        this.setState({ userEdit: user.data.users });
+      const arrKeys = [];
+      for (const key in data) {
+        if (data.hasOwnProperty(key) && data[key] === "") {
+          arrKeys.push(key);
+        }
+      }
+      if (arrKeys.length > 0) {
+        return this.setState({ arrKeysEmpty: [...arrKeys] });
+      } else {
+        await createUser(data);
+        this.toggle();
+        this.getAllUsers();
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  toggle = () => {
-    this.setState({ modal: !this.state.modal });
+  handleEditUser = async (data) => {
+    try {
+      const arrKeys = [];
+      for (const key in data) {
+        if (
+          data.hasOwnProperty(key) &&
+          key !== "email" &&
+          key !== "password" &&
+          data[key] === ""
+        ) {
+          arrKeys.push(key);
+        }
+      }
+      if (arrKeys.length > 0) {
+        return this.setState({ arrKeysEmpty: [...arrKeys] });
+      } else {
+        this.state.dataUserEdit.firstName = data.firstName;
+        this.state.dataUserEdit.lastName = data.lastName;
+        this.state.dataUserEdit.address = data.address;
+        await editUser(this.state.dataUserEdit);
+        this.toggle();
+        this.getAllUsers();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  async componentDidMount() {
+    this.getAllUsers();
+  }
 
   render() {
     return (
@@ -56,7 +107,10 @@ class UserManage extends Component {
         <div className="style-modal">
           <button
             className="btn-add-user btn btn-primary"
-            onClick={() => this.toggle()}
+            onClick={() => {
+              this.toggle();
+              this.setState({ isShowModalEdit: false });
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +130,11 @@ class UserManage extends Component {
           <ModalCreateUser
             isOpen={this.state.modal}
             toggle={this.toggle}
+            handleCreateUser={this.handleCreateUser}
+            arrKeysEmpty={this.state.arrKeysEmpty}
+            dataUserEdit={this.state.dataUserEdit}
+            handleEditUser={this.handleEditUser}
+            isShowModalEdit={this.state.isShowModalEdit}
           ></ModalCreateUser>
         </div>
         <table id="customers">
@@ -97,7 +156,12 @@ class UserManage extends Component {
                   <th>
                     <button
                       className="btn-icon btn-edit"
-                      onClick={() => this.handleEditUser(item)}
+                      onClick={() => {
+                        this.setState({ modal: !this.state.modal });
+                        this.setState({ arrKeysEmpty: [] });
+                        this.setState({ isShowModalEdit: true });
+                        this.setState({ dataUserEdit: item });
+                      }}
                     >
                       <i class="fas fa-pencil-alt"></i>
                     </button>
