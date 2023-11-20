@@ -1,0 +1,184 @@
+.header-page-container {
+  overflow-y: scroll;
+}
+
+.header-page-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 40px;
+}
+
+.wrapper-header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper-item-header {
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  margin: 0;
+}
+
+.header-logo {
+  width: 150px;
+
+  img {
+    margin-left: 16px;
+  }
+
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.icon-bar {
+  font-size: 16px;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.item-header {
+  list-style: none;
+
+  h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.wrapper-support-language {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper-support {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  margin-right: 20px;
+
+  .support {
+    i {
+      margin-right: 6px;
+      color: #45c3d2;
+
+      text {
+        padding-left: 4px;
+        color: #969495;
+      }
+    }
+
+    :hover {
+      cursor: pointer;
+    }
+  }
+
+  .phone-number {
+    font-size: 14px;
+    color: #45c3d2;
+  }
+}
+
+.multi-language {
+  display: flex;
+
+  .language-vi,
+  .language-en {
+    margin: 0 4px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.active {
+      color: #f7d800;
+    }
+  }
+}
+
+.container-home-page {
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.082),
+      rgba(255, 253, 253, 0.726) 90%
+    ),
+    url("../../assets/images/anh-dep-ve-gia-dinh.jpg");
+  padding: 26px 0;
+}
+
+.main-title {
+  h1 {
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #333;
+    text-align: center;
+    color: #0b8cff;
+    padding-top: 24px;
+    font-family: "ProximaNova", sans-serif;
+  }
+}
+
+.wrapper-optionMedical {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0 40px;
+  padding-top: 20px;
+
+  h4 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+
+.wrapper-item-optionMedical {
+  width: 160px;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  :hover {
+    cursor: pointer;
+    color: #f76300;
+  }
+}
+
+.img-item-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  margin: 2px auto;
+}
+
+.img-item-option img {
+  width: 60%;
+  height: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 32px;
+}
