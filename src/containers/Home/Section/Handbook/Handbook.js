@@ -1,25 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "../Speciality/Specialty.scss";
-import "./DoctorOutstand.scss";
 import { Carousel } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
-
-class DoctorOutstand extends Component {
+class Handbook extends Component {
   render() {
     return (
-      <div className="specialty-container doctor-outstand-container">
+      <div className="specialty-container">
         <div className="offers_container" style={{ height: "100%" }}>
           <div className="offer_box" style={{ height: "100%" }}>
             <div className="wrapper-title-main-specialty">
               <h4 className="title-main-specialty">
-                <FormattedMessage id={"homepage.outstanding-doctor"} />
+                <FormattedMessage id={"homepage.handbook"} />
               </h4>
-              <p className="btn-see-more">
+              <button className="btn-see-more-specialty">
                 <FormattedMessage id={"homepage.more-info"} />
-              </p>
+              </button>
             </div>
-            <Carousel slide={false} interval={3000} className="carousel">
+            <Carousel
+              slide={false}
+              interval={3000}
+              className="carousel-specialty"
+            >
               <Carousel.Item>
                 <div
                   className="item-specialty"
@@ -239,4 +241,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorOutstand);
+export default connect(mapStateToProps, mapDispatchToProps)(Handbook);

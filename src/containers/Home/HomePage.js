@@ -5,6 +5,7 @@ import ContainerHomePage from "./ContainerHomePage";
 import "./HomePage.scss";
 import Specialty from "./Section/Speciality/Specialty";
 import DoctorOutstand from "./Section/DoctorOutstand/DoctorOutstand";
+import Handbook from "./Section/Handbook/Handbook";
 
 class HomePage extends Component {
   render() {
@@ -15,7 +16,8 @@ class HomePage extends Component {
           <ContainerHomePage />
         </div>
         <Specialty />
-        {/* <DoctorOutstand /> */}
+        <DoctorOutstand />
+        <Handbook />
       </div>
     );
   }
