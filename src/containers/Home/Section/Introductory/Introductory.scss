@@ -1,0 +1,21 @@
+.wrapper-introductory {
+  margin: 0 16px 20px;
+}
+
+.title-introductory {
+  margin: 16px 0;
+  font-weight: 600;
+}
+
+.wrapper-content-introductory {
+  display: flex;
+  gap: 30px;
+}
+
+.content-introductory {
+  width: 100%;
+
+  p {
+    font-style: italic;
+  }
+}

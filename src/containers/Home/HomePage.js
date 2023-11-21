@@ -6,6 +6,8 @@ import "./HomePage.scss";
 import Specialty from "./Section/Speciality/Specialty";
 import DoctorOutstand from "./Section/DoctorOutstand/DoctorOutstand";
 import Handbook from "./Section/Handbook/Handbook";
+import Introductory from "./Section/Introductory/Introductory";
+import Footer from "./Section/Footer/Footer";
 
 class HomePage extends Component {
   render() {
@@ -18,6 +20,10 @@ class HomePage extends Component {
         <Specialty />
         <DoctorOutstand />
         <Handbook />
+        <div className="wrapper-sections">
+          <Introductory />
+        </div>
+        <Footer />
       </div>
     );
   }

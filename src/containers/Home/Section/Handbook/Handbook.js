@@ -1,30 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "../Speciality/Specialty.scss";
 import { Carousel } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 class Handbook extends Component {
   render() {
     return (
-      <div className="specialty-container">
+      <div className="section-container">
         <div className="offers_container" style={{ height: "100%" }}>
           <div className="offer_box" style={{ height: "100%" }}>
-            <div className="wrapper-title-main-specialty">
-              <h4 className="title-main-specialty">
+            <div className="wrapper-title-main-section">
+              <h4 className="title-main-section">
                 <FormattedMessage id={"homepage.handbook"} />
               </h4>
-              <button className="btn-see-more-specialty">
+              <button className="btn-see-more">
                 <FormattedMessage id={"homepage.more-info"} />
               </button>
             </div>
             <Carousel
               slide={false}
               interval={3000}
-              className="carousel-specialty"
+              className="carousel-section"
             >
               <Carousel.Item>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -36,7 +35,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -48,7 +47,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -60,7 +59,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -74,7 +73,7 @@ class Handbook extends Component {
               </Carousel.Item>
               <Carousel.Item>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -86,7 +85,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -98,7 +97,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -110,7 +109,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -124,7 +123,7 @@ class Handbook extends Component {
               </Carousel.Item>
               <Carousel.Item>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -136,7 +135,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -148,7 +147,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -160,7 +159,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -174,7 +173,7 @@ class Handbook extends Component {
               </Carousel.Item>
               <Carousel.Item>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -186,7 +185,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -198,7 +197,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
@@ -210,7 +209,7 @@ class Handbook extends Component {
                   <p>Cơ xương khớp</p>
                 </div>
                 <div
-                  className="item-specialty"
+                  className="item-section"
                   onClick={() => {
                     alert(123);
                   }}
