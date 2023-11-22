@@ -28,17 +28,20 @@
   },
   "menu": {
     "admin": {
+      "setting-user": "Setting User",
       "manage-user": "Users System",
       "manage-doctor": "Manage Doctor",
-      "manage-admin": "Quản lí admin",
+      "manage-admin": "Manage admin",
       "crud": "CRUD user",
-      "crud-redux": "CRUD user(redux)",
+      "crud-redux": "CRUD user (redux)",
       "clinic": "Clinic",
       "manage-clinic": "Manage clinic",
       "specialty": "Specialty",
       "manage-specialty": "Manage Specialty",
       "handbook": "Handbook",
-      "manage-handbook": "Manage Handbook"
+      "manage-handbook": "Manage Handbook",
+      "language": "Language",
+      "logout": "Logout"
     },
     "doctor": {
       "manage-schedule": "Manage Doctor's schedule",
@@ -67,6 +70,7 @@
     "outstanding-medical": "Outstanding medical facility",
     "all": "All Posts",
     "handbook": "Handbook",
+    "health": "Health is wealth",
     "about": "What does the media say about the online appointment booking solution?"
   },
   "manage-schedule": {
@@ -172,20 +176,6 @@
     "username": "Username",
     "password": "Password",
     "userpass-wrong": "Invalid username or password!"
-  },
-  "menu": {
-    "system": {
-      "header": "System",
-      "system-administrator": {
-        "header": "System Administrator",
-        "user-manage": "User manage",
-        "product-manage": "Package manage",
-        "register-package-group-or-account": "Register service package for group/account"
-      },
-      "system-parameter": {
-        "header": "System-parameter"
-      }
-    }
   },
   "system": {
     "user-manage": {

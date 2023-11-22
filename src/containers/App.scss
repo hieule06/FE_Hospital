@@ -7,9 +7,13 @@
 
 .content-container {
   width: 100%;
+}
+
+.content-container-patient {
+  width: 100%;
   position: relative;
 }
 
-.content-container > div {
+.wrapper-home-page {
   position: absolute;
 }

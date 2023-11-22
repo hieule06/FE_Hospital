@@ -1,51 +1,25 @@
 @import "../../styles/common.scss";
 
-.header-container {
-  z-index: 99;
-  display: flex;
-  justify-content: space-between;
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(255, 116, 81, 1) 0%,
-    rgba(233, 247, 91, 1) 61%,
-    rgba(185, 166, 54, 1) 100%,
-    rgba(240, 245, 25, 1) 100%,
-    rgba(203, 35, 168, 1) 100%
-  );
-  color: $common-text-color;
-  margin-left: 256px;
-  height: 40px;
-  position: relative;
-  .btn-logout {
-    color: rgb(255, 70, 70);
-    line-height: 40px;
-    height: 40px;
-    &:hover {
-      background-color: darken($colormain, 5);
-    }
-    i {
-      font-size: 16px;
-    }
+:where(.css-dev-only-do-not-override-1adbn6x).ant-layout {
+  background: transparent;
+}
+
+.wrapper-sidebar {
+  height: 100vh;
+}
+
+.infor-user {
+  h5 {
+    margin: 0;
   }
 }
 
-.wrapper-header {
-  z-index: 99;
-  display: flex;
-  justify-content: space-between;
-  color: $common-text-color;
-  height: 40px;
-  position: relative;
-  .btn-logout {
-    color: rgb(255, 70, 70);
-    line-height: 40px;
-    height: 40px;
-    &:hover {
-      background-color: darken($colormain, 5);
-    }
-    i {
-      font-size: 16px;
-    }
-  }
+.sidebar {
+  max-width: 100% !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+.ant-layout-sider-collapsed {
+  max-width: 80px !important;
 }

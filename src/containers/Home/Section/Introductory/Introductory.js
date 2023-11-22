@@ -8,7 +8,7 @@ class Introductory extends Component {
     return (
       <div className="wrapper-introductory">
         <h4 className="title-introductory">
-          <FormattedMessage id={"homepage.handbook"} />
+          <FormattedMessage id={"homepage.health"} />
         </h4>
         <div className="wrapper-content-introductory">
           <div className="iframe-introductory">

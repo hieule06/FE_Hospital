@@ -28,17 +28,20 @@
   },
   "menu": {
     "admin": {
+      "setting-user": "Thiết lập người dùng",
       "manage-user": "Người dùng",
       "manage-doctor": "Quản lí bác sĩ",
       "manage-admin": "Quản lí admin",
       "crud": "CRUD user",
-      "crud-redux": "CRUD user(redux)",
+      "crud-redux": "CRUD user (redux)",
       "clinic": "Phòng khám",
       "manage-clinic": "Quản lí phòng khám",
       "specialty": "Chuyên khoa",
       "manage-specialty": "Quản lí chuyên khoa",
       "handbook": "Cẩm nang",
-      "manage-handbook": "Quản lí cẩm nang"
+      "manage-handbook": "Quản lí cẩm nang",
+      "language": "Ngôn ngữ",
+      "logout": "Đăng xuất"
     },
     "doctor": {
       "manage-schedule": "Quản lí kế hoạch khám bệnh",
@@ -67,6 +70,7 @@
     "outstanding-medical": "Cơ sở y tế nổi bật",
     "all": "Tất cả bài viết",
     "handbook": "Cẩm nang",
+    "health": "Sức khỏe là vàng",
     "about": "Truyền thông nói gì về giải pháp đặt lịch khám online"
   },
   "manage-schedule": {
@@ -172,20 +176,6 @@
     "username": "Tên đăng nhập",
     "password": "Mật khẩu",
     "userpass-wrong": "Sai tên đăng nhập hoặc mật khẩu!"
-  },
-  "menu": {
-    "system": {
-      "header": "Hệ thống",
-      "system-administrator": {
-        "header": "Quản trị hệ thống",
-        "user-manage": "Quản lý người sử dụng",
-        "product-manage": "Quản lý gói",
-        "register-package-group-or-account": "Đăng ký gói dịch vụ cho nhóm/tài khoản"
-      },
-      "system-parameter": {
-        "header": "Tham số hệ thống"
-      }
-    }
   },
   "system": {
     "user-manage": {

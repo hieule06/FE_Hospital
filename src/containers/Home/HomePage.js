@@ -12,7 +12,7 @@ import Footer from "./Section/Footer/Footer";
 class HomePage extends Component {
   render() {
     return (
-      <div>
+      <div className="wrapper-home-page">
         <HeaderHome />
         <div className="wrapper-container-home-page">
           <ContainerHomePage />
