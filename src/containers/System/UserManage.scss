@@ -54,7 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 16px;
+  padding: 6px 12px;
   border-radius: 4px;
   margin: 0 20px 20px 0;
   font-size: 14px;
@@ -87,6 +87,11 @@
 
 .btn-save {
   margin-right: 10px;
+
+  &:hover {
+    color: #fff !important;
+    background-color: $colormain;
+  }
 }
 
 .btn-icon {
@@ -116,5 +121,11 @@
   text-align: left;
   .login-error-message {
     color: red;
+  }
+}
+
+.close {
+  &:hover {
+    color: rgb(182, 184, 182);
   }
 }

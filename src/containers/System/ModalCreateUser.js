@@ -3,7 +3,10 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { getAllUsers, deleteUser } from "../../services/userService";
 import "./UserManage.scss";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import * as actions from "../../store/actions";
 class ModalCreateUser extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +16,7 @@ class ModalCreateUser extends Component {
       email: "",
       password: "",
       address: "",
+      genderArr: [],
     };
   }
 
@@ -63,7 +67,16 @@ class ModalCreateUser extends Component {
     }
   };
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    this.props.fetchGenderStart();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const arrGender = this.props.genders;
+    if (prevProps.genders !== arrGender) {
+      this.setState({ genderArr: arrGender });
+    }
+  }
 
   render() {
     return this.props.isShowModalEdit ? (
@@ -165,16 +178,11 @@ class ModalCreateUser extends Component {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="primary"
-            className="btn-save px-3"
-            onClick={() => this.handleEdit()}
-          >
+          <Button className="btn-save px-3" onClick={() => this.handleEdit()}>
             Edit User
           </Button>{" "}
           <Button
-            color="secondary"
-            className="px-3"
+            className="btn-save px-3"
             onClick={() => {
               this.props.toggle();
               this.setState({
@@ -279,38 +287,82 @@ class ModalCreateUser extends Component {
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-md-12">
-                  <label for="inputAddress">Address</label>
-                  <input
-                    name="address"
-                    type="text"
-                    class="form-control"
-                    placeholder="1234 Main St"
-                    onChange={(e) =>
-                      this.handleOnchange("address", e.target.value)
-                    }
-                  />
-                  {this.props.arrKeysEmpty.some((e) => e === "address") && (
-                    <div className="login-error">
-                      <span className="login-error-message">{`Trường address rỗng`}</span>
-                    </div>
-                  )}
+                <div className="wrapper-form-group">
+                  <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input
+                      name="address"
+                      type="text"
+                      class="form-control"
+                      placeholder="1234 Main St"
+                      onChange={(e) => {
+                        this.setState({ address: e.target.value });
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="wrapper-form-group">
+                  <div class="form-group">
+                    <label for="inputPhoneNumber">Phone number</label>
+                    <input
+                      name="phoneNumber"
+                      type="text"
+                      class="form-control"
+                      placeholder="Phone number"
+                      onChange={(e) => {
+                        this.setState({ phoneNumber: e.target.value });
+                      }}
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="inputState">Gender</label>
+                    <select name="gender" class="form-control">
+                      {this.state.genderArr.length > 0 &&
+                        this.state.genderArr.map((item, index) => (
+                          <option value={index}>
+                            {this.props.language === "en"
+                              ? item.valueEn
+                              : item.valueVi}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="wrapper-form-group">
+                  <div class="form-group">
+                    <label for="inputRole">Role</label>
+                    <select name="roleId" class="form-control">
+                      <option value="1">Admin</option>
+                      <option value="2">Doctor</option>
+                      <option value="3">Patient</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputState">Position</label>
+                    <select name="gender" class="form-control">
+                      <option value="0">1</option>
+                      <option value="1">2</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="wrapper-form-group">
+                  <Upload
+                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                    listType="picture"
+                  >
+                    <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                  </Upload>
                 </div>
               </form>
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button
-            color="primary"
-            className="btn-save px-3"
-            onClick={() => this.handleSave()}
-          >
+          <Button className="btn-save px-3" onClick={() => this.handleSave()}>
             Save
-          </Button>{" "}
+          </Button>
           <Button
-            color="secondary"
-            className="px-3"
+            className="btn-save px-3"
             onClick={() => {
               this.props.toggle();
             }}
@@ -324,11 +376,16 @@ class ModalCreateUser extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    genders: state.admin.genders,
+    language: state.app.language,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchGenderStart: () => dispatch(actions.fetchGenderStart()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalCreateUser);

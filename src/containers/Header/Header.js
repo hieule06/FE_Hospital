@@ -64,22 +64,22 @@ class Header extends Component {
               icon={<SettingOutlined />}
               title={<FormattedMessage id={"menu.admin.setting-user"} />}
             >
-              <Menu.Item className="style-title" key={"home1"}>
+              <Menu.Item className="style-title-sub" key={"home1"}>
                 <Link to="/system/user-manage">
                   <FormattedMessage id={"menu.admin.crud"} />
                 </Link>
               </Menu.Item>
-              <Menu.Item className="style-title" key={"home2"}>
+              <Menu.Item className="style-title-sub" key={"home2"}>
                 <Link to="/system/product-manage">
                   <FormattedMessage id={"menu.admin.crud-redux"} />
                 </Link>
               </Menu.Item>
-              <Menu.Item className="style-title" key={"home3"}>
+              <Menu.Item className="style-title-sub" key={"home3"}>
                 <Link to="/system/product-manage">
                   <FormattedMessage id={"menu.admin.manage-doctor"} />
                 </Link>
               </Menu.Item>
-              <Menu.Item className="style-title" key={"home4"}>
+              <Menu.Item className="style-title-sub" key={"home4"}>
                 <Link to="/system/product-manage">
                   <FormattedMessage id={"menu.admin.manage-admin"} />
                 </Link>
@@ -103,8 +103,8 @@ class Header extends Component {
                 key={"language-vn"}
                 className={
                   this.props.language === "vi"
-                    ? "style-title language-vi active"
-                    : "style-title language-vi"
+                    ? "language-vi active"
+                    : "language-vi"
                 }
                 onClick={() => {
                   this.changeLanguage(LANGUAGES.VI);
@@ -116,8 +116,8 @@ class Header extends Component {
                 key={"language-en"}
                 className={
                   this.props.language === "en"
-                    ? "style-title language-en active"
-                    : "style-title language-en"
+                    ? "language-en active"
+                    : "language-en"
                 }
                 onClick={() => {
                   this.changeLanguage(LANGUAGES.EN);

@@ -14,9 +14,9 @@ class DoctorOutstand extends Component {
               <h4 className="title-main-section">
                 <FormattedMessage id={"homepage.outstanding-doctor"} />
               </h4>
-              <p className="btn-see-more">
+              <button className="btn-see-more">
                 <FormattedMessage id={"homepage.more-info"} />
-              </p>
+              </button>
             </div>
             <Carousel slide={false} interval={3000} className="carousel">
               <Carousel.Item>
