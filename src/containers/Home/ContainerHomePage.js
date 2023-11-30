@@ -62,7 +62,7 @@ class ContainerHomePage extends Component {
           {optionMedical.map((item) => (
             <li className="wrapper-item-optionMedical">
               <div className="img-item-option">
-                <img src={item.img} />
+                <img src={item.img} alt="" />
               </div>
               <h4>{item.title}</h4>
             </li>

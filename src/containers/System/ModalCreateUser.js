@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import { getAllUsers, deleteUser } from "../../services/userService";
 import "./UserManage.scss";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Upload, Button } from "antd";
+import { Upload, Button, Spin } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import * as actions from "../../store/actions";
+import CommonUtils from "../../utils/CommonUtils";
 class ModalCreateUser extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +16,14 @@ class ModalCreateUser extends Component {
       email: "",
       password: "",
       address: "",
+      phoneNumber: "",
+      gender: "",
+      roleId: "",
+      positionId: "",
+      avatar: "",
       genderArr: [],
+      positionArr: [],
+      roleArr: [],
     };
   }
 
@@ -24,6 +31,17 @@ class ModalCreateUser extends Component {
     let data = { ...this.state };
     data[name] = value;
     this.setState({ ...data });
+  };
+
+  handleOnchangeImage = async (e) => {
+    if (e.file.status !== "removed") {
+      const base64 = await CommonUtils.getBase64(e.file);
+      this.setState({ avatar: base64 });
+      this.props.dataUserEdit["image"] = this.state.avatar;
+    } else {
+      this.setState({ avatar: "" });
+      this.props.dataUserEdit["image"] = this.state.avatar;
+    }
   };
 
   handleOnchangeEdit = (name, value) => {
@@ -39,19 +57,29 @@ class ModalCreateUser extends Component {
       email: "",
       password: "",
       address: "",
+      phoneNumber: "",
+      gender: "",
+      roleId: "",
+      positionId: "",
+      avatar: "",
     });
   };
 
   handleSave = async () => {
     try {
-      await this.props.handleCreateUser(this.state);
-      if (this.props.arrKeysEmpty.length <= 0) {
+      const result = await this.props.handleCreateUser(this.state);
+      if (result.errCode === 0) {
         this.setState({
           firstName: "",
           lastName: "",
           email: "",
           password: "",
           address: "",
+          phoneNumber: "",
+          gender: "",
+          roleId: "",
+          positionId: "",
+          avatar: "",
         });
       }
     } catch (error) {
@@ -61,6 +89,12 @@ class ModalCreateUser extends Component {
 
   handleEdit = async () => {
     try {
+      if (
+        this.props.dataUserEdit["image"].data &&
+        this.props.dataUserEdit["image"].data.length <= 0
+      ) {
+        this.props.dataUserEdit["image"] = "";
+      }
       await this.props.handleEditUser(this.props.dataUserEdit);
     } catch (error) {
       console.log(error);
@@ -69,307 +103,589 @@ class ModalCreateUser extends Component {
 
   async componentDidMount() {
     this.props.fetchGenderStart();
+    this.props.fetchRoleStart();
+    this.props.fetchPositionStart();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const arrGender = this.props.genders;
+    const arrRole = this.props.roles;
+    const arrPosition = this.props.positions;
     if (prevProps.genders !== arrGender) {
-      this.setState({ genderArr: arrGender });
+      this.setState({
+        genderArr: arrGender,
+        gender: arrGender && arrGender.length > 0 ? arrGender[0].key : "",
+      });
+    }
+    if (prevProps.roles !== arrRole) {
+      this.setState({
+        roleArr: arrRole,
+        roleId: arrRole && arrRole.length > 0 ? arrRole[0].key : "",
+      });
+    }
+    if (prevProps.positions !== arrPosition) {
+      this.setState({
+        positionArr: arrPosition,
+        positionId:
+          arrPosition && arrPosition.length > 0 ? arrPosition[0].key : "",
+      });
     }
   }
 
   render() {
     return this.props.isShowModalEdit ? (
       <Modal isOpen={this.props.isOpen} size="lg" centered>
-        <ModalHeader
-          toggle={() => {
-            this.props.toggle();
-            this.setState({
-              firstName: "",
-              lastName: "",
-              email: "",
-              password: "",
-              address: "",
-            });
-          }}
-        >
-          Edit new user
-        </ModalHeader>
-        <ModalBody>
-          <div class="container">
-            <div class="row">
-              <form action="/submit-login" method="POST">
-                <div class="form-row">
-                  <div className="wrapper-form-group">
-                    <div class="form-group">
-                      <label for="inputEmail4">First Name</label>
+        {this.props.isLoadingData ? (
+          <Spin size="large" className="wrapper-loading" />
+        ) : (
+          <>
+            <ModalHeader
+              toggle={() => {
+                this.props.toggle();
+                this.setState({
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                  address: "",
+                  phoneNumber: "",
+                  avatar: "",
+                  gender: "M",
+                  roleId: "R0",
+                  positionId: "P0",
+                });
+              }}
+            >
+              <FormattedMessage id={"manage-user.edit-user"} />
+            </ModalHeader>
+            <ModalBody>
+              <div class="container">
+                <div class="row">
+                  <form action="/submit-login" method="POST">
+                    <div class="form-row">
+                      <div className="wrapper-form-group">
+                        <div class="form-group">
+                          <label for="inputEmail4">
+                            <FormattedMessage id={"manage-user.firstName"} />
+                          </label>
+                          <input
+                            name="firstName"
+                            type="text"
+                            class="form-control"
+                            placeholder="firstName"
+                            value={
+                              this.state.firstName
+                                ? this.state.firstName
+                                : this.props.dataUserEdit.firstName
+                            }
+                            onChange={(e) =>
+                              this.handleOnchangeEdit(
+                                "firstName",
+                                e.target.value
+                              )
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "firstName"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường firstName rỗng`}</span>
+                            </div>
+                          )}
+                        </div>
+                        <div class="form-group">
+                          <label for="inputEmail4">
+                            <FormattedMessage id={"manage-user.lastName"} />
+                          </label>
+                          <input
+                            name="lastName"
+                            type="text"
+                            class="form-control"
+                            placeholder="lastName"
+                            value={
+                              this.state.lastName
+                                ? this.state.lastName
+                                : this.props.dataUserEdit.lastName
+                            }
+                            onChange={(e) =>
+                              this.handleOnchangeEdit(
+                                "lastName",
+                                e.target.value
+                              )
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "lastName"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường lastName rỗng`}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                      <label for="inputAddress">
+                        <FormattedMessage id={"manage-user.address"} />
+                      </label>
                       <input
-                        name="firstName"
+                        name="address"
                         type="text"
                         class="form-control"
-                        placeholder="firstName"
+                        placeholder="1234 Main St"
                         value={
-                          this.state.firstName
-                            ? this.state.firstName
-                            : this.props.dataUserEdit.firstName
+                          this.state.address
+                            ? this.state.address
+                            : this.props.dataUserEdit.address
                         }
                         onChange={(e) =>
-                          this.handleOnchangeEdit("firstName", e.target.value)
+                          this.handleOnchangeEdit("address", e.target.value)
                         }
                       />
-                      {this.props.arrKeysEmpty.some(
-                        (e) => e === "firstName"
-                      ) && (
+                      {this.props.arrKeysEmpty.some((e) => e === "address") && (
                         <div className="login-error">
-                          <span className="login-error-message">{`Trường firstName rỗng`}</span>
+                          <span className="login-error-message">{`Trường address rỗng`}</span>
                         </div>
                       )}
                     </div>
-                    <div class="form-group">
-                      <label for="inputEmail4">Last Name</label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        class="form-control"
-                        placeholder="lastName"
-                        value={
-                          this.state.lastName
-                            ? this.state.lastName
-                            : this.props.dataUserEdit.lastName
-                        }
-                        onChange={(e) =>
-                          this.handleOnchangeEdit("lastName", e.target.value)
-                        }
-                      />
-                      {this.props.arrKeysEmpty.some(
-                        (e) => e === "lastName"
-                      ) && (
-                        <div className="login-error">
-                          <span className="login-error-message">{`Trường lastName rỗng`}</span>
-                        </div>
-                      )}
+                    <div className="wrapper-form-group">
+                      <div class="form-group">
+                        <label for="inputPhoneNumber">
+                          <FormattedMessage id={"manage-user.phoneNumber"} />
+                        </label>
+                        <input
+                          name="phoneNumber"
+                          type="text"
+                          class="form-control"
+                          placeholder="Phone number"
+                          value={
+                            this.state.phoneNumber
+                              ? this.state.phoneNumber
+                              : this.props.dataUserEdit.phoneNumber
+                          }
+                          onChange={(e) =>
+                            this.handleOnchangeEdit(
+                              "phoneNumber",
+                              e.target.value
+                            )
+                          }
+                        />
+                        {this.props.arrKeysEmpty.some(
+                          (e) => e === "phoneNumber"
+                        ) && (
+                          <div className="login-error">
+                            <span className="login-error-message">{`Trường phoneNumber rỗng`}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div class="form-group">
+                        <label for="inputState">
+                          <FormattedMessage id={"manage-user.gender"} />
+                        </label>
+                        <select
+                          name="gender"
+                          class="form-control"
+                          value={this.props.dataUserEdit.gender}
+                          onChange={(e) =>
+                            this.handleOnchangeEdit("gender", e.target.value)
+                          }
+                        >
+                          {this.state.genderArr.length > 0 &&
+                            this.state.genderArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="inputAddress">Address</label>
-                  <input
-                    name="address"
-                    type="text"
-                    class="form-control"
-                    placeholder="1234 Main St"
-                    value={
-                      this.state.address
-                        ? this.state.address
-                        : this.props.dataUserEdit.address
-                    }
-                    onChange={(e) =>
-                      this.handleOnchangeEdit("address", e.target.value)
-                    }
-                  />
-                  {this.props.arrKeysEmpty.some((e) => e === "address") && (
-                    <div className="login-error">
-                      <span className="login-error-message">{`Trường address rỗng`}</span>
+                    <div className="wrapper-form-group">
+                      <div class="form-group">
+                        <label for="inputRole">
+                          <FormattedMessage id={"manage-user.roleId"} />
+                        </label>
+                        <select
+                          name="roleId"
+                          class="form-control"
+                          value={this.props.dataUserEdit.roleId}
+                          onChange={(e) =>
+                            this.handleOnchangeEdit("roleId", e.target.value)
+                          }
+                        >
+                          {this.state.roleArr.length > 0 &&
+                            this.state.roleArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputState">
+                          <FormattedMessage id={"manage-user.positionId"} />
+                        </label>
+                        <select
+                          name="positionId"
+                          class="form-control"
+                          value={this.props.dataUserEdit.positionId}
+                          onChange={(e) =>
+                            this.handleOnchangeEdit(
+                              "positionId",
+                              e.target.value
+                            )
+                          }
+                        >
+                          {this.state.positionArr.length > 0 &&
+                            this.state.positionArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
                     </div>
-                  )}
+                    <div className="wrapper-form-group">
+                      <Upload
+                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                        listType="picture"
+                        beforeUpload={(file) => {
+                          return false;
+                        }}
+                        fileList={
+                          this.props.dataUserEdit.image === "" ||
+                          this.props.dataUserEdit.image.data.length <= 0
+                            ? []
+                            : [
+                                {
+                                  thumbUrl: new Buffer(
+                                    this.props.dataUserEdit.image,
+                                    "base64"
+                                  ).toString("binary"),
+                                },
+                              ]
+                        }
+                        onChange={(e) => this.handleOnchangeImage(e)}
+                      >
+                        <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                      </Upload>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button className="btn-save px-3" onClick={() => this.handleEdit()}>
-            Edit User
-          </Button>{" "}
-          <Button
-            className="btn-save px-3"
-            onClick={() => {
-              this.props.toggle();
-              this.setState({
-                firstName: "",
-                lastName: "",
-                email: "",
-                password: "",
-                address: "",
-              });
-            }}
-          >
-            Cancel
-          </Button>
-        </ModalFooter>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                className="btn-save px-3"
+                onClick={() => this.handleEdit()}
+              >
+                <FormattedMessage id={"manage-user.edit"} />
+              </Button>{" "}
+              <Button
+                className="btn-save px-3"
+                onClick={() => {
+                  this.props.toggle();
+                  this.setState({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    address: "",
+                    phoneNumber: "",
+                    avatar: "",
+                    gender: "M",
+                    roleId: "R0",
+                    positionId: "P0",
+                  });
+                }}
+              >
+                <FormattedMessage id={"manage-user.cancel"} />
+              </Button>
+            </ModalFooter>
+          </>
+        )}
       </Modal>
     ) : (
       <Modal isOpen={this.props.isOpen} size="lg" centered>
-        <ModalHeader toggle={() => this.props.toggle()}>
-          Create new user
-        </ModalHeader>
-        <ModalBody>
-          <div class="container">
-            <div class="row">
-              <form action="/submit-login" method="POST">
-                <div class="form-row">
-                  <div className="wrapper-form-group">
-                    <div class="form-group">
-                      <label for="inputEmail4">First Name</label>
-                      <input
-                        name="firstName"
-                        type="text"
-                        class="form-control"
-                        placeholder="firstName"
-                        onChange={(e) =>
-                          this.handleOnchange("firstName", e.target.value)
-                        }
-                      />
-                      {this.props.arrKeysEmpty.some(
-                        (e) => e === "firstName"
-                      ) && (
-                        <div className="login-error">
-                          <span className="login-error-message">{`Trường firstName rỗng`}</span>
+        {this.props.isLoadingData ? (
+          <Spin size="large" className="wrapper-loading" />
+        ) : (
+          <>
+            <ModalHeader
+              toggle={() => {
+                this.props.toggle();
+                this.setState({
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                  address: "",
+                  phoneNumber: "",
+                  avatar: "",
+                  gender: "M",
+                  roleId: "R0",
+                  positionId: "P0",
+                });
+              }}
+            >
+              <FormattedMessage id={"manage-user.create-user"} />
+            </ModalHeader>
+            <ModalBody>
+              <div class="container">
+                <div class="row">
+                  <form action="/submit-login" method="POST">
+                    <div class="form-row">
+                      <div className="wrapper-form-group">
+                        <div class="form-group">
+                          <label for="inputEmail4">
+                            <FormattedMessage id={"manage-user.firstName"} />
+                          </label>
+                          <input
+                            name="firstName"
+                            type="text"
+                            class="form-control"
+                            placeholder="firstName"
+                            onChange={(e) =>
+                              this.handleOnchange("firstName", e.target.value)
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "firstName"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường firstName rỗng`}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div class="form-group">
-                      <label for="inputEmail4">Last Name</label>
-                      <input
-                        name="lastName"
-                        type="text"
-                        class="form-control"
-                        placeholder="lastName"
-                        onChange={(e) =>
-                          this.handleOnchange("lastName", e.target.value)
-                        }
-                      />
-                      {this.props.arrKeysEmpty.some(
-                        (e) => e === "lastName"
-                      ) && (
-                        <div className="login-error">
-                          <span className="login-error-message">{`Trường lastName rỗng`}</span>
+                        <div class="form-group">
+                          <label for="inputEmail4">
+                            <FormattedMessage id={"manage-user.lastName"} />
+                          </label>
+                          <input
+                            name="lastName"
+                            type="text"
+                            class="form-control"
+                            placeholder="lastName"
+                            onChange={(e) =>
+                              this.handleOnchange("lastName", e.target.value)
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "lastName"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường lastName rỗng`}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="wrapper-form-group">
-                    <div class="form-group">
-                      <label for="inputEmail4">Email</label>
-                      <input
-                        name="email"
-                        type="email"
-                        class="form-control"
-                        placeholder="Email"
-                        onChange={(e) =>
-                          this.handleOnchange("email", e.target.value)
-                        }
-                      />
-                      {this.props.arrKeysEmpty.some((e) => e === "email") && (
-                        <div className="login-error">
-                          <span className="login-error-message">{`Trường email rỗng`}</span>
+                      </div>
+                      <div className="wrapper-form-group">
+                        <div class="form-group">
+                          <label for="inputEmail4">
+                            <FormattedMessage id={"manage-user.email"} />
+                          </label>
+                          <input
+                            name="email"
+                            type="email"
+                            class="form-control"
+                            placeholder="Email"
+                            onChange={(e) =>
+                              this.handleOnchange("email", e.target.value)
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "email"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường email rỗng`}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword4">Password</label>
-                      <input
-                        name="password"
-                        type="password"
-                        class="form-control"
-                        placeholder="Password"
-                        onChange={(e) =>
-                          this.handleOnchange("password", e.target.value)
-                        }
-                      />
-                      {this.props.arrKeysEmpty.some(
-                        (e) => e === "password"
-                      ) && (
-                        <div className="login-error">
-                          <span className="login-error-message">{`Trường password rỗng`}</span>
+                        <div class="form-group">
+                          <label for="inputPassword4">
+                            <FormattedMessage id={"manage-user.password"} />
+                          </label>
+                          <input
+                            name="password"
+                            type="password"
+                            class="form-control"
+                            placeholder="Password"
+                            onChange={(e) =>
+                              this.handleOnchange("password", e.target.value)
+                            }
+                          />
+                          {this.props.arrKeysEmpty.some(
+                            (e) => e === "password"
+                          ) && (
+                            <div className="login-error">
+                              <span className="login-error-message">{`Trường password rỗng`}</span>
+                            </div>
+                          )}
                         </div>
-                      )}
+                      </div>
                     </div>
-                  </div>
+                    <div className="wrapper-form-group">
+                      <div class="form-group">
+                        <label for="inputAddress">
+                          <FormattedMessage id={"manage-user.address"} />
+                        </label>
+                        <input
+                          name="address"
+                          type="text"
+                          class="form-control"
+                          placeholder="1234 Main St"
+                          onChange={(e) => {
+                            this.setState({ address: e.target.value });
+                          }}
+                        />
+                        {this.props.arrKeysEmpty.some(
+                          (e) => e === "address"
+                        ) && (
+                          <div className="login-error">
+                            <span className="login-error-message">{`Trường address rỗng`}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="wrapper-form-group">
+                      <div class="form-group">
+                        <label for="inputPhoneNumber">
+                          <FormattedMessage id={"manage-user.phoneNumber"} />
+                        </label>
+                        <input
+                          name="phoneNumber"
+                          type="text"
+                          class="form-control"
+                          placeholder="Phone number"
+                          onChange={(e) => {
+                            this.setState({ phoneNumber: e.target.value });
+                          }}
+                        />
+                        {this.props.arrKeysEmpty.some(
+                          (e) => e === "phoneNumber"
+                        ) && (
+                          <div className="login-error">
+                            <span className="login-error-message">{`Trường phoneNumber rỗng`}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div class="form-group">
+                        <label for="inputState">
+                          <FormattedMessage id={"manage-user.gender"} />
+                        </label>
+                        <select
+                          name=""
+                          class="form-control"
+                          onChange={(e) =>
+                            this.setState({ gender: e.target.value })
+                          }
+                        >
+                          {this.state.genderArr.length > 0 &&
+                            this.state.genderArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="wrapper-form-group">
+                      <div class="form-group">
+                        <label for="inputRole">
+                          <FormattedMessage id={"manage-user.roleId"} />
+                        </label>
+                        <select
+                          name="roleId"
+                          class="form-control"
+                          onChange={(e) =>
+                            this.setState({ roleId: e.target.value })
+                          }
+                        >
+                          {this.state.roleArr.length > 0 &&
+                            this.state.roleArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputState">
+                          <FormattedMessage id={"manage-user.positionId"} />
+                        </label>
+                        <select
+                          name="positionId"
+                          class="form-control"
+                          onChange={(e) =>
+                            this.setState({ positionId: e.target.value })
+                          }
+                        >
+                          {this.state.positionArr.length > 0 &&
+                            this.state.positionArr.map((item, index) => (
+                              <option key={index} value={item.key}>
+                                {this.props.language === "en"
+                                  ? item.valueEn
+                                  : item.valueVi}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="wrapper-form-group">
+                      <Upload
+                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                        listType="picture"
+                        onChange={(e) => this.handleOnchangeImage(e)}
+                        beforeUpload={(file) => {
+                          return false;
+                        }}
+                      >
+                        <Button icon={<UploadOutlined />}>Upload Avatar</Button>
+                      </Upload>
+                    </div>
+                  </form>
                 </div>
-                <div className="wrapper-form-group">
-                  <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input
-                      name="address"
-                      type="text"
-                      class="form-control"
-                      placeholder="1234 Main St"
-                      onChange={(e) => {
-                        this.setState({ address: e.target.value });
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="wrapper-form-group">
-                  <div class="form-group">
-                    <label for="inputPhoneNumber">Phone number</label>
-                    <input
-                      name="phoneNumber"
-                      type="text"
-                      class="form-control"
-                      placeholder="Phone number"
-                      onChange={(e) => {
-                        this.setState({ phoneNumber: e.target.value });
-                      }}
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="inputState">Gender</label>
-                    <select name="gender" class="form-control">
-                      {this.state.genderArr.length > 0 &&
-                        this.state.genderArr.map((item, index) => (
-                          <option value={index}>
-                            {this.props.language === "en"
-                              ? item.valueEn
-                              : item.valueVi}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="wrapper-form-group">
-                  <div class="form-group">
-                    <label for="inputRole">Role</label>
-                    <select name="roleId" class="form-control">
-                      <option value="1">Admin</option>
-                      <option value="2">Doctor</option>
-                      <option value="3">Patient</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputState">Position</label>
-                    <select name="gender" class="form-control">
-                      <option value="0">1</option>
-                      <option value="1">2</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="wrapper-form-group">
-                  <Upload
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    listType="picture"
-                  >
-                    <Button icon={<UploadOutlined />}>Upload Avatar</Button>
-                  </Upload>
-                </div>
-              </form>
-            </div>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button className="btn-save px-3" onClick={() => this.handleSave()}>
-            Save
-          </Button>
-          <Button
-            className="btn-save px-3"
-            onClick={() => {
-              this.props.toggle();
-            }}
-          >
-            Cancel
-          </Button>
-        </ModalFooter>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                className="btn-save px-3"
+                onClick={() => this.handleSave()}
+              >
+                <FormattedMessage id={"manage-user.save"} />
+              </Button>
+              <Button
+                className="btn-save px-3"
+                onClick={() => {
+                  this.props.toggle();
+                  this.setState({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    address: "",
+                    phoneNumber: "",
+                    avatar: "",
+                    gender: "M",
+                    roleId: "R0",
+                    positionId: "P0",
+                  });
+                }}
+              >
+                <FormattedMessage id={"manage-user.cancel"} />
+              </Button>
+            </ModalFooter>
+          </>
+        )}
       </Modal>
     );
   }
@@ -377,7 +693,10 @@ class ModalCreateUser extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isLoadingData: state.admin.isLoadingData,
     genders: state.admin.genders,
+    roles: state.admin.roles,
+    positions: state.admin.positions,
     language: state.app.language,
   };
 };
@@ -385,6 +704,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGenderStart: () => dispatch(actions.fetchGenderStart()),
+    fetchRoleStart: () => dispatch(actions.fetchRoleStart()),
+    fetchPositionStart: () => dispatch(actions.fetchPositionStart()),
   };
 };
 

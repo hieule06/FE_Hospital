@@ -49,7 +49,11 @@
     }
   },
   "manage-user": {
+    "manage-user": "Manage User",
+    "actions": "Actions",
     "add": "Add a new user",
+    "edit-user": "Edit user",
+    "create-user": "Create new user",
     "email": "Email",
     "password": "Password",
     "firstName": "First Name",
@@ -57,11 +61,12 @@
     "phoneNumber": "Phone Number",
     "address": "Address",
     "gender": "Gender",
-    "postion": "Postion",
+    "positionId": "PositionId",
     "roleId": "Role Id",
     "image": "Avatar",
-    "save": "Save user",
-    "edit": "Save change"
+    "save": "Save",
+    "edit": "Edit",
+    "cancel": "Cancel"
   },
   "homepage": {
     "outstanding-doctor": "Outstanding Doctor of the Week",

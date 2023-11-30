@@ -60,8 +60,8 @@
   font-size: 14px;
   float: right;
 
-  svg {
-    margin-right: 8px;
+  i {
+    margin: 0 6px 4px 0;
   }
 }
 
@@ -83,6 +83,10 @@
 .form-group {
   margin-bottom: 10px;
   width: 100%;
+
+  label {
+    margin-bottom: 2px;
+  }
 }
 
 .btn-save {
@@ -117,7 +121,7 @@
 
 .login-error {
   width: 100%;
-  margin: 6px 0;
+  margin: 6px 0 0;
   text-align: left;
   .login-error-message {
     color: red;
@@ -128,4 +132,11 @@
   &:hover {
     color: rgb(182, 184, 182);
   }
+}
+
+.wrapper-loading {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

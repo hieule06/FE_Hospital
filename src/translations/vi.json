@@ -49,7 +49,11 @@
     }
   },
   "manage-user": {
+    "manage-user": "Quản lý người dùng",
+    "actions": "Hành động",
     "add": "Thêm mới người dùng",
+    "edit-user": "Chỉnh sửa thông tin người dùng",
+    "create-user": "Tạo mới người dùng",
     "email": "Email",
     "password": "Mật khẩu",
     "firstName": "Tên",
@@ -57,11 +61,12 @@
     "phoneNumber": "Số điện thoại",
     "address": "Địa chỉ",
     "gender": "Giới tính",
-    "postion": "Chức vị",
+    "positionId": "Chức vị",
     "roleId": "Vai trò",
     "image": "Ảnh đại diện",
-    "save": "Lưu user",
-    "edit": "Lưu thay đổi"
+    "save": "Lưu",
+    "edit": "Sửa",
+    "cancel": "Hủy"
   },
   "homepage": {
     "outstanding-doctor": "Bác sĩ nổi bật tuần qua",

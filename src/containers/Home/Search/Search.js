@@ -47,10 +47,10 @@ function Search() {
     setShowResult(false);
   };
 
-  const handleClickSearch = () => {
-    setSearchResult([]);
-    setSearchValue("");
-  };
+  // const handleClickSearch = () => {
+  //   setSearchResult([]);
+  //   setSearchValue("");
+  // };
 
   const handleChangeSearch = (e) => {
     const searchValue = e.target.value;

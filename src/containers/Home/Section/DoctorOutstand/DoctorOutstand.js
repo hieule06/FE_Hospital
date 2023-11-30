@@ -29,6 +29,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-y-hoc-co-truyen.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -41,6 +42,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2019/12/16/183706-di-ung-mien-dich.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -53,6 +55,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113221-san-phu-khoa.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -65,6 +68,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112911-sieu-am-thai.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -79,6 +83,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112457-co-xuong-khop.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -91,6 +96,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112617-tai-mui-hong.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -103,6 +109,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-cot-song.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -115,6 +122,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112550-tim-mach.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -129,6 +137,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-y-hoc-co-truyen.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -141,6 +150,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2019/12/13/121305-cham-cuu.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -153,6 +163,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113221-san-phu-khoa.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -165,6 +176,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112911-sieu-am-thai.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -179,6 +191,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112457-co-xuong-khop.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -191,6 +204,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112617-tai-mui-hong.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -203,6 +217,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-cot-song.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
@@ -215,6 +230,7 @@ class DoctorOutstand extends Component {
                   <img
                     style={{ width: "100%", height: "160px" }}
                     src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112550-tim-mach.jpg"
+                    alt=""
                   />
                   <p>Cơ xương khớp</p>
                 </div>
