@@ -21,8 +21,10 @@
 .wrapper-item-header {
   display: flex;
   flex-direction: row;
-  gap: 36px;
   margin: 0;
+  justify-content: space-around;
+  flex: 1;
+  padding: 0 2rem;
 }
 
 .header-logo {
@@ -198,7 +200,7 @@
 // Css chung cho sections
 
 .section-container {
-  height: 300px;
+  height: 400px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -215,11 +217,10 @@
 }
 
 .offer_box > div {
-  height: 100%;
+  height: 80%;
 }
 
 .wrapper-title-main-section {
-  position: absolute;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -248,45 +249,49 @@
   }
 }
 
-.carousel-section {
-  background-color: #ededed;
+.react-multi-carousel-track {
+  height: 100%;
 }
 
-.carousel-indicators {
-  display: none;
+.react-multi-carousel-item {
+  padding: 0 20px 20px;
 }
 
-.carousel-inner {
-  margin-top: 30px;
-  .active {
-    display: flex !important;
-    justify-content: space-evenly;
+.card {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.25rem;
+  cursor: pointer;
+
+  img {
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    margin-bottom: 10px;
   }
 }
 
-.item-section {
-  width: 22%;
+.name-doctor {
+  margin-bottom: 0;
+}
 
-  p {
-    margin-top: 6px;
-    font-style: 16px;
-  }
-  :hover {
-    cursor: pointer;
+.title-specialty {
+  margin-bottom: 0;
+}
+
+@media all and (min-width: 1440px) {
+  .section-container {
+    height: 500px;
   }
 }
 
-.carousel-control-prev {
-  width: 26px;
-  height: 60px;
-  position: absolute;
-  margin: 118px 12px;
-  background-color: #959494;
-}
+@media all and (max-width: 1200px) {
+  .section-container {
+    height: 300px;
+  }
 
-.carousel-control-next {
-  width: 26px;
-  height: 60px;
-  margin: 118px 12px;
-  background-color: #959494;
+  .container-home-page {
+    height: 100%;
+  }
 }

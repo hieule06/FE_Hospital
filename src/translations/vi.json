@@ -54,6 +54,7 @@
     "add": "Thêm mới người dùng",
     "edit-user": "Chỉnh sửa thông tin người dùng",
     "create-user": "Tạo mới người dùng",
+    "message-success": "Lưu thành công!",
     "email": "Email",
     "password": "Mật khẩu",
     "firstName": "Tên",
@@ -172,7 +173,7 @@
     "internal-server-error": "Lỗi kết nối",
     "bad-request": "Yêu cầu không hợp lệ",
     "forbiden-request": "Thông tin truyền vào không hợp lệ",
-    "fail-to-load-all-code": "Không thể tải về dữ liệu allcode",
+    "fail-to-load-all-code": "Không thể tải về dữ liệu regulation",
     "sum": "Tổng",
     "date-range-invalid": "Khoảng thời gian không hợp lệ"
   },

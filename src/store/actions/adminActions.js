@@ -1,4 +1,4 @@
-import { getAllCode } from "../../services/userService";
+import { getRegulation, getDataDoctors } from "../../services/userService";
 import actionTypes from "./actionTypes";
 
 export const fetchGenderStart = () => {
@@ -6,9 +6,9 @@ export const fetchGenderStart = () => {
     try {
       dispatch({ type: actionTypes.FETCH_GENDER_START });
 
-      const dataGender = await getAllCode("GENDER");
-      if (dataGender && dataGender.data.dataAllCode.errCode === 0) {
-        dispatch(fetchGenderSuccess(dataGender.data.dataAllCode.data));
+      const dataGender = await getRegulation("GENDER");
+      if (dataGender && dataGender.data.dataRegulation.errCode === 0) {
+        dispatch(fetchGenderSuccess(dataGender.data.dataRegulation.data));
       } else {
         dispatch(fetchGenderFail());
       }
@@ -31,9 +31,9 @@ export const fetchGenderFail = () => ({
 export const fetchRoleStart = () => {
   return async (dispatch, getState) => {
     try {
-      const dataRole = await getAllCode("ROLE");
-      if (dataRole && dataRole.data.dataAllCode.errCode === 0) {
-        dispatch(fetchRoleSuccess(dataRole.data.dataAllCode.data));
+      const dataRole = await getRegulation("ROLE");
+      if (dataRole && dataRole.data.dataRegulation.errCode === 0) {
+        dispatch(fetchRoleSuccess(dataRole.data.dataRegulation.data));
       } else {
         dispatch(fetchRoleFail());
       }
@@ -56,9 +56,9 @@ export const fetchRoleFail = () => ({
 export const fetchPositionStart = () => {
   return async (dispatch, getState) => {
     try {
-      const dataPosition = await getAllCode("POSITION");
-      if (dataPosition && dataPosition.data.dataAllCode.errCode === 0) {
-        dispatch(fetchPositionSuccess(dataPosition.data.dataAllCode.data));
+      const dataPosition = await getRegulation("POSITION");
+      if (dataPosition && dataPosition.data.dataRegulation.errCode === 0) {
+        dispatch(fetchPositionSuccess(dataPosition.data.dataRegulation.data));
       } else {
         dispatch(fetchPositionFail());
       }
@@ -76,4 +76,29 @@ export const fetchPositionSuccess = (positionData) => ({
 
 export const fetchPositionFail = () => ({
   type: actionTypes.FETCH_POSITION_FAIL,
+});
+
+export const fetchDataDoctorStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const dataDoctors = await getDataDoctors();
+      if (dataDoctors && dataDoctors.data.errCode === 0) {
+        dispatch(fetchDataDoctorSuccess(dataDoctors.data.dataDoctors));
+      } else {
+        dispatch(fetchDataDoctorFail());
+      }
+    } catch (error) {
+      dispatch(fetchDataDoctorFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchDataDoctorSuccess = (dataDoctors) => ({
+  type: actionTypes.FETCH_DATA_DOCTOR_SUCCESS,
+  dataDoctors: dataDoctors,
+});
+
+export const fetchDataDoctorFail = () => ({
+  type: actionTypes.FETCH_DATA_DOCTOR_FAIL,
 });

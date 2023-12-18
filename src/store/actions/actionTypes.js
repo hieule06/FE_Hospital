@@ -21,6 +21,10 @@ const actionTypes = Object.freeze({
   PROCESS_LOGOUT: "PROCESS_LOGOUT",
 
   ADD_USER_SUCCESS: "ADD_USER_SUCCESS",
+
+  //doctor
+  FETCH_DATA_DOCTOR_SUCCESS: "FETCH_DATA_DOCTOR_SUCCESS",
+  FETCH_DATA_DOCTOR_FAIL: "FETCH_DATA_DOCTOR_FAIL",
 });
 
 export default actionTypes;

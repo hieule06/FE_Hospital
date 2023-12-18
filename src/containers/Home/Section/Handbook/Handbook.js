@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Carousel } from "react-bootstrap";
+import Carousel from "react-multi-carousel";
 import { FormattedMessage } from "react-intl";
+import * as actions from "../../../../store/actions";
+import { responsive } from "../../../../utils";
+import { LANGUAGES } from "../../../../utils";
+import noImage from "../../../../assets/images/no-image.png";
 class Handbook extends Component {
+  async componentDidMount() {
+    this.props.fetchDataDoctorStart();
+  }
   render() {
+    const listDataDoctors = this.props.dataDoctors;
     return (
       <div className="section-container">
         <div className="offers_container" style={{ height: "100%" }}>
@@ -16,227 +24,31 @@ class Handbook extends Component {
                 <FormattedMessage id={"homepage.more-info"} />
               </button>
             </div>
-            <Carousel
-              slide={false}
-              interval={3000}
-              className="carousel-section"
-            >
-              <Carousel.Item>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-y-hoc-co-truyen.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2019/12/16/183706-di-ung-mien-dich.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113221-san-phu-khoa.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112911-sieu-am-thai.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-              </Carousel.Item>
-              <Carousel.Item>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112457-co-xuong-khop.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112617-tai-mui-hong.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-cot-song.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112550-tim-mach.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-              </Carousel.Item>
-              <Carousel.Item>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-y-hoc-co-truyen.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2019/12/13/121305-cham-cuu.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113221-san-phu-khoa.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112911-sieu-am-thai.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-              </Carousel.Item>
-              <Carousel.Item>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112457-co-xuong-khop.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112617-tai-mui-hong.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/113208-cot-song.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-                <div
-                  className="item-section"
-                  onClick={() => {
-                    alert(123);
-                  }}
-                >
-                  <img
-                    style={{ width: "100%", height: "160px" }}
-                    src="https://cdn.bookingcare.vn/fo/w384/2023/06/20/112550-tim-mach.jpg"
-                    alt=""
-                  />
-                  <p>Cơ xương khớp</p>
-                </div>
-              </Carousel.Item>
+            <Carousel showDots={false} responsive={responsive}>
+              {listDataDoctors.map((item, idx) => {
+                const imgDoctor = item.image
+                  ? new Buffer(item.image, "base64").toString("binary")
+                  : "";
+                const positionDoctor =
+                  this.props.language === LANGUAGES.VI
+                    ? `${item.positionData.valueVi}`
+                    : `${item.positionData.valueEn}`;
+                const nameDoctor =
+                  this.props.language === LANGUAGES.VI
+                    ? `${item.lastName + " " + item.firstName}`
+                    : `${item.firstName + " " + item.lastName}`;
+                return (
+                  <div className="card">
+                    <img
+                      className="product--image"
+                      src={imgDoctor ? imgDoctor : noImage}
+                      alt="product image"
+                    />
+                    <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
+                    <p className="title-specialty">Cơ xương khớp</p>
+                  </div>
+                );
+              })}
             </Carousel>
           </div>
         </div>
@@ -247,13 +59,16 @@ class Handbook extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    dataDoctors: state.admin.dataDoctors,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchDataDoctorStart: () => dispatch(actions.fetchDataDoctorStart()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Handbook);

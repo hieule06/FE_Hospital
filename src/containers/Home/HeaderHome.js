@@ -11,10 +11,6 @@ const itemMenuHeader = [
     description: <FormattedMessage id={"homeheader.searchdoctor"} />,
   },
   {
-    title: <FormattedMessage id={"homeheader.health"} />,
-    description: <FormattedMessage id={"homeheader.chooseHospital"} />,
-  },
-  {
     title: <FormattedMessage id={"homeheader.doctor"} />,
     description: <FormattedMessage id={"homeheader.chooseDoctor"} />,
   },

@@ -9,6 +9,7 @@ import {
 } from "../../services/userService";
 import "./UserManage.scss";
 import ModalCreateUser from "./ModalCreateUser";
+import { message } from "antd";
 class UserManage extends Component {
   constructor(props) {
     super(props);
@@ -35,8 +36,11 @@ class UserManage extends Component {
       let response = await getAllUsers("All");
       if (response && response.data.errCode === 0) {
         this.setState({ dataAllUsers: response.data.users });
+
+        message.success("Lưu thành công!");
       }
     } catch (error) {
+      message.error("Thất bại!");
       console.log(error);
     }
   };
@@ -61,9 +65,13 @@ class UserManage extends Component {
       } else {
         const result = await createUser(data);
         this.toggle();
+        if (result.data.newUser.errCode === 0) {
+          message.success("Lưu thành công!");
+        }
         return result;
       }
     } catch (error) {
+      message.error("Thất bại!");
       console.log(error);
     }
   };
@@ -94,10 +102,14 @@ class UserManage extends Component {
         this.state.dataUserEdit.roleId = data.roleId;
         this.state.dataUserEdit.positionId = data.positionId;
         this.state.dataUserEdit.image = data.image;
-        await editUser(this.state.dataUserEdit);
+        const resultEdit = await editUser(this.state.dataUserEdit);
         this.toggle();
+        if (resultEdit.data.userEdit.errCode === 0) {
+          message.success("Lưu thành công!");
+        }
       }
     } catch (error) {
+      message.error("Thất bại!");
       console.log(error);
     }
   };

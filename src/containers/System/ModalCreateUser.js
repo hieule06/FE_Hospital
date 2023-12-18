@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import "./UserManage.scss";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Upload, Button, Spin } from "antd";
+import { Upload, Button, Spin, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import * as actions from "../../store/actions";
 import CommonUtils from "../../utils/CommonUtils";
@@ -51,24 +51,12 @@ class ModalCreateUser extends Component {
     if (this.props.dataUserEdit.email) {
       this.props.dataUserEdit[name] = value;
     }
-    this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      address: "",
-      phoneNumber: "",
-      gender: "",
-      roleId: "",
-      positionId: "",
-      avatar: "",
-    });
   };
 
   handleSave = async () => {
     try {
       const result = await this.props.handleCreateUser(this.state);
-      if (result.errCode === 0) {
+      if (result.data.newUser.errCode === 0) {
         this.setState({
           firstName: "",
           lastName: "",
@@ -76,9 +64,9 @@ class ModalCreateUser extends Component {
           password: "",
           address: "",
           phoneNumber: "",
-          gender: "",
-          roleId: "",
-          positionId: "",
+          gender: "M",
+          roleId: "R0",
+          positionId: "P0",
           avatar: "",
         });
       }
@@ -95,7 +83,15 @@ class ModalCreateUser extends Component {
       ) {
         this.props.dataUserEdit["image"] = "";
       }
-      await this.props.handleEditUser(this.props.dataUserEdit);
+      if (this.props.dataUserEdit["image"].type === "Buffer") {
+        this.props.dataUserEdit["image"] = new Buffer(
+          this.props.dataUserEdit.image,
+          "base64"
+        ).toString("binary");
+      }
+      const resultEdit = await this.props.handleEditUser(
+        this.props.dataUserEdit
+      );
     } catch (error) {
       console.log(error);
     }
@@ -114,20 +110,20 @@ class ModalCreateUser extends Component {
     if (prevProps.genders !== arrGender) {
       this.setState({
         genderArr: arrGender,
-        gender: arrGender && arrGender.length > 0 ? arrGender[0].key : "",
+        gender: arrGender && arrGender.length > 0 ? arrGender[0].keyMap : "",
       });
     }
     if (prevProps.roles !== arrRole) {
       this.setState({
         roleArr: arrRole,
-        roleId: arrRole && arrRole.length > 0 ? arrRole[0].key : "",
+        roleId: arrRole && arrRole.length > 0 ? arrRole[0].keyMap : "",
       });
     }
     if (prevProps.positions !== arrPosition) {
       this.setState({
         positionArr: arrPosition,
         positionId:
-          arrPosition && arrPosition.length > 0 ? arrPosition[0].key : "",
+          arrPosition && arrPosition.length > 0 ? arrPosition[0].keyMap : "",
       });
     }
   }
@@ -292,7 +288,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.genderArr.length > 0 &&
                             this.state.genderArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}
@@ -316,7 +312,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.roleArr.length > 0 &&
                             this.state.roleArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}
@@ -341,7 +337,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.positionArr.length > 0 &&
                             this.state.positionArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}
@@ -357,9 +353,11 @@ class ModalCreateUser extends Component {
                         beforeUpload={(file) => {
                           return false;
                         }}
-                        fileList={
+                        maxCount={1}
+                        defaultFileList={
                           this.props.dataUserEdit.image === "" ||
-                          this.props.dataUserEdit.image.data.length <= 0
+                          (this.props.dataUserEdit.image.data &&
+                            this.props.dataUserEdit.image.data.length <= 0)
                             ? []
                             : [
                                 {
@@ -587,7 +585,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.genderArr.length > 0 &&
                             this.state.genderArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}
@@ -610,7 +608,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.roleArr.length > 0 &&
                             this.state.roleArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}
@@ -631,7 +629,7 @@ class ModalCreateUser extends Component {
                         >
                           {this.state.positionArr.length > 0 &&
                             this.state.positionArr.map((item, index) => (
-                              <option key={index} value={item.key}>
+                              <option key={index} value={item.keyMap}>
                                 {this.props.language === "en"
                                   ? item.valueEn
                                   : item.valueVi}

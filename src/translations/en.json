@@ -54,6 +54,7 @@
     "add": "Add a new user",
     "edit-user": "Edit user",
     "create-user": "Create new user",
+    "message-success": "Save success !",
     "email": "Email",
     "password": "Password",
     "firstName": "First Name",
@@ -172,7 +173,7 @@
     "internal-server-error": "Internal server error",
     "bad-request": "Bad request",
     "forbiden-request": "Invalid input data",
-    "fail-to-load-all-code": "Fail to load data from allcode",
+    "fail-to-load-all-code": "Fail to load data from regulation",
     "sum": "Sum",
     "date-range-invalid": "Date range invalid"
   },

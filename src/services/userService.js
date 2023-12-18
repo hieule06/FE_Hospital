@@ -19,8 +19,13 @@ const createUser = (dataUser) => {
 const editUser = (dataUser) => {
   return axios.post("/api/put-edit-user", dataUser);
 };
-const getAllCode = (type) => {
-  return axios.get(`/api/get-all-code?type=${type}`);
+
+const getRegulation = (type) => {
+  return axios.get(`/api/get-regulation?type=${type}`);
+};
+
+const getDataDoctors = (limitCount) => {
+  return axios.get(`/api/get-data-doctors?limitCount=${limitCount}`);
 };
 
 export {
@@ -29,5 +34,6 @@ export {
   deleteUser,
   createUser,
   editUser,
-  getAllCode,
+  getRegulation,
+  getDataDoctors,
 };
