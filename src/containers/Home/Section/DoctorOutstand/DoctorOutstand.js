@@ -8,8 +8,14 @@ import * as actions from "../../../../store/actions";
 import { responsive } from "../../../../utils";
 import { LANGUAGES } from "../../../../utils";
 import noImage from "../../../../assets/images/no-image.png";
+import { withRouter } from "react-router";
 
 class DoctorOutstand extends Component {
+  handleViewDetailDoctor = (inforDoctor) => {
+    console.log("first: ", inforDoctor);
+    this.props.history.push(`/detail-doctor/${inforDoctor.id}`);
+  };
+
   async componentDidMount() {
     this.props.fetchDataDoctorStart();
   }
@@ -42,11 +48,14 @@ class DoctorOutstand extends Component {
                     ? `${item.lastName + " " + item.firstName}`
                     : `${item.firstName + " " + item.lastName}`;
                 return (
-                  <div className="card">
+                  <div
+                    className="card"
+                    onClick={() => this.handleViewDetailDoctor(item)}
+                  >
                     <img
                       className="product--image"
                       src={imgDoctor ? imgDoctor : noImage}
-                      alt="product image"
+                      alt=""
                     />
                     <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
                     <p className="title-specialty">Cơ xương khớp</p>
@@ -63,7 +72,7 @@ class DoctorOutstand extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dataDoctors: state.admin.dataDoctors,
+    dataDoctors: state.doctor.dataDoctors,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };
@@ -75,4 +84,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DoctorOutstand);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DoctorOutstand)
+);

@@ -24,10 +24,6 @@ const getRegulation = (type) => {
   return axios.get(`/api/get-regulation?type=${type}`);
 };
 
-const getDataDoctors = (limitCount) => {
-  return axios.get(`/api/get-data-doctors?limitCount=${limitCount}`);
-};
-
 export {
   handleLogin,
   getAllUsers,
@@ -35,5 +31,4 @@ export {
   createUser,
   editUser,
   getRegulation,
-  getDataDoctors,
 };

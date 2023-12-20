@@ -4,6 +4,7 @@ import "./HomePage.scss";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions/appActions";
+import { withRouter } from "react-router";
 
 const itemMenuHeader = [
   {
@@ -33,7 +34,10 @@ class HeaderHome extends Component {
             <div className="icon-bar">
               <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
-            <div className="header-logo">
+            <div
+              className="header-logo"
+              onClick={() => this.props.history.push(`/home-page`)}
+            >
               <img
                 src="https://bookingcare.vn/assets/icon/bookingcare-2020.svg"
                 alt="BookingCare"
@@ -106,4 +110,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderHome);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HeaderHome)
+);

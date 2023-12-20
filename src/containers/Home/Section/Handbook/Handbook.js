@@ -42,7 +42,7 @@ class Handbook extends Component {
                     <img
                       className="product--image"
                       src={imgDoctor ? imgDoctor : noImage}
-                      alt="product image"
+                      alt=""
                     />
                     <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
                     <p className="title-specialty">Cơ xương khớp</p>
@@ -59,7 +59,7 @@ class Handbook extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dataDoctors: state.admin.dataDoctors,
+    dataDoctors: state.doctor.dataDoctors,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };

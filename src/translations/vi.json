@@ -62,7 +62,7 @@
     "phoneNumber": "Số điện thoại",
     "address": "Địa chỉ",
     "gender": "Giới tính",
-    "positionId": "Chức vị",
+    "positionId": "Chức vụ",
     "roleId": "Vai trò",
     "image": "Ảnh đại diện",
     "save": "Lưu",
@@ -209,6 +209,9 @@
         "password": "Quý khách vui lòng nhập mật khẩu"
       },
       "sure-delete-user": "Bạn có chắc chắn muốn xóa người dùng này?"
+    },
+    "doctor-manage": {
+      "doctor-manage": "Tạo thêm thông tin Bác Sĩ"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { getRegulation, getDataDoctors } from "../../services/userService";
+import { getRegulation } from "../../services/userService";
 import actionTypes from "./actionTypes";
 
 export const fetchGenderStart = () => {
@@ -76,29 +76,4 @@ export const fetchPositionSuccess = (positionData) => ({
 
 export const fetchPositionFail = () => ({
   type: actionTypes.FETCH_POSITION_FAIL,
-});
-
-export const fetchDataDoctorStart = () => {
-  return async (dispatch, getState) => {
-    try {
-      const dataDoctors = await getDataDoctors();
-      if (dataDoctors && dataDoctors.data.errCode === 0) {
-        dispatch(fetchDataDoctorSuccess(dataDoctors.data.dataDoctors));
-      } else {
-        dispatch(fetchDataDoctorFail());
-      }
-    } catch (error) {
-      dispatch(fetchDataDoctorFail());
-      console.log(error);
-    }
-  };
-};
-
-export const fetchDataDoctorSuccess = (dataDoctors) => ({
-  type: actionTypes.FETCH_DATA_DOCTOR_SUCCESS,
-  dataDoctors: dataDoctors,
-});
-
-export const fetchDataDoctorFail = () => ({
-  type: actionTypes.FETCH_DATA_DOCTOR_FAIL,
 });

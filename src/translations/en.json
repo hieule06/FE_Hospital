@@ -209,6 +209,9 @@
         "password": "Please fill in password"
       },
       "sure-delete-user": "Are you sure to delete this user?"
+    },
+    "doctor-manage": {
+      "doctor-manage": "Create additional Doctor information"
     }
   }
 }

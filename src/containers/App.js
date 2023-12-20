@@ -20,6 +20,8 @@ import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import "./App.scss";
 import HomePage from "./Home/HomePage";
+import DoctorDetail from "./Home/InformationDetail/Doctor/DoctorDetail";
+import Doctor from "../routes/Doctor";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -57,7 +59,12 @@ class App extends Component {
                   path={path.SYSTEM}
                   component={userIsAuthenticated(System)}
                 />
+                <Route
+                  path={path.DOCTOR}
+                  component={userIsAuthenticated(Doctor)}
+                />
                 <Route path={path.HOME_PAGE} component={HomePage} />
+                <Route path={path.DETAIL_DOCTOR} component={DoctorDetail} />
               </Switch>
             </div>
 
@@ -84,6 +91,7 @@ const mapStateToProps = (state) => {
   return {
     started: state.app.started,
     isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
   };
 };
 

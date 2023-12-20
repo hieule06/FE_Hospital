@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import UserManage from "../containers/System/UserManage";
-import ProductManage from "../containers/System/ProductManage";
 import RegisterPackageGroupOrAcc from "../containers/System/RegisterPackageGroupOrAcc";
 import Header from "../containers/Header/Header";
 import "./System.scss";
+import DoctorManage from "../containers/System/Admin/DoctorManage";
 
 class System extends Component {
   render() {
@@ -16,7 +16,8 @@ class System extends Component {
           {!this.props.isLoggedIn && <Header />}
           <Switch>
             <Route path="/system/user-manage" component={UserManage} />
-            <Route path="/system/product-manage" component={ProductManage} />
+            <Route path="/system/doctor-manage" component={DoctorManage} />
+            <Route path="/system/schedule-manage" component={DoctorManage} />
             <Route
               path="/system/register-package-group-or-account"
               component={RegisterPackageGroupOrAcc}

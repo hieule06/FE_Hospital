@@ -40,6 +40,7 @@ class Header extends Component {
 
   render() {
     const { processLogout } = this.props;
+    const { userInfo } = this.props;
     return (
       <Layout className="wrapper-sidebar">
         <Sider className="sidebar" collapsed={this.state.collapsed}>
@@ -50,50 +51,57 @@ class Header extends Component {
               className="infor-user"
             >
               <h5>
-                {this.props.userInfo &&
-                this.props.userInfo.firstName &&
-                this.props.userInfo.lastName
-                  ? this.props.userInfo.firstName +
-                    " " +
-                    this.props.userInfo.lastName
+                {userInfo && userInfo.firstName && userInfo.lastName
+                  ? userInfo.firstName + " " + userInfo.lastName
                   : ""}
               </h5>
             </Menu.Item>
-            <Menu.SubMenu
-              key={"home"}
-              icon={<SettingOutlined />}
-              title={<FormattedMessage id={"menu.admin.setting-user"} />}
-            >
-              <Menu.Item className="style-title-sub" key={"home1"}>
-                <Link to="/system/user-manage">
-                  <FormattedMessage id={"menu.admin.crud"} />
-                </Link>
-              </Menu.Item>
-              <Menu.Item className="style-title-sub" key={"home2"}>
-                <Link to="/system/product-manage">
-                  <FormattedMessage id={"menu.admin.crud-redux"} />
-                </Link>
-              </Menu.Item>
-              <Menu.Item className="style-title-sub" key={"home3"}>
-                <Link to="/system/product-manage">
-                  <FormattedMessage id={"menu.admin.manage-doctor"} />
-                </Link>
-              </Menu.Item>
-              <Menu.Item className="style-title-sub" key={"home4"}>
-                <Link to="/system/product-manage">
-                  <FormattedMessage id={"menu.admin.manage-admin"} />
-                </Link>
-              </Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>
-              <FormattedMessage id={"menu.admin.clinic"} />
-            </Menu.Item>
-            <Menu.Item key={"specialty"} icon={<ContainerOutlined />}>
-              <FormattedMessage id={"menu.admin.specialty"} />
-            </Menu.Item>
-            <Menu.Item key={"handbook"} icon={<DesktopOutlined />}>
-              <FormattedMessage id={"menu.admin.handbook"} />
-            </Menu.Item>
+            {userInfo.roleId === "R2" ? (
+              <Menu.SubMenu
+                key={"home"}
+                icon={<SettingOutlined />}
+                title={<FormattedMessage id={"menu.admin.setting-user"} />}
+              >
+                <Menu.Item className="style-title-sub" key={"home4"}>
+                  <Link to="/doctor/schedule-manage">
+                    <FormattedMessage id={"menu.doctor.manage-schedule"} />
+                  </Link>
+                </Menu.Item>
+              </Menu.SubMenu>
+            ) : (
+              <>
+                <Menu.SubMenu
+                  key={"home"}
+                  icon={<SettingOutlined />}
+                  title={<FormattedMessage id={"menu.admin.setting-user"} />}
+                >
+                  <Menu.Item className="style-title-sub" key={"home1"}>
+                    <Link to="/system/user-manage">
+                      <FormattedMessage id={"menu.admin.crud"} />
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item className="style-title-sub" key={"home3"}>
+                    <Link to="/system/doctor-manage">
+                      <FormattedMessage id={"menu.admin.manage-doctor"} />
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item className="style-title-sub" key={"home4"}>
+                    <Link to="/system/schedule-manage">
+                      <FormattedMessage id={"menu.doctor.manage-schedule"} />
+                    </Link>
+                  </Menu.Item>
+                </Menu.SubMenu>
+                <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>
+                  <FormattedMessage id={"menu.admin.clinic"} />
+                </Menu.Item>
+                <Menu.Item key={"specialty"} icon={<ContainerOutlined />}>
+                  <FormattedMessage id={"menu.admin.specialty"} />
+                </Menu.Item>
+                <Menu.Item key={"handbook"} icon={<DesktopOutlined />}>
+                  <FormattedMessage id={"menu.admin.handbook"} />
+                </Menu.Item>
+              </>
+            )}
             <Menu.SubMenu
               key={"language"}
               icon={<FontSizeOutlined />}
