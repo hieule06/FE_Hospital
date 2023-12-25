@@ -4,6 +4,7 @@ const initialState = {
   isLoadingData: false,
   genders: [],
   positions: [],
+  times: [],
   roles: [],
   dataDoctors: [],
 };
@@ -46,6 +47,16 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         positions: [],
+      };
+    case actionTypes.FETCH_SCHEDULE_HOUR_SUCCESS:
+      state.times = action.timeData;
+      return {
+        ...state,
+      };
+    case actionTypes.FETCH_SCHEDULE_HOUR_FAIL:
+      return {
+        ...state,
+        times: [],
       };
     case actionTypes.FETCH_DATA_DOCTOR_SUCCESS:
       return {

@@ -23,6 +23,19 @@ const getdataDoctorShowPage = (idDoctorSelect) => {
   return axios.get(`/api/get-detail-doctor-by-id?id=${idDoctorSelect}`);
 };
 
+const bulkCreateSchedule = (listSchedule) => {
+  return axios.post("/api/bulk-create-schedule", listSchedule);
+};
+
+const getdataDoctorSchedule = (listFilter) => {
+  return axios.get("/api/get-data-doctor-schedule", {
+    params: {
+      idDoctor: listFilter.idDoctorSelect,
+      dateSelect: listFilter.dateSelect,
+    },
+  });
+};
+
 export {
   getDataDoctors,
   getAllDoctors,
@@ -30,4 +43,6 @@ export {
   getdataDoctor,
   updateInforDoctor,
   getdataDoctorShowPage,
+  bulkCreateSchedule,
+  getdataDoctorSchedule,
 };

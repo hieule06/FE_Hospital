@@ -77,3 +77,28 @@ export const fetchPositionSuccess = (positionData) => ({
 export const fetchPositionFail = () => ({
   type: actionTypes.FETCH_POSITION_FAIL,
 });
+
+export const fetchScheduleHourStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const dataTime = await getRegulation("TIME");
+      if (dataTime && dataTime.data.dataRegulation.errCode === 0) {
+        dispatch(fetchScheduleHourSuccess(dataTime.data.dataRegulation.data));
+      } else {
+        dispatch(fetchScheduleHourFail());
+      }
+    } catch (error) {
+      dispatch(fetchScheduleHourFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchScheduleHourSuccess = (timeData) => ({
+  type: actionTypes.FETCH_SCHEDULE_HOUR_SUCCESS,
+  timeData: timeData,
+});
+
+export const fetchScheduleHourFail = () => ({
+  type: actionTypes.FETCH_SCHEDULE_HOUR_FAIL,
+});

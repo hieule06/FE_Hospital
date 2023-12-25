@@ -45,13 +45,6 @@ class DoctorManage extends Component {
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
-        this.setState({
-          contentMarkDown: "",
-          contentHTML: "",
-          descriptionDoctor: "",
-          selectDoctor: "",
-          checkIdDoctor: false,
-        });
         return message.success("Lưu thành công !");
       }
     } catch (error) {
@@ -66,13 +59,6 @@ class DoctorManage extends Component {
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
-        this.setState({
-          contentMarkDown: "",
-          contentHTML: "",
-          descriptionDoctor: "",
-          selectDoctor: "",
-          checkIdDoctor: false,
-        });
         return message.success("Lưu thành công !");
       }
     } catch (error) {
@@ -84,6 +70,13 @@ class DoctorManage extends Component {
   handleSelectDoctor = async (value) => {
     const inforDoctor = await getdataDoctor(value);
     if (!inforDoctor.data.inforDoctor) {
+      this.setState({
+        contentMarkDown: "",
+        contentHTML: "",
+        descriptionDoctor: "",
+        selectDoctor: "",
+        checkIdDoctor: false,
+      });
       return this.setState({ selectDoctor: value });
     } else {
       this.setState({
@@ -138,8 +131,11 @@ class DoctorManage extends Component {
         </h2>
         <div className="wrapper-infor-doctor">
           <div className="search-user">
-            <p>Chọn bác sĩ</p>
+            <p>
+              <FormattedMessage id={"admin.select-doctor"} />
+            </p>
             <Select
+              allowClear
               showSearch
               placeholder="Select a person"
               onChange={(value) => this.handleSelectDoctor(value)}
@@ -147,7 +143,9 @@ class DoctorManage extends Component {
             />
           </div>
           <div className="add-infor-doctor">
-            <p>Thông tin giới thiệu</p>
+            <p>
+              <FormattedMessage id={"admin.intro"} />
+            </p>
             <TextArea
               rows={4}
               onChange={(e) =>
@@ -173,7 +171,7 @@ class DoctorManage extends Component {
               this.handleCreateInforDoctor(this.state);
             }}
           >
-            Lưu thông tin
+            <FormattedMessage id={"admin.save"} />
           </button>
           <button
             className={

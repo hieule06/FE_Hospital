@@ -5,6 +5,8 @@ import { getdataDoctorShowPage } from "../../../../services/doctorService";
 import noImage from "../../../../assets/images/no-image.png";
 import "./DoctorDetail.scss";
 import { LANGUAGES } from "../../../../utils";
+import Footer from "../../Section/Footer/Footer";
+import DoctorSchedule from "./DoctorSchedule";
 
 class DoctorDetail extends Component {
   constructor(props) {
@@ -70,7 +72,9 @@ class DoctorDetail extends Component {
               </div>
             </div>
           </div>
-          <div className="schedule-doctor"></div>
+          <div className="schedule-doctor">
+            <DoctorSchedule />
+          </div>
           <div className="detail-infor-doctor">
             {detailDoctor.Markdown && detailDoctor.Markdown.contentHTML && (
               <div
@@ -81,6 +85,7 @@ class DoctorDetail extends Component {
             )}
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

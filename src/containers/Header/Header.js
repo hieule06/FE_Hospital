@@ -86,14 +86,14 @@ class Header extends Component {
                     </Link>
                   </Menu.Item>
                   <Menu.Item className="style-title-sub" key={"home4"}>
-                    <Link to="/system/schedule-manage">
+                    <Link to="/doctor/schedule-manage">
                       <FormattedMessage id={"menu.doctor.manage-schedule"} />
                     </Link>
                   </Menu.Item>
                 </Menu.SubMenu>
-                <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>
+                {/* <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>
                   <FormattedMessage id={"menu.admin.clinic"} />
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item key={"specialty"} icon={<ContainerOutlined />}>
                   <FormattedMessage id={"menu.admin.specialty"} />
                 </Menu.Item>

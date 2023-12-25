@@ -1,20 +1,236 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./ManageSchedule.scss";
+import { FormattedMessage } from "react-intl";
+import { DatePicker, Select, message } from "antd";
 import * as actions from "../../../store/actions";
+import { LANGUAGES } from "../../../utils/constant";
+import dayjs from "dayjs";
+import { pull, includes, map } from "lodash";
+import {
+  getdataDoctorSchedule,
+  bulkCreateSchedule,
+} from "../../../services/doctorService";
+import "./ManageSchedule.scss";
 
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      listDoctors: [],
+      selectedDoctor: 1,
+      currentDate: new Date().getTime(),
+      rangeTime: [],
+    };
   }
 
-  async componentDidMount() {}
+  handleCreateScheduleTime = async (data) => {
+    try {
+      if (
+        !this.state.currentDate ||
+        !this.state.selectedDoctor ||
+        this.state.rangeTime.length === 0
+      ) {
+        return message.error("Các trường chưa điền đủ thông tin !");
+      } else {
+        console.log("first: ", this.state);
+        const listSchedule = this.state.rangeTime.map((item) => {
+          return {
+            date: this.state.currentDate,
+            timeType: item,
+            doctorId: this.state.selectedDoctor,
+          };
+        });
+        console.log("listSchedule: ", listSchedule);
+        await bulkCreateSchedule(listSchedule);
+      }
+    } catch (error) {
+      message.error("Thất bại!");
+      console.log(error);
+    }
+  };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {}
+  handleUpdateScheduleTime = async (data) => {
+    try {
+      if (
+        !this.state.currentDate ||
+        !this.state.selectedDoctor.selectDoctor ||
+        this.state.rangeTime.length === 0
+      ) {
+        return message.error("Các trường chưa điền đủ thông tin !");
+      } else {
+        console.log("first: ", this.state);
+      }
+    } catch (error) {
+      message.error("Thất bại!");
+      console.log(error);
+    }
+  };
+
+  handleSelectDoctor = async (value) => {
+    this.setState({ selectedDoctor: value });
+    const inforDoctorSchedule = await getdataDoctorSchedule({
+      idDoctorSelect: value,
+      dateSelect: this.state.currentDate,
+    });
+    if (inforDoctorSchedule && inforDoctorSchedule.data.errCode === 0) {
+      const listTimeType = map(inforDoctorSchedule.data.result, "timeType");
+      if (listTimeType && listTimeType.length > 0) {
+        this.setState({ rangeTime: listTimeType });
+      }
+    } else {
+      this.setState({ rangeTime: [] });
+    }
+  };
+
+  handleSelectPeriod = (timeItem) => {
+    const arrRangTime = this.state.rangeTime;
+    let checkExitsTime;
+    if (this.state.rangeTime.length > 0) {
+      checkExitsTime = includes(this.state.rangeTime, timeItem.keyMap);
+      if (!checkExitsTime) {
+        arrRangTime.push(timeItem.keyMap);
+      } else {
+        pull(arrRangTime, timeItem.keyMap);
+      }
+    } else {
+      arrRangTime.push(timeItem.keyMap);
+    }
+    this.setState({ rangeTime: arrRangTime });
+  };
+
+  handleOnchangeTime = async (event) => {
+    this.setState({ currentDate: new Date(event).getTime() });
+    const inforDoctorSchedule = await getdataDoctorSchedule({
+      idDoctorSelect: this.state.selectedDoctor,
+      dateSelect: new Date(event).getTime(),
+    });
+    if (inforDoctorSchedule && inforDoctorSchedule.data.errCode === 0) {
+      const listTimeType = map(inforDoctorSchedule.data.result, "timeType");
+      if (listTimeType && listTimeType.length > 0) {
+        this.setState({ rangeTime: listTimeType });
+      }
+    } else {
+      this.setState({ rangeTime: [] });
+    }
+  };
+
+  buildDataSelectDoctor = (listDoctors) => {
+    let result = [];
+    let { language } = this.props;
+    if (listDoctors && listDoctors.length > 0) {
+      listDoctors.map((item) => {
+        const obj = {};
+        const nameDoctor =
+          language === LANGUAGES.VI
+            ? `${item.lastName} ${item.firstName}`
+            : `${item.firstName} ${item.lastName}`;
+        obj.label = nameDoctor;
+        obj.value = item.id;
+        result.push(obj);
+      });
+    }
+    return result;
+  };
+
+  async componentDidMount() {
+    this.props.fetchAllDoctorStart();
+    this.props.fetchScheduleHourStart();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps.allDoctors !== this.props.allDoctors ||
+      prevProps.language !== this.props.language
+    ) {
+      const dataSelect = this.buildDataSelectDoctor(this.props.allDoctors);
+      this.setState({
+        listDoctors: dataSelect,
+      });
+    }
+  }
 
   render() {
-    return <div className="">manage doctor</div>;
+    let yesterday = new Date();
+    return (
+      <div className="wrapper-page-doctor-manage wrapper-page-schedule-manage">
+        <h2 className="title-page">
+          <FormattedMessage id={"manage-schedule.title"} />
+        </h2>
+        <div className="wrapper-infor-doctor wrapper-schedule-doctor">
+          <div className="search-user">
+            <p>
+              <FormattedMessage id={"admin.select-doctor"} />
+            </p>
+            <Select
+              placeholder="Select a person"
+              onChange={(value) => this.handleSelectDoctor(value)}
+              options={this.state.listDoctors}
+            />
+          </div>
+          <div className="add-infor-doctor add-calendar-doctor">
+            <p>
+              <FormattedMessage id={"manage-schedule.choose-date"} />
+            </p>
+            <DatePicker
+              defaultValue={dayjs(yesterday)}
+              disabledDate={(current) => {
+                return (
+                  current && current < dayjs().subtract(1, "day").endOf("day")
+                );
+              }}
+              format="DD-MM-YYYY"
+              onChange={(e) => this.handleOnchangeTime(e)}
+            />
+          </div>
+        </div>
+        <div className="scheduleTime">
+          {this.props.times.map((item) => {
+            const showTime =
+              this.props.language === LANGUAGES.VI
+                ? item.valueVi
+                : item.valueEn;
+            const backgroundItemTime = includes(
+              this.state.rangeTime,
+              item.keyMap
+            );
+            return (
+              <span
+                onClick={() => this.handleSelectPeriod(item)}
+                className={backgroundItemTime ? "item-scheduletime-action" : ""}
+              >
+                {showTime}
+              </span>
+            );
+          })}
+        </div>
+        <div className="btn-save-doctor">
+          <button
+            className={
+              this.state.checkIdDoctor
+                ? "btn-add-user btn btn-primary disable"
+                : "btn-add-user btn btn-primary"
+            }
+            onClick={() => {
+              this.handleCreateScheduleTime(this.state);
+            }}
+          >
+            <FormattedMessage id={"admin.save"} />
+          </button>
+          <button
+            className={
+              this.state.checkIdDoctor
+                ? "btn-add-user btn btn-primary"
+                : "btn-add-user btn btn-primary disable"
+            }
+            onClick={() => {
+              this.handleUpdateScheduleTime(this.state);
+            }}
+          >
+            Sửa thông tin
+          </button>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -22,12 +238,14 @@ const mapStateToProps = (state) => {
   return {
     allDoctors: state.doctor.allDoctors,
     language: state.app.language,
+    times: state.admin.times,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllDoctorStart: () => dispatch(actions.fetchAllDoctorStart()),
+    fetchScheduleHourStart: () => dispatch(actions.fetchScheduleHourStart()),
   };
 };
 
