@@ -1,3 +1,7 @@
+.schedule-doctor {
+  display: flex;
+}
+
 .doctor-detail-container {
   min-height: 91vh;
   padding: 82px 40px 20px;
@@ -9,10 +13,14 @@
 
 .content-intro {
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   .avatar-doctor {
     margin-right: 30px;
+    min-width: 180px;
+    min-height: 180px;
+    background-size: cover;
+    border-radius: 50%;
 
     img {
       width: 160px;
@@ -35,8 +43,7 @@
 
 .detail-infor-doctor {
   padding: 30px 20px 0;
-  border-top: 1px solid;
-  box-shadow: 0px 1px 2px rgba(201, 201, 201, 0.5);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 
   p {
     img {
@@ -46,6 +53,9 @@
 }
 
 @media all and (min-width: 1201px) {
+  .doctor-detail-container {
+    padding: 82px 70px 20px;
+  }
   .content-intro {
     .avatar-doctor {
       img {

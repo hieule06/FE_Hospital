@@ -7,6 +7,8 @@ import "./DoctorDetail.scss";
 import { LANGUAGES } from "../../../../utils";
 import Footer from "../../Section/Footer/Footer";
 import DoctorSchedule from "./DoctorSchedule";
+import DoctorExtrainfor from "./DoctorExtrainfor";
+import BookingModal from "./Modal/BookingModal";
 
 class DoctorDetail extends Component {
   constructor(props) {
@@ -14,8 +16,23 @@ class DoctorDetail extends Component {
     this.state = {
       detailDoctor: {},
       currentDoctorId: -1,
+      isModalOpen: false,
+      objDate: -1,
     };
   }
+
+  handleShowModal = (value) => {
+    this.setState({ isModalOpen: true, objDate: value });
+  };
+
+  handleOk = () => {
+    this.setState({ isModalOpen: false });
+  };
+
+  handleCancel = () => {
+    this.setState({ isModalOpen: false });
+  };
+
   async componentDidMount() {
     if (
       this.props.match &&
@@ -38,32 +55,60 @@ class DoctorDetail extends Component {
 
   render() {
     const { detailDoctor } = this.state;
-    const nameVN = detailDoctor
-      ? `${detailDoctor.lastName} ${detailDoctor.firstName}`
-      : "";
-    const nameEN = detailDoctor
-      ? `${detailDoctor.firstName} ${detailDoctor.lastName}`
-      : "";
+    let nameDoctor;
+    if (
+      detailDoctor &&
+      detailDoctor.positionData &&
+      this.props.language === LANGUAGES.VI
+    ) {
+      nameDoctor = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
+    }
+    if (
+      detailDoctor &&
+      detailDoctor.positionData &&
+      this.props.language === LANGUAGES.EN
+    ) {
+      nameDoctor = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
+    }
     return (
-      <div>
+      <div className="doctor-detail-page">
+        <BookingModal
+          isModalOpen={this.state.isModalOpen}
+          handleOk={this.handleOk}
+          handleCancel={this.handleCancel}
+          detailDoctor={detailDoctor}
+          priceExamination={
+            detailDoctor &&
+            detailDoctor.Markdown &&
+            detailDoctor.Markdown.priceType
+          }
+          objDate={this.state.objDate}
+        />
         <HeaderHome />
         <div className="doctor-detail-container">
           <div className="intro-doctor">
             <div className="content-intro">
-              <div className="avatar-doctor">
-                <img
+              <div
+                className="avatar-doctor"
+                style={{
+                  backgroundImage: `url(${
+                    detailDoctor && detailDoctor.image
+                      ? detailDoctor.image
+                      : noImage
+                  })`,
+                }}
+              >
+                {/*  <img
                   src={
                     detailDoctor && detailDoctor.image
                       ? detailDoctor.image
                       : noImage
                   }
                   alt=""
-                />
+                /> */}
               </div>
               <div className="preliminary-information">
-                <h3>
-                  {this.props.language === LANGUAGES.VI ? nameVN : nameEN}
-                </h3>
+                <h3>{nameDoctor}</h3>
                 <p>
                   {detailDoctor.Markdown
                     ? detailDoctor.Markdown.description
@@ -73,7 +118,22 @@ class DoctorDetail extends Component {
             </div>
           </div>
           <div className="schedule-doctor">
-            <DoctorSchedule />
+            <DoctorSchedule
+              idDoctor={this.props.match.params.id}
+              handleShowModal={this.handleShowModal}
+            />
+            <DoctorExtrainfor
+              priceExamination={
+                detailDoctor &&
+                detailDoctor.Markdown &&
+                detailDoctor.Markdown.priceType
+              }
+              noteText={
+                detailDoctor &&
+                detailDoctor.Markdown &&
+                detailDoctor.Markdown.noteText
+              }
+            />
           </div>
           <div className="detail-infor-doctor">
             {detailDoctor.Markdown && detailDoctor.Markdown.contentHTML && (

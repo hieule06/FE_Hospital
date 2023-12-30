@@ -1,0 +1,55 @@
+.doctor-schedule-container {
+  flex-basis: 50%;
+  border-right: 2px solid #e7e7e7;
+  margin: 0 16px;
+}
+
+.select-date {
+  margin-bottom: 15px;
+
+  .ant-select-selector {
+    padding: 0px 20px !important;
+
+    .ant-select-selection-item {
+      color: blue;
+      font-weight: 600;
+    }
+  }
+}
+
+.ant-select-item.ant-select-item-option.ant-select-item-option-active {
+  color: blue;
+  font-weight: 600;
+}
+
+.icon-calendar {
+  font-size: 18px;
+}
+.title-medical-schedule {
+  font-size: 18px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+.detail-schedule {
+  margin-bottom: 15px;
+
+  span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 116px;
+    padding: 10px 16px;
+    margin: 10px 16px 0 0;
+    background-color: yellow;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgb(221, 221, 0);
+    }
+  }
+}
+
+.suggest-choose-schedule {
+  margin-bottom: 15px;
+}

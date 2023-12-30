@@ -58,11 +58,15 @@
   border-radius: 4px;
   margin: 0 20px 20px 0;
   font-size: 14px;
-  float: left;
+  float: right;
 
   i {
     margin: 0 6px 4px 0;
   }
+}
+
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
 }
 
 .modal-header {

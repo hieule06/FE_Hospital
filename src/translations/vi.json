@@ -94,10 +94,13 @@
     },
     "extra-infor-doctor": {
       "text-address": "Địa chỉ khám",
+      "hospital-address": "Bệnh viện Quốc tế Hải Phòng",
+      "detail-address": "124 Nguyễn Đức Cảnh, Cát Dài, Q Lê Chân, Hải Phòng",
       "price": "Giá khám",
       "payment": "Người bệnh có thể tri trả hành thức: ",
       "see-dentail": "Xem chi tiết",
-      "hide": "Ẩn bảng giá"
+      "hide": "Ẩn bảng giá",
+      "payments": "Phòng khám có thanh toán bằng hình thức tiền mặt và chuyển khoản"
     },
     "booking-modal": {
       "title": "Thông tin đặt lịch khám bệnh",
@@ -119,6 +122,7 @@
     "manage-doctor": "Tạo thêm thông tin Bác sĩ",
     "select-doctor": "Chọn bác sĩ ",
     "intro": "Thông tin giới thiệu",
+    "intro-detail": "Thông tin chi tiết",
     "save": "Lưu thông tin",
     "add": "Tạo thông tin",
     "price": "Giá khám bệnh",

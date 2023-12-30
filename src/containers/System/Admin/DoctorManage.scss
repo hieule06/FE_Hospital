@@ -10,11 +10,11 @@
   width: 100%;
   display: flex;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 .search-user {
-  flex-basis: 30%;
-  margin-right: 30px;
+  flex-basis: 40%;
 
   .ant-select {
     width: 100%;
@@ -27,6 +27,11 @@
     font-size: 16px;
     font-weight: 600;
   }
+}
+
+.wrapper-add-infor-doctor {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .add-infor-doctor {
@@ -49,6 +54,7 @@
 .btn-save-doctor .btn-add-user {
   display: inline-block;
   margin: 20px 0;
+  float: left !important;
 }
 
 .btn-save-doctor .btn-add-user.disable {

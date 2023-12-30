@@ -24,6 +24,9 @@ class DoctorManage extends Component {
     super(props);
     this.state = {
       listDoctors: [],
+      arrPrices: [],
+      priceSelect: "",
+      noteText: "",
       contentMarkDown: "",
       contentHTML: "",
       descriptionDoctor: "",
@@ -45,6 +48,9 @@ class DoctorManage extends Component {
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
+        this.setState({
+          checkIdDoctor: true,
+        });
         return message.success("Lưu thành công !");
       }
     } catch (error) {
@@ -71,6 +77,8 @@ class DoctorManage extends Component {
     const inforDoctor = await getdataDoctor(value);
     if (!inforDoctor.data.inforDoctor) {
       this.setState({
+        priceSelect: "",
+        noteText: "",
         contentMarkDown: "",
         contentHTML: "",
         descriptionDoctor: "",
@@ -83,25 +91,33 @@ class DoctorManage extends Component {
         contentMarkDown: inforDoctor.data.inforDoctor.contentMarkdown,
         contentHTML: inforDoctor.data.inforDoctor.contentHTML,
         descriptionDoctor: inforDoctor.data.inforDoctor.description,
+        priceSelect: inforDoctor.data.inforDoctor.priceType,
+        noteText: inforDoctor.data.inforDoctor.noteText,
         selectDoctor: inforDoctor.data.inforDoctor.doctorId,
         checkIdDoctor: true,
       });
     }
   };
 
+  handleSelectPrice = async (value) => {
+    this.setState({ priceSelect: value });
+  };
+
   buildDataSelectDoctor = (listDoctors) => {
     let result = [];
     let { language } = this.props;
     if (listDoctors && listDoctors.length > 0) {
-      listDoctors.map((item) => {
-        const obj = {};
-        const nameDoctor =
-          language === LANGUAGES.VI
-            ? `${item.lastName} ${item.firstName}`
-            : `${item.firstName} ${item.lastName}`;
-        obj.label = nameDoctor;
-        obj.value = item.id;
-        result.push(obj);
+      listDoctors.map((item, idx) => {
+        if (idx === 0 || listDoctors[idx - 1].id !== item.id) {
+          const obj = {};
+          const nameDoctor =
+            language === LANGUAGES.VI
+              ? `${item.lastName} ${item.firstName}`
+              : `${item.firstName} ${item.lastName}`;
+          obj.label = nameDoctor;
+          obj.value = item.id;
+          result.push(obj);
+        }
       });
     }
     return result;
@@ -109,9 +125,26 @@ class DoctorManage extends Component {
 
   async componentDidMount() {
     this.props.fetchAllDoctorStart();
+    this.props.fetchPriceStart();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const dataPrices = this.props.prices;
+    const arrPrice = [];
+    if (
+      prevProps.prices !== arrPrice ||
+      prevProps.allDoctors !== this.props.allDoctors
+    ) {
+      dataPrices.map((item) => {
+        const object = {};
+        object.label =
+          this.props.language === LANGUAGES.VI ? item.valueVi : item.valueEn;
+        object.value = item.keyMap;
+
+        arrPrice.push(object);
+      });
+    }
+
     if (
       prevProps.allDoctors !== this.props.allDoctors ||
       prevProps.language !== this.props.language
@@ -119,6 +152,7 @@ class DoctorManage extends Component {
       const dataSelect = this.buildDataSelectDoctor(this.props.allDoctors);
       this.setState({
         listDoctors: dataSelect,
+        arrPrices: arrPrice,
       });
     }
   }
@@ -135,13 +169,24 @@ class DoctorManage extends Component {
               <FormattedMessage id={"admin.select-doctor"} />
             </p>
             <Select
-              allowClear
-              showSearch
               placeholder="Select a person"
               onChange={(value) => this.handleSelectDoctor(value)}
               options={this.state.listDoctors}
             />
           </div>
+          <div className="medical-examination-price search-user">
+            <p>
+              <FormattedMessage id={"admin.price"} />
+            </p>
+            <Select
+              value={this.state.priceSelect}
+              placeholder="Select price"
+              onChange={(value) => this.handleSelectPrice(value)}
+              options={this.state.arrPrices}
+            />
+          </div>
+        </div>
+        <div className="wrapper-add-infor-doctor">
           <div className="add-infor-doctor">
             <p>
               <FormattedMessage id={"admin.intro"} />
@@ -155,11 +200,30 @@ class DoctorManage extends Component {
             />
           </div>
         </div>
-        <MdEditor
-          renderHTML={(text) => mdParser.render(text)}
-          onChange={this.handleEditorChange}
-          value={this.state.contentMarkDown}
-        />
+        <div className="wrapper-notes-infor-doctor wrapper-add-infor-doctor">
+          <div className="notes-infor-doctor add-infor-doctor">
+            <p>
+              <FormattedMessage id={"admin.note"} />
+            </p>
+            <TextArea
+              rows={2}
+              onChange={(e) => this.setState({ noteText: e.target.value })}
+              value={this.state.noteText}
+            />
+          </div>
+        </div>
+        <div className="wrapper-add-infor-doctor">
+          <div className="add-infor-doctor">
+            <p>
+              <FormattedMessage id={"admin.intro-detail"} />
+            </p>
+            <MdEditor
+              renderHTML={(text) => mdParser.render(text)}
+              onChange={this.handleEditorChange}
+              value={this.state.contentMarkDown}
+            />
+          </div>
+        </div>
         <div className="btn-save-doctor">
           <button
             className={
@@ -195,12 +259,14 @@ const mapStateToProps = (state) => {
   return {
     allDoctors: state.doctor.allDoctors,
     language: state.app.language,
+    prices: state.admin.prices,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllDoctorStart: () => dispatch(actions.fetchAllDoctorStart()),
+    fetchPriceStart: () => dispatch(actions.fetchPriceStart()),
   };
 };
 

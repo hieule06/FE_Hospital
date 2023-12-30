@@ -8,9 +8,6 @@ import { LANGUAGES } from "../../../../utils";
 import noImage from "../../../../assets/images/no-image.png";
 
 class Specialty extends Component {
-  async componentDidMount() {
-    this.props.fetchDataDoctorStart();
-  }
   render() {
     const listDataDoctors = this.props.dataDoctors;
     return (
@@ -40,11 +37,14 @@ class Specialty extends Component {
                     : `${item.firstName + " " + item.lastName}`;
                 return (
                   <div className="card">
-                    <img
+                    <div
                       className="product--image"
-                      src={imgDoctor ? imgDoctor : noImage}
-                      alt=""
-                    />
+                      style={{
+                        backgroundImage: `url(${
+                          imgDoctor ? imgDoctor : noImage
+                        })`,
+                      }}
+                    ></div>
                     <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
                     <p className="title-specialty">Cơ xương khớp</p>
                   </div>
@@ -60,16 +60,13 @@ class Specialty extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dataDoctors: state.doctor.dataDoctors,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchDataDoctorStart: () => dispatch(actions.fetchDataDoctorStart()),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Specialty);

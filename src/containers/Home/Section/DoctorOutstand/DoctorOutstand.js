@@ -12,13 +12,8 @@ import { withRouter } from "react-router";
 
 class DoctorOutstand extends Component {
   handleViewDetailDoctor = (inforDoctor) => {
-    console.log("first: ", inforDoctor);
     this.props.history.push(`/detail-doctor/${inforDoctor.id}`);
   };
-
-  async componentDidMount() {
-    this.props.fetchDataDoctorStart();
-  }
 
   render() {
     const listDataDoctors = this.props.dataDoctors;
@@ -52,11 +47,19 @@ class DoctorOutstand extends Component {
                     className="card"
                     onClick={() => this.handleViewDetailDoctor(item)}
                   >
-                    <img
+                    <div
+                      className="product--image"
+                      style={{
+                        backgroundImage: `url(${
+                          imgDoctor ? imgDoctor : noImage
+                        })`,
+                      }}
+                    ></div>
+                    {/* <img
                       className="product--image"
                       src={imgDoctor ? imgDoctor : noImage}
                       alt=""
-                    />
+                    /> */}
                     <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
                     <p className="title-specialty">Cơ xương khớp</p>
                   </div>
@@ -72,16 +75,13 @@ class DoctorOutstand extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    dataDoctors: state.doctor.dataDoctors,
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchDataDoctorStart: () => dispatch(actions.fetchDataDoctorStart()),
-  };
+  return {};
 };
 
 export default withRouter(

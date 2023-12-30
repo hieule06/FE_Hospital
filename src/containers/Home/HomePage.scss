@@ -273,8 +273,15 @@
   }
 }
 
+.product--image {
+  width: 60%;
+  height: 60%;
+  background-size: cover;
+  border-radius: 50%;
+}
+
 .name-doctor {
-  margin-bottom: 0;
+  margin: 10px 0 0 0;
 }
 
 .title-specialty {

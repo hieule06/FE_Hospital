@@ -78,6 +78,31 @@ export const fetchPositionFail = () => ({
   type: actionTypes.FETCH_POSITION_FAIL,
 });
 
+export const fetchPriceStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const dataPrice = await getRegulation("PRICE");
+      if (dataPrice && dataPrice.data.dataRegulation.errCode === 0) {
+        dispatch(fetchPriceSuccess(dataPrice.data.dataRegulation.data));
+      } else {
+        dispatch(fetchPriceFail());
+      }
+    } catch (error) {
+      dispatch(fetchPriceFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchPriceSuccess = (priceData) => ({
+  type: actionTypes.FETCH_PRICE_SUCCESS,
+  priceData: priceData,
+});
+
+export const fetchPriceFail = () => ({
+  type: actionTypes.FETCH_PRICE_FAIL,
+});
+
 export const fetchScheduleHourStart = () => {
   return async (dispatch, getState) => {
     try {

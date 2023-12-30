@@ -94,10 +94,13 @@
     },
     "extra-infor-doctor": {
       "text-address": "Address examination",
-      "price": "Examination price",
+      "hospital-address": "Hai Phong International Hospital",
+      "detail-address": "124 Nguyen Đuc Canh, Cat Dai, Q Le Chan, Hai Phong",
+      "price": "Price",
       "payment": "Patients can pay for: ",
       "see-dentail": "See details",
-      "hide": "Hide price list"
+      "hide": "Hide price list",
+      "payments": "The clinic accepts payment in cash and bank transfer"
     },
     "booking-modal": {
       "title": "Information to book a medical appointment",
@@ -119,6 +122,7 @@
     "manage-doctor": "Create more Doctor information",
     "select-doctor": "Choose a doctor",
     "intro": "Introduction information",
+    "intro-detail": "Detail information",
     "save": "Save infor",
     "add": "Create infor",
     "price": "Medical examination price",
