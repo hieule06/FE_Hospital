@@ -13,7 +13,8 @@ import {
 import { path } from "../utils";
 
 import Home from "../routes/Home";
-import Login from "./Auth/Login";
+import LoginRedirect from "./Auth/LoginRedirect";
+import Login from "../routes/Login";
 import System from "../routes/System";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
@@ -21,6 +22,8 @@ import ConfirmModal from "../components/ConfirmModal";
 import "./App.scss";
 import HomePage from "./Home/HomePage";
 import DoctorDetail from "./Home/InformationDetail/Doctor/DoctorDetail";
+import ManageSpecialty from "./System/Specialty/ManageSpecialty";
+import VerifyEmail from "./Home/InformationDetail/VerifyEmail";
 import Doctor from "../routes/Doctor";
 
 class App extends Component {
@@ -51,20 +54,14 @@ class App extends Component {
             <div className={"content-container-patient"}>
               <Switch>
                 <Route path={path.HOME} exact component={Home} />
-                <Route
-                  path={path.LOGIN}
-                  component={userIsNotAuthenticated(Login)}
-                />
-                <Route
-                  path={path.SYSTEM}
-                  component={userIsAuthenticated(System)}
-                />
-                <Route
-                  path={path.DOCTOR}
-                  component={userIsAuthenticated(Doctor)}
-                />
+                <Route path={path.LOGIN} component={Login} />
+                <Route path={path.LOGIN_REDIRECT} component={LoginRedirect} />
+                <Route path={path.SYSTEM} component={System} />
+                <Route path={path.DOCTOR} component={Doctor} />
+                <Route path={path.SPECIALTY} component={ManageSpecialty} />
                 <Route path={path.HOME_PAGE} component={HomePage} />
                 <Route path={path.DETAIL_DOCTOR} component={DoctorDetail} />
+                <Route path={path.VERIFY_BOOKING} component={VerifyEmail} />
               </Switch>
             </div>
 

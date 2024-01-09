@@ -41,6 +41,7 @@ class Header extends Component {
   render() {
     const { processLogout } = this.props;
     const { userInfo } = this.props;
+    console.log("userInfo: ", userInfo);
     return (
       <Layout className="wrapper-sidebar">
         <Sider className="sidebar" collapsed={this.state.collapsed}>
@@ -56,7 +57,7 @@ class Header extends Component {
                   : ""}
               </h5>
             </Menu.Item>
-            {userInfo.roleId === "R2" ? (
+            {userInfo && userInfo.roleId && userInfo.roleId === "R2" ? (
               <Menu.SubMenu
                 key={"home"}
                 icon={<SettingOutlined />}
@@ -95,7 +96,9 @@ class Header extends Component {
                   <FormattedMessage id={"menu.admin.clinic"} />
                 </Menu.Item> */}
                 <Menu.Item key={"specialty"} icon={<ContainerOutlined />}>
-                  <FormattedMessage id={"menu.admin.specialty"} />
+                  <Link to="/specialty">
+                    <FormattedMessage id={"menu.admin.specialty"} />
+                  </Link>
                 </Menu.Item>
                 <Menu.Item key={"handbook"} icon={<DesktopOutlined />}>
                   <FormattedMessage id={"menu.admin.handbook"} />
@@ -139,7 +142,9 @@ class Header extends Component {
               icon={<LoginOutlined />}
               onClick={processLogout}
             >
-              <FormattedMessage id={"menu.admin.logout"} />
+              <Link to="/login-redirect">
+                <FormattedMessage id={"menu.admin.logout"} />
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>

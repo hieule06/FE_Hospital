@@ -5,9 +5,10 @@ import { push } from "connected-react-router";
 import * as actions from "../../store/actions";
 import { handleLogin } from "../../services/userService";
 
-import "./Login.scss";
+import "./LoginRedirect.scss";
+import { withRouter } from "react-router";
 
-class Login extends Component {
+class LoginRedirect extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +40,11 @@ class Login extends Component {
       }
       if (data.data.errCode === 0) {
         this.props.userLoginSuccess(data.data.user);
+        data.data.user &&
+        data.data.user.roleId &&
+        data.data.user.roleId === "R2"
+          ? this.props.history.push(`/doctor/schedule-manage`)
+          : this.props.history.push(`/system/user-manage`);
       }
     } catch (error) {
       console.log("error: ", error);
@@ -130,4 +136,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(LoginRedirect)
+);
