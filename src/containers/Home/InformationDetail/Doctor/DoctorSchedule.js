@@ -53,13 +53,15 @@ class DoctorSchedule extends Component {
         "timeType"
       );
 
+      console.log("hhh: ", arrAllAvalableTimeFirst);
+
       const arrDatePeriod = this.props.times
         ? this.props.times
             .filter((item) => arrAllAvalableTimeFirst.includes(item.keyMap))
             .map((itemDate) =>
               this.props.language === LANGUAGES.VI
-                ? itemDate.valueVi
-                : itemDate.valueEn
+                ? { timeSelected: itemDate.valueVi, keyMap: itemDate.keyMap }
+                : { timeSelected: itemDate.valueEn, keyMap: itemDate.keyMap }
             )
         : [];
       return arrDatePeriod;
@@ -145,7 +147,7 @@ class DoctorSchedule extends Component {
                       })
                     }
                   >
-                    {item}
+                    {item.timeSelected}
                   </span>
                 );
               })

@@ -77,6 +77,7 @@ class DoctorDetail extends Component {
           handleOk={this.handleOk}
           handleCancel={this.handleCancel}
           detailDoctor={detailDoctor}
+          currentDoctorId={this.state.currentDoctorId}
           priceExamination={
             detailDoctor &&
             detailDoctor.Markdown &&

@@ -36,6 +36,14 @@ const getdataDoctorSchedule = (listFilter) => {
   });
 };
 
+const postAppointmentBook = (dataAppointment) => {
+  return axios.post("/api/patient-book-appointment", dataAppointment);
+};
+
+const postVerifyBookAppoinment = (data) => {
+  return axios.post(`/api/verify-book-appoinment`, data);
+};
+
 export {
   getDataDoctors,
   getAllDoctors,
@@ -45,4 +53,6 @@ export {
   getdataDoctorShowPage,
   bulkCreateSchedule,
   getdataDoctorSchedule,
+  postAppointmentBook,
+  postVerifyBookAppoinment,
 };
