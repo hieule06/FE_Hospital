@@ -66,7 +66,9 @@ class UserManage extends Component {
         const result = await createUser(data);
         this.toggle();
         if (result.data.errCode === 1) {
-          return message.error("email đã tồn tại!");
+          return message.error(
+            "Email đã tồn tại. Vui lòng nhập email khác để tạo mới người dùng !"
+          );
         }
         if (result.data.newUser.errCode === 0) {
           message.success("Lưu thành công!");

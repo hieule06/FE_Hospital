@@ -39,8 +39,8 @@ class ManageSchedule extends Component {
             doctorId: this.state.selectedDoctor,
           };
         });
-        await bulkCreateSchedule(listSchedule);
         message.success("Lưu thành công !");
+        await bulkCreateSchedule(listSchedule);
       }
     } catch (error) {
       message.error("Thất bại!");
