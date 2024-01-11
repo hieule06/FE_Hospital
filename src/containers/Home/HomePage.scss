@@ -278,6 +278,11 @@
   height: 60%;
   background-size: cover;
   border-radius: 50%;
+  background-position: center;
+}
+
+.image-specialty {
+  background-size: 195%;
 }
 
 .name-doctor {
@@ -285,7 +290,15 @@
 }
 
 .title-specialty {
+  font-weight: 600;
+  font-size: 16px;
   margin-bottom: 0;
+}
+
+.card-specialty {
+  .title-specialty {
+    margin-top: 10px;
+  }
 }
 
 @media all and (min-width: 1440px) {

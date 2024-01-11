@@ -23,6 +23,12 @@ const getdataDoctorShowPage = (idDoctorSelect) => {
   return axios.get(`/api/get-detail-doctor-by-id?id=${idDoctorSelect}`);
 };
 
+const getListDoctorsByIdSpecialty = (idSpecialty) => {
+  return axios.get(
+    `/api/get-detail-doctor-by-idSpecialty?idSpecialty=${idSpecialty}`
+  );
+};
+
 const bulkCreateSchedule = (listSchedule) => {
   return axios.post("/api/bulk-create-schedule", listSchedule);
 };
@@ -44,6 +50,38 @@ const postVerifyBookAppoinment = (data) => {
   return axios.post(`/api/verify-book-appoinment`, data);
 };
 
+// Page Specialty
+
+const createNewSpecialty = (data) => {
+  return axios.post(`/api/create-new-specialty`, data);
+};
+
+const updateDataSpecialty = (data) => {
+  return axios.post(`/api/update-data-specialty`, data);
+};
+
+const getAllDataSpecialty = () => {
+  return axios.get(`/api/get-all-specialties`);
+};
+
+const getdataSpecialtyShowPage = (idSpecialtySelect) => {
+  return axios.get(`/api/get-detail-specialty-by-id?id=${idSpecialtySelect}`);
+};
+
+// Page Handbook
+
+const createNewHandbook = (data) => {
+  return axios.post(`/api/create-new-handbook`, data);
+};
+
+const updateDataHandbook = (data) => {
+  return axios.post(`/api/update-data-handbook`, data);
+};
+
+const getAllDataHandbook = () => {
+  return axios.get(`/api/get-all-handbook`);
+};
+
 export {
   getDataDoctors,
   getAllDoctors,
@@ -51,8 +89,16 @@ export {
   getdataDoctor,
   updateInforDoctor,
   getdataDoctorShowPage,
+  getListDoctorsByIdSpecialty,
   bulkCreateSchedule,
   getdataDoctorSchedule,
   postAppointmentBook,
   postVerifyBookAppoinment,
+  createNewSpecialty,
+  updateDataSpecialty,
+  getAllDataSpecialty,
+  createNewHandbook,
+  updateDataHandbook,
+  getAllDataHandbook,
+  getdataSpecialtyShowPage,
 };

@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import * as actions from "../../../../store/actions";
 import moment from "moment";
 import localization from "moment/locale/vi";
+import { withRouter } from "react-router";
 
 class ProfileDoctor extends Component {
   constructor(props) {
@@ -36,10 +37,11 @@ class ProfileDoctor extends Component {
               .locale("en")
               .format("ddd - DD/MM/YYYY");
 
-      this.props.getScheduleTimeFrame({
-        scheduleTimeFrame: `${time} - ${date}`,
-        doctorName: this.state.doctorName,
-      });
+      !this.props.isShowProfile &&
+        this.props.getScheduleTimeFrame({
+          scheduleTimeFrame: `${time} - ${date}`,
+          doctorName: this.state.doctorName,
+        });
 
       return (
         <>
@@ -56,6 +58,10 @@ class ProfileDoctor extends Component {
       );
     }
     return <></>;
+  };
+
+  handleViewDetailDoctor = (currentDoctorId) => {
+    this.props.history.push(`/detail-doctor/${currentDoctorId}`);
   };
 
   async componentDidMount() {
@@ -114,10 +120,14 @@ class ProfileDoctor extends Component {
                 /> */}
               </div>
               <div className="wrapper-infor-price">
-                <span className="title-price">
-                  <FormattedMessage id={"patient.extra-infor-doctor.price"} />
-                </span>
-                {listPrices && listPrices.valueVi ? (
+                {!this.props.isShowProfile && (
+                  <span className="title-price">
+                    <FormattedMessage id={"patient.extra-infor-doctor.price"} />
+                  </span>
+                )}
+                {!this.props.isShowProfile &&
+                listPrices &&
+                listPrices.valueVi ? (
                   <span className="count-price">
                     {this.props.language === LANGUAGES.VI
                       ? `: ${listPrices.valueVi.replace(
@@ -127,7 +137,14 @@ class ProfileDoctor extends Component {
                       : `: ${listPrices.valueEn}USD.  `}
                   </span>
                 ) : (
-                  ""
+                  <p
+                    className="title-detail-doctor"
+                    onClick={() =>
+                      this.handleViewDetailDoctor(this.props.currentDoctorId)
+                    }
+                  >
+                    Xem chi tiết
+                  </p>
                 )}
               </div>
             </div>
@@ -135,7 +152,9 @@ class ProfileDoctor extends Component {
               <h3>{this.state.doctorName}</h3>
               {this.props.isShowProfile ? (
                 <p>
-                  {detailDoctor.Markdown
+                  {this.props.description
+                    ? this.props.description
+                    : detailDoctor.Markdown
                     ? detailDoctor.Markdown.description
                     : ""}
                 </p>
@@ -163,4 +182,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileDoctor);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ProfileDoctor)
+);

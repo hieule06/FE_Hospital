@@ -7,30 +7,30 @@ import { FormattedMessage } from "react-intl";
 import { Button, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import "./ManageSpecialty.scss";
+import "./ManageHandBook.scss";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils/constant";
 import { CommonUtils } from "../../../utils";
 import {
-  createNewSpecialty,
-  getAllDataSpecialty,
-  updateDataSpecialty,
+  createNewHandbook,
+  getAllDataHandbook,
+  updateDataHandbook,
 } from "../../../services/doctorService";
 
 const { TextArea } = Input;
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class ManageSpecialty extends Component {
+class ManageHandbook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameSpecialty: "",
-      imgSpecialty: "",
+      nameHandbook: "",
+      imgHandbook: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
-      checkIdSpecialty: false,
-      listSpecialty: [],
+      checkIdHandbook: false,
+      listHandbook: [],
     };
   }
 
@@ -41,14 +41,14 @@ class ManageSpecialty extends Component {
     });
   };
 
-  handleCreateSpecialty = async (data) => {
+  handleCreateHandbook = async (data) => {
     try {
-      const result = await createNewSpecialty(data);
+      const result = await createNewHandbook(data);
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
         this.setState({
-          checkIdSpecialty: true,
+          checkIdHandbook: true,
         });
         return message.success("Lưu thành công !");
       }
@@ -58,9 +58,9 @@ class ManageSpecialty extends Component {
     }
   };
 
-  handleUpdateSpecialty = async (data) => {
+  handleUpdateHandbook = async (data) => {
     try {
-      const result = await updateDataSpecialty(data);
+      const result = await updateDataHandbook(data);
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
@@ -75,17 +75,17 @@ class ManageSpecialty extends Component {
   handleOnchangeImage = async (e) => {
     if (e.file.status !== "removed") {
       const base64 = await CommonUtils.getBase64(e.file);
-      this.setState({ imgSpecialty: base64 });
+      this.setState({ imgHandbook: base64 });
     } else {
-      this.setState({ imgSpecialty: "" });
+      this.setState({ imgHandbook: "" });
     }
   };
 
-  buildDataSelectSpecialty = (listSpecialty) => {
+  buildDataSelectHandbook = (listHandbook) => {
     let result = [];
-    if (listSpecialty && listSpecialty.length > 0) {
-      listSpecialty.map((item, idx) => {
-        if (idx === 0 || listSpecialty[idx - 1].id !== item.id) {
+    if (listHandbook && listHandbook.length > 0) {
+      listHandbook.map((item, idx) => {
+        if (idx === 0 || listHandbook[idx - 1].id !== item.id) {
           const obj = {};
           obj.label = item.name;
           obj.value = item.id;
@@ -96,36 +96,36 @@ class ManageSpecialty extends Component {
     return result;
   };
 
-  handleSelectSpecialty = async (value) => {
-    const allSpecialties = await getAllDataSpecialty();
+  handleSelectHandbook = async (value) => {
+    const allSpecialties = await getAllDataHandbook();
     if (allSpecialties && allSpecialties.data.errCode === 0) {
-      if (allSpecialties.data.AllSpecialty) {
-        const selectedSpecialty = allSpecialties.data.AllSpecialty.find(
+      if (allSpecialties.data.AllHandbook) {
+        const selectedHandbook = allSpecialties.data.AllHandbook.find(
           (item) => {
             return item.id === value;
           }
         );
-        if (!selectedSpecialty) {
+        if (!selectedHandbook) {
           this.setState({
-            nameSpecialty: "",
-            imgSpecialty: "",
+            nameHandbook: "",
+            imgHandbook: "",
             descriptionHTML: "",
             descriptionMarkdown: "",
-            checkIdSpecialty: false,
+            checkIdHandbook: false,
           });
         } else {
           const img =
-            selectedSpecialty.image &&
-            selectedSpecialty.image.data.length >= 0 &&
-            selectedSpecialty.image.type === "Buffer"
-              ? new Buffer(selectedSpecialty.image, "base64").toString("binary")
+            selectedHandbook.image &&
+            selectedHandbook.image.data.length >= 0 &&
+            selectedHandbook.image.type === "Buffer"
+              ? new Buffer(selectedHandbook.image, "base64").toString("binary")
               : "";
           this.setState({
-            nameSpecialty: selectedSpecialty.name,
-            imgSpecialty: img,
-            descriptionHTML: selectedSpecialty.descriptionHTML,
-            descriptionMarkdown: selectedSpecialty.descriptionMarkdown,
-            checkIdSpecialty: true,
+            nameHandbook: selectedHandbook.name,
+            imgHandbook: img,
+            descriptionHTML: selectedHandbook.descriptionHTML,
+            descriptionMarkdown: selectedHandbook.descriptionMarkdown,
+            checkIdHandbook: true,
           });
         }
       }
@@ -133,49 +133,49 @@ class ManageSpecialty extends Component {
   };
 
   async componentDidMount() {
-    this.props.fetchAllSpecialtyStart();
+    this.props.fetchAllHandbookStart();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.allDataSpecialty !== this.props.allDataSpecialty) {
-      const dataSelect = this.buildDataSelectSpecialty(
-        this.props.allDataSpecialty
+    if (prevProps.allDataHandbook !== this.props.allDataHandbook) {
+      const dataSelect = this.buildDataSelectHandbook(
+        this.props.allDataHandbook
       );
       this.setState({
-        listSpecialty: dataSelect,
+        listHandbook: dataSelect,
       });
     }
   }
   render() {
-    console.log("123: ", this.props.allDataSpecialty);
+    console.log("123: ", this.props.allDataHandbook);
     return (
       <div className="wrapper-page-doctor-manage">
         <h2 className="title-page">
-          <FormattedMessage id={"menu.admin.manage-specialty"} />
+          <FormattedMessage id={"menu.admin.manage-handbook"} />
         </h2>
         <div className="wrapper-infor-doctor">
           <div className="search-user">
             <p>
-              <FormattedMessage id={"admin.name-specialty"} />
+              <FormattedMessage id={"admin.name-handbook"} />
             </p>
-            {/* <Input
-              placeholder="Select specialty"
+            <Input
+              placeholder="Select handbook"
               onChange={(e) => {
-                this.setState({ nameSpecialty: e.target.value });
+                this.setState({ nameHandbook: e.target.value });
               }}
-              value={this.state.nameSpecialty}
-            /> */}
-            <Select
-              placeholder="Select specialty"
-              onChange={(value) => {
-                this.handleSelectSpecialty(value);
-              }}
-              options={this.state.listSpecialty}
+              value={this.state.nameHandbook}
             />
+            {/* <Select
+              placeholder="Select handbook"
+              onChange={(value) => {
+                this.handleSelectHandbook(value);
+              }}
+              options={this.state.listHandbook}
+            /> */}
           </div>
           <div className="upload-image search-user">
             <p>
-              <FormattedMessage id={"admin.img-specialty"} />
+              <FormattedMessage id={"admin.img-handbook"} />
             </p>
             <Upload
               action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -184,15 +184,6 @@ class ManageSpecialty extends Component {
                 return false;
               }}
               maxCount={1}
-              fileList={
-                this.state.imgSpecialty === ""
-                  ? []
-                  : [
-                      {
-                        thumbUrl: this.state.imgSpecialty,
-                      },
-                    ]
-              }
               onChange={(e) => this.handleOnchangeImage(e)}
             >
               <Button icon={<UploadOutlined />}>Upload Avatar</Button>
@@ -214,24 +205,24 @@ class ManageSpecialty extends Component {
         <div className="btn-save-doctor">
           <button
             className={
-              this.state.checkIdSpecialty
+              this.state.checkIdHandbook
                 ? "btn-add-user btn btn-primary disable"
                 : "btn-add-user btn btn-primary"
             }
             onClick={() => {
-              this.handleCreateSpecialty(this.state);
+              this.handleCreateHandbook(this.state);
             }}
           >
             <FormattedMessage id={"admin.save"} />
           </button>
           <button
             className={
-              this.state.checkIdSpecialty
+              this.state.checkIdHandbook
                 ? "btn-add-user btn btn-primary"
                 : "btn-add-user btn btn-primary disable"
             }
             onClick={() => {
-              this.handleUpdateSpecialty(this.state);
+              this.handleUpdateHandbook(this.state);
             }}
           >
             Sửa thông tin
@@ -244,15 +235,15 @@ class ManageSpecialty extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    allDataSpecialty: state.doctor.allDataSpecialty,
+    allDataHandbook: state.doctor.allDataHandbook,
     language: state.app.language,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllSpecialtyStart: () => dispatch(actions.fetchAllSpecialtyStart()),
+    fetchAllHandbookStart: () => dispatch(actions.fetchAllHandbookStart()),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSpecialty);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageHandbook);

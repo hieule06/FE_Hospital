@@ -135,7 +135,9 @@
     "clinic": "Chọn phòng khám",
     "img-clinic": "Ảnh phòng khám",
     "name-specialty": "Tên chuyên khoa",
-    "img-specialty": "Ảnh chuyên khoa"
+    "img-specialty": "Ảnh chuyên khoa",
+    "name-handbook": "Tên cẩm nang",
+    "img-handbook": "Ảnh cẩm nang"
   },
   "doctor": {
     "manage-patient": "Quản lí bệnh nhân khám bệnh",

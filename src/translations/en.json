@@ -135,7 +135,9 @@
     "clinic": "Choose clinic",
     "img-clinic": "Clinic photo",
     "name-specialty": "Specialist name",
-    "img-specialty": "Professional photo"
+    "img-specialty": "Professional photo",
+    "name-handbook": "Handbook name",
+    "img-handbook": "Handbook photo"
   },
   "doctor": {
     "manage-patient": "Manage Doctor's patient",

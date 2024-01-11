@@ -13,6 +13,7 @@ import * as actions from "../../store/actions";
 class HomePage extends Component {
   async componentDidMount() {
     this.props.fetchDataDoctorStart();
+    this.props.fetchAllSpecialtyStart();
   }
 
   render() {
@@ -22,8 +23,11 @@ class HomePage extends Component {
         <div className="wrapper-container-home-page">
           <ContainerHomePage />
         </div>
-        <Specialty dataDoctors={this.props.dataDoctors} />
-        <DoctorOutstand dataDoctors={this.props.dataDoctors} />
+        <Specialty allDataSpecialty={this.props.allDataSpecialty} />
+        <DoctorOutstand
+          dataDoctors={this.props.dataDoctors}
+          allDataSpecialty={this.props.allDataSpecialty}
+        />
         <Handbook dataDoctors={this.props.dataDoctors} />
         <div className="wrapper-sections">
           <Introductory />
@@ -37,6 +41,7 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
   return {
     dataDoctors: state.doctor.dataDoctors,
+    allDataSpecialty: state.doctor.allDataSpecialty,
     isLoggedIn: state.user.isLoggedIn,
   };
 };
@@ -44,6 +49,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchDataDoctorStart: () => dispatch(actions.fetchDataDoctorStart()),
+    fetchAllSpecialtyStart: () => dispatch(actions.fetchAllSpecialtyStart()),
   };
 };
 

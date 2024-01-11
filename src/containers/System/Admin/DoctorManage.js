@@ -26,6 +26,7 @@ class DoctorManage extends Component {
       listDoctors: [],
       arrPrices: [],
       priceSelect: "",
+      specialtySelect: "",
       noteText: "",
       contentMarkDown: "",
       contentHTML: "",
@@ -78,6 +79,7 @@ class DoctorManage extends Component {
     if (!inforDoctor.data.inforDoctor) {
       this.setState({
         priceSelect: "",
+        specialtySelect: "",
         noteText: "",
         contentMarkDown: "",
         contentHTML: "",
@@ -92,6 +94,9 @@ class DoctorManage extends Component {
         contentHTML: inforDoctor.data.inforDoctor.contentHTML,
         descriptionDoctor: inforDoctor.data.inforDoctor.description,
         priceSelect: inforDoctor.data.inforDoctor.priceType,
+        specialtySelect: inforDoctor.data.inforDoctor.specialtyId
+          ? inforDoctor.data.inforDoctor.specialtyId
+          : "",
         noteText: inforDoctor.data.inforDoctor.noteText,
         selectDoctor: inforDoctor.data.inforDoctor.doctorId,
         checkIdDoctor: true,
@@ -101,6 +106,10 @@ class DoctorManage extends Component {
 
   handleSelectPrice = async (value) => {
     this.setState({ priceSelect: value });
+  };
+
+  handleSelectSpecialty = async (value) => {
+    this.setState({ specialtySelect: value });
   };
 
   buildDataSelectDoctor = (listDoctors) => {
@@ -123,9 +132,25 @@ class DoctorManage extends Component {
     return result;
   };
 
+  buildDataSelectSpecialty = (listSpecialty) => {
+    let result = [];
+    if (listSpecialty && listSpecialty.length > 0) {
+      listSpecialty.map((item, idx) => {
+        if (idx === 0 || listSpecialty[idx - 1].id !== item.id) {
+          const obj = {};
+          obj.label = item.name;
+          obj.value = item.id;
+          result.push(obj);
+        }
+      });
+    }
+    return result;
+  };
+
   async componentDidMount() {
     this.props.fetchAllDoctorStart();
     this.props.fetchPriceStart();
+    this.props.fetchAllSpecialtyStart();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -149,10 +174,14 @@ class DoctorManage extends Component {
       prevProps.allDoctors !== this.props.allDoctors ||
       prevProps.language !== this.props.language
     ) {
-      const dataSelect = this.buildDataSelectDoctor(this.props.allDoctors);
+      const dataPriceSelect = this.buildDataSelectDoctor(this.props.allDoctors);
+      const dataSpecialtySelect = this.buildDataSelectSpecialty(
+        this.props.allDataSpecialty
+      );
       this.setState({
-        listDoctors: dataSelect,
+        listDoctors: dataPriceSelect,
         arrPrices: arrPrice,
+        listSpecialty: dataSpecialtySelect,
       });
     }
   }
@@ -183,6 +212,19 @@ class DoctorManage extends Component {
               placeholder="Select price"
               onChange={(value) => this.handleSelectPrice(value)}
               options={this.state.arrPrices}
+            />
+          </div>
+        </div>
+        <div className="wrapper-infor-doctor">
+          <div className="medical-examination-price search-user">
+            <p>
+              <FormattedMessage id={"admin.specialty"} />
+            </p>
+            <Select
+              value={this.state.specialtySelect}
+              placeholder="Select specialty"
+              onChange={(value) => this.handleSelectSpecialty(value)}
+              options={this.state.listSpecialty}
             />
           </div>
         </div>
@@ -257,6 +299,7 @@ class DoctorManage extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    allDataSpecialty: state.doctor.allDataSpecialty,
     allDoctors: state.doctor.allDoctors,
     language: state.app.language,
     prices: state.admin.prices,
@@ -267,6 +310,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllDoctorStart: () => dispatch(actions.fetchAllDoctorStart()),
     fetchPriceStart: () => dispatch(actions.fetchPriceStart()),
+    fetchAllSpecialtyStart: () => dispatch(actions.fetchAllSpecialtyStart()),
   };
 };
 

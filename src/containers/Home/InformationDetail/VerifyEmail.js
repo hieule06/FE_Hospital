@@ -29,7 +29,6 @@ class VerifyEmail extends Component {
         token: token,
         doctorId: doctorId,
       });
-      console.log("first123: ", res);
       if (res && res.data.result.errCode === 0) {
         this.setState({
           stateVerify: true,

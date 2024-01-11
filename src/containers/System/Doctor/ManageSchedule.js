@@ -32,7 +32,6 @@ class ManageSchedule extends Component {
       ) {
         return message.error("Các trường chưa điền đủ thông tin !");
       } else {
-        console.log("first: ", this.state);
         const listSchedule = this.state.rangeTime.map((item) => {
           return {
             date: this.state.currentDate,
@@ -40,8 +39,8 @@ class ManageSchedule extends Component {
             doctorId: this.state.selectedDoctor,
           };
         });
-        console.log("listSchedule: ", listSchedule);
         await bulkCreateSchedule(listSchedule);
+        message.success("Lưu thành công !");
       }
     } catch (error) {
       message.error("Thất bại!");
@@ -58,7 +57,7 @@ class ManageSchedule extends Component {
       ) {
         return message.error("Các trường chưa điền đủ thông tin !");
       } else {
-        console.log("first: ", this.state);
+        return message.success("Lưu thành công !");
       }
     } catch (error) {
       message.error("Thất bại!");

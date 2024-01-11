@@ -128,6 +128,20 @@ class ModalCreateUser extends Component {
     }
   }
 
+  handleImg = () => {
+    if (
+      this.props.dataUserEdit.image === "" ||
+      (this.props.dataUserEdit.image.data &&
+        this.props.dataUserEdit.image.data.length <= 0)
+    ) {
+      return "";
+    } else {
+      return new Buffer(this.props.dataUserEdit.image, "base64").toString(
+        "binary"
+      );
+    }
+  };
+
   render() {
     return this.props.isShowModalEdit ? (
       <Modal isOpen={this.props.isOpen} size="lg" centered>
@@ -354,20 +368,11 @@ class ModalCreateUser extends Component {
                           return false;
                         }}
                         maxCount={1}
-                        defaultFileList={
-                          this.props.dataUserEdit.image === "" ||
-                          (this.props.dataUserEdit.image.data &&
-                            this.props.dataUserEdit.image.data.length <= 0)
-                            ? []
-                            : [
-                                {
-                                  thumbUrl: new Buffer(
-                                    this.props.dataUserEdit.image,
-                                    "base64"
-                                  ).toString("binary"),
-                                },
-                              ]
-                        }
+                        defaultFileList={[
+                          {
+                            thumbUrl: this.handleImg(),
+                          },
+                        ]}
                         onChange={(e) => this.handleOnchangeImage(e)}
                       >
                         <Button icon={<UploadOutlined />}>Upload Avatar</Button>

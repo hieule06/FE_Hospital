@@ -6,10 +6,14 @@ import * as actions from "../../../../store/actions";
 import { responsive } from "../../../../utils";
 import { LANGUAGES } from "../../../../utils";
 import noImage from "../../../../assets/images/no-image.png";
+import { withRouter } from "react-router";
 
 class Specialty extends Component {
+  handleViewDetailSpecialty = (idSpecialty) => {
+    this.props.history.push(`/detail-specialty/${idSpecialty}`);
+  };
   render() {
-    const listDataDoctors = this.props.dataDoctors;
+    const listDataSpecialty = this.props.allDataSpecialty;
     return (
       <div className="section-container">
         <div className="offers_container" style={{ height: "100%" }}>
@@ -23,30 +27,25 @@ class Specialty extends Component {
               </button>
             </div>
             <Carousel showDots={false} responsive={responsive}>
-              {listDataDoctors.map((item, idx) => {
+              {listDataSpecialty.map((item, idx) => {
                 const imgDoctor = item.image
                   ? new Buffer(item.image, "base64").toString("binary")
                   : "";
-                const positionDoctor =
-                  this.props.language === LANGUAGES.VI
-                    ? `${item.positionData.valueVi}`
-                    : `${item.positionData.valueEn}`;
-                const nameDoctor =
-                  this.props.language === LANGUAGES.VI
-                    ? `${item.lastName + " " + item.firstName}`
-                    : `${item.firstName + " " + item.lastName}`;
+                const titleSpecialty = item.name;
                 return (
-                  <div className="card">
+                  <div
+                    className="card card-specialty"
+                    onClick={() => this.handleViewDetailSpecialty(item.id)}
+                  >
                     <div
-                      className="product--image"
+                      className="product--image image-specialty"
                       style={{
                         backgroundImage: `url(${
                           imgDoctor ? imgDoctor : noImage
                         })`,
                       }}
                     ></div>
-                    <p className="name-doctor">{`${positionDoctor}, ${nameDoctor}`}</p>
-                    <p className="title-specialty">Cơ xương khớp</p>
+                    <p className="title-specialty">{titleSpecialty}</p>
                   </div>
                 );
               })}
@@ -69,4 +68,6 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Specialty)
+);

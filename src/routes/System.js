@@ -6,6 +6,9 @@ import RegisterPackageGroupOrAcc from "../containers/System/RegisterPackageGroup
 import Header from "../containers/Header/Header";
 import "./System.scss";
 import DoctorManage from "../containers/System/Admin/DoctorManage";
+import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
+import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
+import ManageHandBook from "../containers/System/HandBook/ManageHandBook";
 
 class System extends Component {
   render() {
@@ -17,7 +20,12 @@ class System extends Component {
           <Switch>
             <Route path="/system/user-manage" component={UserManage} />
             <Route path="/system/doctor-manage" component={DoctorManage} />
-            {/* <Route path="/system/schedule-manage" component={DoctorManage} /> */}
+            <Route path="/system/schedule-manage" component={ManageSchedule} />
+            <Route
+              path="/system/specialty-manage"
+              component={ManageSpecialty}
+            />
+            <Route path="/system/handbook-manage" component={ManageHandBook} />
             <Route
               path="/system/register-package-group-or-account"
               component={RegisterPackageGroupOrAcc}

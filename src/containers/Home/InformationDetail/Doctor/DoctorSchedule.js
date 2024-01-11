@@ -53,8 +53,6 @@ class DoctorSchedule extends Component {
         "timeType"
       );
 
-      console.log("hhh: ", arrAllAvalableTimeFirst);
-
       const arrDatePeriod = this.props.times
         ? this.props.times
             .filter((item) => arrAllAvalableTimeFirst.includes(item.keyMap))

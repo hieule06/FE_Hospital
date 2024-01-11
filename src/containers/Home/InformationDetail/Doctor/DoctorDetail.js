@@ -80,8 +80,8 @@ class DoctorDetail extends Component {
           currentDoctorId={this.state.currentDoctorId}
           priceExamination={
             detailDoctor &&
-            detailDoctor.Markdown &&
-            detailDoctor.Markdown.priceType
+            detailDoctor.Infor_Doctor &&
+            detailDoctor.Infor_Doctor.priceType
           }
           objDate={this.state.objDate}
         />
@@ -111,8 +111,8 @@ class DoctorDetail extends Component {
               <div className="preliminary-information">
                 <h3>{nameDoctor}</h3>
                 <p>
-                  {detailDoctor.Markdown
-                    ? detailDoctor.Markdown.description
+                  {detailDoctor.Infor_Doctor
+                    ? detailDoctor.Infor_Doctor.description
                     : ""}
                 </p>
               </div>
@@ -126,24 +126,25 @@ class DoctorDetail extends Component {
             <DoctorExtrainfor
               priceExamination={
                 detailDoctor &&
-                detailDoctor.Markdown &&
-                detailDoctor.Markdown.priceType
+                detailDoctor.Infor_Doctor &&
+                detailDoctor.Infor_Doctor.priceType
               }
               noteText={
                 detailDoctor &&
-                detailDoctor.Markdown &&
-                detailDoctor.Markdown.noteText
+                detailDoctor.Infor_Doctor &&
+                detailDoctor.Infor_Doctor.noteText
               }
             />
           </div>
           <div className="detail-infor-doctor">
-            {detailDoctor.Markdown && detailDoctor.Markdown.contentHTML && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: detailDoctor.Markdown.contentHTML,
-                }}
-              ></div>
-            )}
+            {detailDoctor.Infor_Doctor &&
+              detailDoctor.Infor_Doctor.contentHTML && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: detailDoctor.Infor_Doctor.contentHTML,
+                  }}
+                ></div>
+              )}
           </div>
         </div>
         <Footer />

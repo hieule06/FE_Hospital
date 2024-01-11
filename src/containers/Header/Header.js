@@ -41,7 +41,6 @@ class Header extends Component {
   render() {
     const { processLogout } = this.props;
     const { userInfo } = this.props;
-    console.log("userInfo: ", userInfo);
     return (
       <Layout className="wrapper-sidebar">
         <Sider className="sidebar" collapsed={this.state.collapsed}>
@@ -87,7 +86,7 @@ class Header extends Component {
                     </Link>
                   </Menu.Item>
                   <Menu.Item className="style-title-sub" key={"home4"}>
-                    <Link to="/doctor/schedule-manage">
+                    <Link to="/system/schedule-manage">
                       <FormattedMessage id={"menu.doctor.manage-schedule"} />
                     </Link>
                   </Menu.Item>
@@ -96,12 +95,14 @@ class Header extends Component {
                   <FormattedMessage id={"menu.admin.clinic"} />
                 </Menu.Item> */}
                 <Menu.Item key={"specialty"} icon={<ContainerOutlined />}>
-                  <Link to="/specialty">
+                  <Link to="/system/specialty-manage">
                     <FormattedMessage id={"menu.admin.specialty"} />
                   </Link>
                 </Menu.Item>
                 <Menu.Item key={"handbook"} icon={<DesktopOutlined />}>
-                  <FormattedMessage id={"menu.admin.handbook"} />
+                  <Link to="/system/handbook-manage">
+                    <FormattedMessage id={"menu.admin.handbook"} />
+                  </Link>
                 </Menu.Item>
               </>
             )}

@@ -66,10 +66,10 @@ class BookingModal extends Component {
         });
         this.props.handleCancel();
         return this.props.language === LANGUAGES.VI
-          ? message.success(
+          ? message.error(
               `Bạn đã đặt lịch khám trùng ngày, vui lòng đặt lịch hẹn cho ngày khác !`
             )
-          : message.success(
+          : message.error(
               `You have booked an appointment for the same day, please schedule an appointment for another day !`
             );
       }

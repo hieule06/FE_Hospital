@@ -22,6 +22,7 @@ import ConfirmModal from "../components/ConfirmModal";
 import "./App.scss";
 import HomePage from "./Home/HomePage";
 import DoctorDetail from "./Home/InformationDetail/Doctor/DoctorDetail";
+import SpecialtyDetail from "./Home/InformationDetail/Specialty/SpecialtyDetail";
 import ManageSpecialty from "./System/Specialty/ManageSpecialty";
 import VerifyEmail from "./Home/InformationDetail/VerifyEmail";
 import Doctor from "../routes/Doctor";
@@ -58,9 +59,12 @@ class App extends Component {
                 <Route path={path.LOGIN_REDIRECT} component={LoginRedirect} />
                 <Route path={path.SYSTEM} component={System} />
                 <Route path={path.DOCTOR} component={Doctor} />
-                <Route path={path.SPECIALTY} component={ManageSpecialty} />
                 <Route path={path.HOME_PAGE} component={HomePage} />
                 <Route path={path.DETAIL_DOCTOR} component={DoctorDetail} />
+                <Route
+                  path={path.DETAIL_SPECIALTY}
+                  component={SpecialtyDetail}
+                />
                 <Route path={path.VERIFY_BOOKING} component={VerifyEmail} />
               </Switch>
             </div>

@@ -1,5 +1,10 @@
 import actionTypes from "./actionTypes";
-import { getDataDoctors, getAllDoctors } from "../../services/doctorService";
+import {
+  getDataDoctors,
+  getAllDoctors,
+  getAllDataSpecialty,
+  getAllDataHandbook,
+} from "../../services/doctorService";
 
 export const fetchDataDoctorStart = () => {
   return async (dispatch, getState) => {
@@ -49,4 +54,54 @@ export const fetchAllDoctorSuccess = (allDoctors) => ({
 
 export const fetchAllDoctorFail = () => ({
   type: actionTypes.FETCH_ALL_DOCTOR_FAIL,
+});
+
+export const fetchAllSpecialtyStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const allSpecialties = await getAllDataSpecialty();
+      if (allSpecialties && allSpecialties.data.errCode === 0) {
+        dispatch(fetchAllSpecialtySuccess(allSpecialties.data.AllSpecialty));
+      } else {
+        dispatch(fetchAllSpecialtyFail());
+      }
+    } catch (error) {
+      dispatch(fetchAllSpecialtyFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchAllSpecialtySuccess = (allSpecialties) => ({
+  type: actionTypes.FETCH_ALL_SPECIALTY_SUCCESS,
+  allSpecialties: allSpecialties,
+});
+
+export const fetchAllSpecialtyFail = () => ({
+  type: actionTypes.FETCH_ALL_SPECIALTY_FAIL,
+});
+
+export const fetchAllHandbookStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const allHandbooks = await getAllDataHandbook();
+      if (allHandbooks && allHandbooks.data.errCode === 0) {
+        dispatch(fetchAllHandbookSuccess(allHandbooks.data.AllHandbook));
+      } else {
+        dispatch(fetchAllHandbookFail());
+      }
+    } catch (error) {
+      dispatch(fetchAllHandbookFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchAllHandbookSuccess = (allHandbooks) => ({
+  type: actionTypes.FETCH_ALL_HANDBOOK_SUCCESS,
+  allHandbooks: allHandbooks,
+});
+
+export const fetchAllHandbookFail = () => ({
+  type: actionTypes.FETCH_ALL_HANDBOOK_FAIL,
 });
