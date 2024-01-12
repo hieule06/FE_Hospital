@@ -161,7 +161,10 @@ class ManageHandbook extends Component {
             <Input
               placeholder="Select handbook"
               onChange={(e) => {
-                this.setState({ nameHandbook: e.target.value });
+                this.setState({
+                  checkIdHandbook: false,
+                  nameHandbook: e.target.value,
+                });
               }}
               value={this.state.nameHandbook}
             />

@@ -11,7 +11,9 @@
     "support": "Hỗ trợ",
     "welcome": "Xin chào,",
     "search": "Tìm kiếm",
-    "share": "Hãy chia sẻ Đặt lịch khám Online lên Facebook và like bạn nhé!"
+    "share": "Hãy chia sẻ Đặt lịch khám Online lên Facebook và like bạn nhé!",
+    "handbook": "Cẩm nang",
+    "articles-about-health": "Bài viết về sức khỏe"
   },
   "banner": {
     "title-main": "NỀN TẢNG Y TẾ",
@@ -77,7 +79,10 @@
     "all": "Tất cả bài viết",
     "handbook": "Cẩm nang",
     "health": "Sức khỏe là vàng",
-    "about": "Truyền thông nói gì về giải pháp đặt lịch khám online"
+    "about": "Truyền thông nói gì về giải pháp đặt lịch khám online",
+    "specialty-page": "Các Chuyên Khoa của bệnh viện",
+    "handbook-page": "Các bài viết bổ ích",
+    "doctor-page": "Các bác sĩ của bệnh viện"
   },
   "manage-schedule": {
     "title": "Quản lí kế hoạch khám bệnh của bác sĩ",
@@ -145,7 +150,9 @@
     "time": "Thời gian",
     "name": "Họ tên",
     "address": "Địa chỉ",
+    "phoneNumber": "Số điện thoại",
     "gender": "Giới tính",
+    "status": "Trạng thái",
     "confirm": "Xác nhận",
     "no-data": "Không có lịch hẹn",
     "email": "Email bệnh nhân",

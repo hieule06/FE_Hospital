@@ -147,7 +147,6 @@ class ManageSpecialty extends Component {
     }
   }
   render() {
-    console.log("123: ", this.props.allDataSpecialty);
     return (
       <div className="wrapper-page-doctor-manage">
         <h2 className="title-page">

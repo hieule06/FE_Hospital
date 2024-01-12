@@ -1,0 +1,46 @@
+.specialty-page {
+  .title-specialty-page {
+    text-align: center;
+    margin: 20px 0 40px;
+    font-weight: 600;
+  }
+
+  .wrapper-list-doctor {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    transition: 1s ease;
+
+    &:hover {
+      cursor: pointer;
+      -webkit-transform: scale(1.05);
+      -ms-transform: scale(1.05);
+      transform: scale(1.05);
+      transition: 1s ease;
+    }
+
+    .intro-doctor {
+      width: 50%;
+      margin: 20px 0;
+      padding: 0 20px;
+      border-right: 2px solid #e7e7e7;
+    }
+  }
+}
+
+.title-list-doctors {
+  font-size: 20px;
+  margin: 20px;
+}
+
+.avatar-specialty {
+  margin-right: 30px;
+  min-width: 120px;
+  min-height: 120px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+}

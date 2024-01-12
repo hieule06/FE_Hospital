@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import HeaderHome from "../../HeaderHome";
-import "./SpecialtyDetail.scss";
-import Footer from "../../Section/Footer/Footer";
-import {
-  getListDoctorsByIdSpecialty,
-  getdataSpecialtyShowPage,
-} from "../../../../services/doctorService";
-import DoctorSchedule from "../Doctor/DoctorSchedule";
-import DoctorExtrainfor from "../Doctor/DoctorExtrainfor";
-import BookingModal from "../Doctor/Modal/BookingModal";
-import ProfileDoctor from "../Doctor/ProfileDoctor";
+import HeaderHome from "../HeaderHome";
+import "./DoctorPage.scss";
+import Footer from "../Section/Footer/Footer";
+import * as actions from "../../../store/actions";
+import noImage from "../../../assets/images/no-image.png";
+import { FormattedMessage } from "react-intl";
+import { withRouter } from "react-router";
+import { getListDoctorsByIdSpecialty } from "../../../services/doctorService";
+import BookingModal from "../InformationDetail/Doctor/Modal/BookingModal";
+import ProfileDoctor from "../InformationDetail/Doctor/ProfileDoctor";
+import DoctorSchedule from "../InformationDetail/Doctor/DoctorSchedule";
 
-class SpecialtyDetail extends Component {
+class DoctorPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailSpecialty: {},
-      currentSpecialtyId: -1,
       isModalOpen: false,
       objDate: -1,
       listDoctors: [],
@@ -37,37 +35,18 @@ class SpecialtyDetail extends Component {
   };
 
   async componentDidMount() {
-    if (
-      this.props.match &&
-      this.props.match.params &&
-      this.props.match.params.id
-    ) {
-      let id = this.props.match.params.id;
+    let listDoctors = await getListDoctorsByIdSpecialty("All");
+    if (listDoctors && listDoctors.data.errCode === 0) {
       this.setState({
-        currentSpecialtyId: id,
+        listDoctors: listDoctors.data.listDoctors,
       });
-
-      let listDoctors = await getListDoctorsByIdSpecialty(id);
-      if (listDoctors && listDoctors.data.errCode === 0) {
-        this.setState({
-          listDoctors: listDoctors.data.listDoctors,
-        });
-      }
-
-      let res = await getdataSpecialtyShowPage(id);
-      if (res && res.data.errCode === 0) {
-        this.setState({
-          detailSpecialty: res.data.dataSpecialty,
-        });
-      }
     }
   }
 
   render() {
-    const { detailSpecialty } = this.state;
     const { listDoctors } = this.state;
     return (
-      <div className="doctor-detail-page">
+      <div className="specialty-page doctor-detail-page">
         <BookingModal
           isModalOpen={this.state.isModalOpen}
           handleOk={this.handleOk}
@@ -85,18 +64,9 @@ class SpecialtyDetail extends Component {
         />
         <HeaderHome />
         <div className="doctor-detail-container">
-          <div className="detail-infor-doctor">
-            {detailSpecialty.descriptionHTML && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: detailSpecialty.descriptionHTML,
-                }}
-              ></div>
-            )}
-          </div>
-          <p className="title-list-doctors">
-            Danh sách các bác sĩ chuyên khoa {detailSpecialty.name}:{" "}
-          </p>
+          <h2 className="title-specialty-page">
+            <FormattedMessage id={"homepage.doctor-page"} />
+          </h2>
           {listDoctors &&
             listDoctors.length > 0 &&
             listDoctors.map((item) => {
@@ -128,36 +98,11 @@ class SpecialtyDetail extends Component {
                         dataDoctor={item}
                         handleShowModal={this.handleShowModal}
                       />
-                      {/* <DoctorExtrainfor
-                        priceExamination={
-                          item && item.priceType ? item.priceType : ""
-                        }
-                        noteText={item && item.noteText ? item.noteText : ""}
-                      /> */}
                     </div>
                   </div>
                 </>
               );
             })}
-
-          {/* <div className="schedule-doctor">
-            <DoctorSchedule
-              idDoctor={this.props.match.params.id}
-              handleShowModal={this.handleShowModal}
-            />
-            <DoctorExtrainfor
-              priceExamination={
-                detailDoctor &&
-                detailDoctor.Infor_Doctor &&
-                detailDoctor.Infor_Doctor.priceType
-              }
-              noteText={
-                detailDoctor &&
-                detailDoctor.Infor_Doctor &&
-                detailDoctor.Infor_Doctor.noteText
-              }
-            />
-          </div> */}
         </div>
         <Footer />
       </div>
@@ -168,11 +113,16 @@ class SpecialtyDetail extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    allDataHandbook: state.doctor.allDataHandbook,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    fetchAllHandbookStart: () => dispatch(actions.fetchAllHandbookStart()),
+  };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpecialtyDetail);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DoctorPage)
+);

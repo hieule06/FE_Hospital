@@ -9,6 +9,7 @@ import DoctorManage from "../containers/System/Admin/DoctorManage";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 import ManageHandBook from "../containers/System/HandBook/ManageHandBook";
+import ManagePatient from "../containers/System/Patient/ManagePatient";
 
 class System extends Component {
   render() {
@@ -25,6 +26,7 @@ class System extends Component {
               path="/system/specialty-manage"
               component={ManageSpecialty}
             />
+            <Route path="/system/patient-manage" component={ManagePatient} />
             <Route path="/system/handbook-manage" component={ManageHandBook} />
             <Route
               path="/system/register-package-group-or-account"

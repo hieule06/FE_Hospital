@@ -17,6 +17,7 @@ class DoctorSchedule extends Component {
       listDate: [],
       currentDate: new Date().getTime(),
       allAvalableTime: [],
+      dataDoctor: {},
     };
   }
 
@@ -138,12 +139,13 @@ class DoctorSchedule extends Component {
               this.state.allAvalableTime.map((item) => {
                 return (
                   <span
-                    onClick={() =>
+                    onClick={() => {
                       this.props.handleShowModal({
                         currentDate: this.state.currentDate,
                         avalableTime: item,
-                      })
-                    }
+                        dataDoctor: this.props.dataDoctor,
+                      });
+                    }}
                   >
                     {item.timeSelected}
                   </span>

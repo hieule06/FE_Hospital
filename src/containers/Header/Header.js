@@ -19,6 +19,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions/appActions";
+import { withRouter } from "react-router";
 
 const { Sider } = Layout;
 
@@ -29,6 +30,17 @@ class Header extends Component {
       collapsed: false,
     };
   }
+
+  handleViewPatientManage = (idPage) => {
+    if (idPage === "doctor")
+      this.props.history.push(
+        `/doctor/patient-manage?idDoctor=all&date=${new Date().getTime()}`
+      );
+    if (idPage === "patient")
+      this.props.history.push(
+        `/system/patient-manage?idDoctor=all&date=${new Date().getTime()}`
+      );
+  };
 
   changeLanguage = (language) => {
     this.props.changeLanguageRedux(language);
@@ -62,10 +74,17 @@ class Header extends Component {
                 icon={<SettingOutlined />}
                 title={<FormattedMessage id={"menu.admin.setting-user"} />}
               >
-                <Menu.Item className="style-title-sub" key={"home4"}>
+                <Menu.Item className="style-title-sub" key={"home3"}>
                   <Link to="/doctor/schedule-manage">
                     <FormattedMessage id={"menu.doctor.manage-schedule"} />
                   </Link>
+                </Menu.Item>
+                <Menu.Item
+                  className="style-title-sub"
+                  key={"home4"}
+                  onClick={() => this.handleViewPatientManage("doctor")}
+                >
+                  <FormattedMessage id={"menu.doctor.manage-patient"} />
                 </Menu.Item>
               </Menu.SubMenu>
             ) : (
@@ -80,15 +99,22 @@ class Header extends Component {
                       <FormattedMessage id={"menu.admin.crud"} />
                     </Link>
                   </Menu.Item>
-                  <Menu.Item className="style-title-sub" key={"home3"}>
+                  <Menu.Item className="style-title-sub" key={"home2"}>
                     <Link to="/system/doctor-manage">
                       <FormattedMessage id={"menu.admin.manage-doctor"} />
                     </Link>
                   </Menu.Item>
-                  <Menu.Item className="style-title-sub" key={"home4"}>
+                  <Menu.Item className="style-title-sub" key={"home3"}>
                     <Link to="/system/schedule-manage">
                       <FormattedMessage id={"menu.doctor.manage-schedule"} />
                     </Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    className="style-title-sub"
+                    key={"home4"}
+                    onClick={() => this.handleViewPatientManage("patient")}
+                  >
+                    <FormattedMessage id={"menu.doctor.manage-patient"} />
                   </Menu.Item>
                 </Menu.SubMenu>
                 {/* <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>
@@ -180,4 +206,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

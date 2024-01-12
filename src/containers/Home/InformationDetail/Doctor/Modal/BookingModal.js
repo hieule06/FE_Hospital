@@ -32,6 +32,12 @@ class BookingModal extends Component {
   };
 
   handleAppointmentBook = async (data) => {
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!data.email.match(mailformat)) {
+      return this.props.language === LANGUAGES.VI
+        ? message.error(`Email của bạn sai định dạng. Vui lòng nhập lại !`)
+        : message.error(`Your email is in the wrong format. Please re-enter !`);
+    }
     if (!data.email || !data.fullName || !data.phoneNumber) {
       return this.props.language === LANGUAGES.VI
         ? message.error(
@@ -47,6 +53,7 @@ class BookingModal extends Component {
         patientName: data.fullName,
         phoneNumber: data.phoneNumber,
         address: data.address,
+        gender: data.gender,
         reason: data.reason,
         language: this.props.language,
         scheduleTimeFrame: data.scheduleTimeFrame,
@@ -55,7 +62,7 @@ class BookingModal extends Component {
         email: data.email,
       });
 
-      if (result && !result.data.dataDoctors[1]) {
+      if (result && result.data.dataDoctors && !result.data.dataDoctors[1]) {
         this.setState({
           fullName: "",
           phoneNumber: "",
@@ -71,6 +78,22 @@ class BookingModal extends Component {
             )
           : message.error(
               `You have booked an appointment for the same day, please schedule an appointment for another day !`
+            );
+      }
+
+      if (result && result.data.errCode === 3) {
+        this.setState({
+          fullName: "",
+          phoneNumber: "",
+          email: "",
+          address: "",
+          reason: "",
+          gender: "",
+        });
+        return this.props.language === LANGUAGES.VI
+          ? message.error(`Lịch khám đã đầy, Vui lòng cho thời gian khác !`)
+          : message.error(
+              `Examination schedule is full, please allow another time!`
             );
       }
 

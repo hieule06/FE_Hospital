@@ -1,8 +1,12 @@
 export const path = {
   HOME: "/",
   HOME_PAGE: "/home-page",
+  SPECIALTY_PAGE: "/specialty-page",
+  DOCTOR_PAGE: "/doctor-page",
+  HANDBOOK_PAGE: "/handbook-page",
   DETAIL_DOCTOR: "/detail-doctor/:id",
   DETAIL_SPECIALTY: "/detail-specialty/:id",
+  DETAIL_HANDBOOK: "/detail-handbook/:id",
   LOGIN_REDIRECT: "/login-redirect",
   LOGIN: "/login",
   LOG_OUT: "/logout",

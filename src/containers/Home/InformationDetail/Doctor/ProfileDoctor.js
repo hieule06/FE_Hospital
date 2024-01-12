@@ -66,6 +66,17 @@ class ProfileDoctor extends Component {
 
   async componentDidMount() {
     this.props.fetchPriceStart();
+  }
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.language !== prevProps.language) {
+    }
+  }
+
+  render() {
+    const listPrices = this.props.prices.find(
+      (item) => item.keyMap === this.props.priceExamination
+    );
     const detailDoctor = this.props.detailDoctor;
     let nameDoctor;
     if (
@@ -82,19 +93,6 @@ class ProfileDoctor extends Component {
     ) {
       nameDoctor = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;
     }
-    this.setState({ doctorName: nameDoctor });
-  }
-
-  async componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.language !== prevProps.language) {
-    }
-  }
-
-  render() {
-    const listPrices = this.props.prices.find(
-      (item) => item.keyMap === this.props.priceExamination
-    );
-    const detailDoctor = this.props.detailDoctor;
     return (
       <Fragment>
         <div className="intro-doctor">
@@ -149,7 +147,7 @@ class ProfileDoctor extends Component {
               </div>
             </div>
             <div className="preliminary-information">
-              <h3>{this.state.doctorName}</h3>
+              <h3>{nameDoctor}</h3>
               {this.props.isShowProfile ? (
                 <p>
                   {this.props.description

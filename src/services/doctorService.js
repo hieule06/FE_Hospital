@@ -82,6 +82,25 @@ const getAllDataHandbook = () => {
   return axios.get(`/api/get-all-handbook`);
 };
 
+const getdataHandbookShowPage = (idHandbookSelect) => {
+  return axios.get(`/api/get-detail-handbook-by-id?id=${idHandbookSelect}`);
+};
+
+// Patient Manage
+
+const getDataBooingByDate = (data) => {
+  return axios.get(`/api/get-data-booking-by-date`, {
+    params: {
+      idDoctor: data.idDoctor,
+      date: data.date,
+    },
+  });
+};
+
+const updateStatusBooking = (dataBookingUpdate) => {
+  return axios.post(`/api/update-status-booking`, dataBookingUpdate);
+};
+
 export {
   getDataDoctors,
   getAllDoctors,
@@ -97,8 +116,11 @@ export {
   createNewSpecialty,
   updateDataSpecialty,
   getAllDataSpecialty,
+  getdataSpecialtyShowPage,
   createNewHandbook,
   updateDataHandbook,
   getAllDataHandbook,
-  getdataSpecialtyShowPage,
+  getdataHandbookShowPage,
+  getDataBooingByDate,
+  updateStatusBooking,
 };

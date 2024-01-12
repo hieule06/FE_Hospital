@@ -11,7 +11,9 @@
     "support": "Support",
     "welcome": "Welcome,",
     "search": "Search",
-    "share": "Please share Book an online appointment on Facebook and like!"
+    "share": "Please share Book an online appointment on Facebook and like!",
+    "handbook": "Handbook",
+    "articles-about-health": "Articles about health"
   },
   "banner": {
     "title-main": "MEDICAL BACKGROUND",
@@ -77,7 +79,10 @@
     "all": "All Posts",
     "handbook": "Handbook",
     "health": "Health is wealth",
-    "about": "What does the media say about the online appointment booking solution?"
+    "about": "What does the media say about the online appointment booking solution?",
+    "specialty-page": "Hospital Specialties",
+    "handbook-page": "Useful articles",
+    "doctor-page": "Hospital doctors"
   },
   "manage-schedule": {
     "title": "Manage doctor's examination plan",
@@ -145,7 +150,9 @@
     "time": "Time",
     "name": "FullName",
     "address": "Address",
+    "phoneNumber": "Phone Number",
     "gender": "Gender",
+    "status": "Status",
     "confirm": "Confirm",
     "no-data": "No appointment",
     "email": "Patient email",

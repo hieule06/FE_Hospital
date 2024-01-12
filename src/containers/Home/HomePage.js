@@ -14,6 +14,7 @@ class HomePage extends Component {
   async componentDidMount() {
     this.props.fetchDataDoctorStart();
     this.props.fetchAllSpecialtyStart();
+    this.props.fetchAllHandbookStart();
   }
 
   render() {
@@ -28,7 +29,7 @@ class HomePage extends Component {
           dataDoctors={this.props.dataDoctors}
           allDataSpecialty={this.props.allDataSpecialty}
         />
-        <Handbook dataDoctors={this.props.dataDoctors} />
+        <Handbook allDataHandbook={this.props.allDataHandbook} />
         <div className="wrapper-sections">
           <Introductory />
         </div>
@@ -42,6 +43,7 @@ const mapStateToProps = (state) => {
   return {
     dataDoctors: state.doctor.dataDoctors,
     allDataSpecialty: state.doctor.allDataSpecialty,
+    allDataHandbook: state.doctor.allDataHandbook,
     isLoggedIn: state.user.isLoggedIn,
   };
 };
@@ -50,6 +52,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchDataDoctorStart: () => dispatch(actions.fetchDataDoctorStart()),
     fetchAllSpecialtyStart: () => dispatch(actions.fetchAllSpecialtyStart()),
+    fetchAllHandbookStart: () => dispatch(actions.fetchAllHandbookStart()),
   };
 };
 

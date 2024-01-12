@@ -10,18 +10,27 @@ const itemMenuHeader = [
   {
     title: <FormattedMessage id={"homeheader.specialist"} />,
     description: <FormattedMessage id={"homeheader.searchdoctor"} />,
+    idPage: 1,
   },
   {
     title: <FormattedMessage id={"homeheader.doctor"} />,
     description: <FormattedMessage id={"homeheader.chooseDoctor"} />,
+    idPage: 2,
   },
   {
-    title: <FormattedMessage id={"homeheader.package"} />,
-    description: <FormattedMessage id={"homeheader.General"} />,
+    title: <FormattedMessage id={"homeheader.handbook"} />,
+    description: <FormattedMessage id={"homeheader.articles-about-health"} />,
+    idPage: 3,
   },
 ];
 
 class HeaderHome extends Component {
+  handleViewPage = (idPage) => {
+    if (idPage === 1) this.props.history.push(`/specialty-page`);
+    if (idPage === 2) this.props.history.push(`/doctor-page`);
+    if (idPage === 3) this.props.history.push(`/handbook-page`);
+  };
+
   changeLanguage = (language) => {
     this.props.changeLanguageRedux(language);
   };
@@ -31,9 +40,9 @@ class HeaderHome extends Component {
       <div className="header-page-container">
         <div className="header-page-content">
           <div className="wrapper-header-logo">
-            <div className="icon-bar">
+            {/* <div className="icon-bar">
               <i class="fa fa-bars" aria-hidden="true"></i>
-            </div>
+            </div> */}
             <div
               className="header-logo"
               onClick={() => this.props.history.push(`/home-page`)}
@@ -47,7 +56,10 @@ class HeaderHome extends Component {
           <ul className="wrapper-item-header">
             {itemMenuHeader &&
               itemMenuHeader.map((item) => (
-                <li className="item-header">
+                <li
+                  className="item-header"
+                  onClick={() => this.handleViewPage(item.idPage)}
+                >
                   <h4>{item.title}</h4>
                   <p className="title-item-header">{item.description}</p>
                 </li>
