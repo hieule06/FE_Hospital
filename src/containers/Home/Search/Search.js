@@ -95,7 +95,10 @@ function Search() {
             value={searchValue}
             placeholder="Search accounts and videos"
             spellCheck={false}
-            onChange={handleChangeSearch}
+            onChange={(e) => {
+              handleChangeSearch(e);
+              console.log(123);
+            }}
             onFocus={() => setShowResult(true)}
           />
           {!!searchValue && !loading && (

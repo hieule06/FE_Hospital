@@ -41,7 +41,7 @@ class HandbookPage extends Component {
               <>
                 <div
                   className="wrapper-list-doctor"
-                  onClick={() => this.handleViewDetailSpecialty(item.id)}
+                  onClick={() => this.handleViewDetailHandbook(item.id)}
                 >
                   <div
                     className="avatar-specialty"

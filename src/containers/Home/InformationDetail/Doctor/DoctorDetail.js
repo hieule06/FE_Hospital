@@ -9,6 +9,8 @@ import Footer from "../../Section/Footer/Footer";
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtrainfor from "./DoctorExtrainfor";
 import BookingModal from "./Modal/BookingModal";
+import LikeAndShare from "../../SocailPlugin/LikeAndShare";
+import Comment from "../../SocailPlugin/Comment";
 
 class DoctorDetail extends Component {
   constructor(props) {
@@ -55,6 +57,11 @@ class DoctorDetail extends Component {
 
   render() {
     const { detailDoctor } = this.state;
+    let currentURL =
+      +process.env.REACT_APP_IS_LOCALHOST === 1
+        ? "https://bookingcare.vn/"
+        : window.location.href;
+    console.log("first: ", process.env);
     let nameDoctor;
     if (
       detailDoctor &&
@@ -115,6 +122,9 @@ class DoctorDetail extends Component {
                     ? detailDoctor.Infor_Doctor.description
                     : ""}
                 </p>
+                <div className="like-share-plugin">
+                  <LikeAndShare dataHref={currentURL}></LikeAndShare>
+                </div>
               </div>
             </div>
           </div>
@@ -145,6 +155,9 @@ class DoctorDetail extends Component {
                   }}
                 ></div>
               )}
+          </div>
+          <div className="comment-doctor">
+            <Comment dataHref={currentURL} width={"100%"}></Comment>
           </div>
         </div>
         <Footer />
