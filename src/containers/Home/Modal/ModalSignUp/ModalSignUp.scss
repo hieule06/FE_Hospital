@@ -1,0 +1,60 @@
+@import "../../../../styles/common.scss";
+
+.modal-sign-up {
+  .ant-modal-content {
+    border-radius: 30px;
+    background: linear-gradient(90deg, #020024 0%, #cb23a8 0%, #51a0ff 100%);
+  }
+
+  .ant-modal-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #020024 0%, #cb23a8 0%, #51a0ff 100%);
+    color: #fff;
+  }
+
+  :where(.css-dev-only-do-not-override-1adbn6x).ant-form-vertical
+    .ant-form-item-label
+    > label {
+    color: #fff;
+  }
+
+  .ant-form-item.css-dev-only-do-not-override-1adbn6x {
+    flex-basis: 80% !important;
+  }
+
+  .ant-modal-close-x {
+    color: #fff;
+  }
+
+  .form-group-modal-booking {
+    display: flex;
+    justify-content: center;
+  }
+
+  .error-email {
+    font-weight: 500;
+    color: red;
+    margin: 3px 0 0 0;
+  }
+
+  .disable-error-email {
+    display: none;
+  }
+
+  .btn-sign-up {
+    border: none;
+    background-color: #fff;
+    padding: 5px 45px;
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0068e5;
+    margin-top: 12px;
+
+    &:hover {
+      background-color: #f7d800;
+    }
+  }
+}

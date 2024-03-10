@@ -60,6 +60,12 @@ const updateDataSpecialty = (data) => {
   return axios.post(`/api/update-data-specialty`, data);
 };
 
+const deleteDataSpecialty = (idSpecialty) => {
+  return axios.get(
+    `/api/delete-data-specialty-by-idSpecialty?idSpecialty=${idSpecialty}`
+  );
+};
+
 const getAllDataSpecialty = () => {
   return axios.get(`/api/get-all-specialties`);
 };
@@ -76,6 +82,12 @@ const createNewHandbook = (data) => {
 
 const updateDataHandbook = (data) => {
   return axios.post(`/api/update-data-handbook`, data);
+};
+
+const deleteDataHandbook = (idHandbook) => {
+  return axios.get(
+    `/api/delete-data-handbook-by-idHandbook?idHandbook=${idHandbook}`
+  );
 };
 
 const getAllDataHandbook = () => {
@@ -101,6 +113,51 @@ const updateStatusBooking = (dataBookingUpdate) => {
   return axios.post(`/api/update-status-booking`, dataBookingUpdate);
 };
 
+const deleteBooking = (idBookingDeletes) => {
+  return axios.post(`/api/delete-bookings`, idBookingDeletes);
+};
+
+const getAllBookingHadPatients = (data) => {
+  return axios.get(`/api/get-all-booking-had-patients`, {
+    params: {
+      idDoctor: data.idDoctor,
+      idPatient: data.idPatient,
+      currentDate: data.currentDate,
+    },
+  });
+};
+
+const getAllPatients = () => {
+  return axios.get(`/api/get-all-patients`);
+};
+
+const createHistoryPatient = (data) => {
+  return axios.post(`/api/history-patient`, data);
+};
+
+const getHistoryPatientByIdPatient = (idPatient) => {
+  return axios.get(
+    `/api/get-history-patient-by-idPatient?idPatient=${idPatient}`
+  );
+};
+
+const createBookingReExamination = (data) => {
+  return axios.post(`/api/create-booking-re-examination`, data);
+};
+
+const getBookingReExamination = (data) => {
+  return axios.get(`/api/booking-re-examination`, {
+    params: {
+      patientsId: data.patientsId,
+      currentDate: data.currentDate,
+    },
+  });
+};
+
+const sendEmailReExamination = (data) => {
+  return axios.post(`/api/send-email-re-examination`, data);
+};
+
 export {
   getDataDoctors,
   getAllDoctors,
@@ -115,12 +172,22 @@ export {
   postVerifyBookAppoinment,
   createNewSpecialty,
   updateDataSpecialty,
+  deleteDataSpecialty,
   getAllDataSpecialty,
   getdataSpecialtyShowPage,
   createNewHandbook,
   updateDataHandbook,
+  deleteDataHandbook,
   getAllDataHandbook,
   getdataHandbookShowPage,
   getDataBooingByDate,
   updateStatusBooking,
+  deleteBooking,
+  getAllBookingHadPatients,
+  createHistoryPatient,
+  getHistoryPatientByIdPatient,
+  getAllPatients,
+  createBookingReExamination,
+  getBookingReExamination,
+  sendEmailReExamination,
 };

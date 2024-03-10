@@ -33,33 +33,44 @@ class BookingModal extends Component {
 
   handleAppointmentBook = async (data) => {
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!data.email.match(mailformat)) {
+    /* if (!data.email.match(mailformat)) {
       return this.props.language === LANGUAGES.VI
         ? message.error(`Email của bạn sai định dạng. Vui lòng nhập lại !`)
         : message.error(`Your email is in the wrong format. Please re-enter !`);
-    }
-    if (!data.email || !data.fullName || !data.phoneNumber) {
+    } */
+    if (!data.phoneNumber && !this.props.patientInfo.phoneNumber) {
       return this.props.language === LANGUAGES.VI
-        ? message.error(
-            `Trường "Họ và tên", "Email" và "Số điện thoại" là trường bắt buộc !`
-          )
-        : message.error(
-            `Field "FullName", "Email" và "PhoneNumber" are required fields !`
-          );
+        ? message.error(`Trường "Số điện thoại" là trường bắt buộc !`)
+        : message.error(`Field "PhoneNumber" are required fields !`);
     } else {
       const result = await postAppointmentBook({
         doctorId: this.props.currentDoctorId,
         doctorName: data.doctorName,
-        patientName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        address: data.address,
-        gender: data.gender,
+        patientName:
+          this.props.patientInfo && this.props.patientInfo.lastName
+            ? this.props.patientInfo.lastName
+            : "",
+        phoneNumber:
+          this.props.patientInfo && this.props.patientInfo.phoneNumber
+            ? this.props.patientInfo.phoneNumber
+            : data.phoneNumber,
+        address:
+          this.props.patientInfo && this.props.patientInfo.address
+            ? this.props.patientInfo.address
+            : data.address,
+        gender:
+          this.props.patientInfo && this.props.patientInfo.gender
+            ? this.props.patientInfo.gender
+            : data.gender,
         reason: data.reason,
         language: this.props.language,
         scheduleTimeFrame: data.scheduleTimeFrame,
         date: this.props.objDate.currentDate, // Ngày đặt lịch để lưu trong bảng schedule
         timeType: this.props.objDate.avalableTime.keyMap,
-        email: data.email,
+        email:
+          this.props.patientInfo && this.props.patientInfo.email
+            ? this.props.patientInfo.email
+            : "",
       });
 
       if (result && result.data.dataDoctors && !result.data.dataDoctors[1]) {
@@ -196,7 +207,14 @@ class BookingModal extends Component {
                   <FormattedMessage id={"patient.booking-modal.FullName"} />
                 }
               >
-                <Input value={this.state.fullName} />
+                <Input
+                  disabled
+                  value={
+                    this.props.patientInfo && this.props.patientInfo.lastName
+                      ? this.props.patientInfo.lastName
+                      : ""
+                  }
+                />
               </Form.Item>
               <Form.Item
                 onChange={(e) => {
@@ -206,7 +224,13 @@ class BookingModal extends Component {
                   <FormattedMessage id={"patient.booking-modal.phoneNumber"} />
                 }
               >
-                <Input value={this.state.phoneNumber} />
+                <Input
+                  value={
+                    this.props.patientInfo && this.props.patientInfo.phoneNumber
+                      ? this.props.patientInfo.phoneNumber
+                      : this.state.phoneNumber
+                  }
+                />
               </Form.Item>
             </div>
             <div className="form-group-modal-booking">
@@ -216,7 +240,14 @@ class BookingModal extends Component {
                 }}
                 label={<FormattedMessage id={"patient.booking-modal.email"} />}
               >
-                <Input value={this.state.email} />
+                <Input
+                  disabled
+                  value={
+                    this.props.patientInfo && this.props.patientInfo.email
+                      ? this.props.patientInfo.email
+                      : ""
+                  }
+                />
               </Form.Item>
               <Form.Item
                 onChange={(e) => {
@@ -226,7 +257,13 @@ class BookingModal extends Component {
                   <FormattedMessage id={"patient.booking-modal.address"} />
                 }
               >
-                <Input value={this.state.address} />
+                <Input
+                  value={
+                    this.props.patientInfo && this.props.patientInfo.address
+                      ? this.props.patientInfo.address
+                      : this.state.address
+                  }
+                />
               </Form.Item>
             </div>
 
@@ -251,7 +288,11 @@ class BookingModal extends Component {
                       ? this.state.arrGender
                       : genderArr
                   }
-                  value={this.state.gender}
+                  value={
+                    this.props.patientInfo && this.props.patientInfo.gender
+                      ? this.props.patientInfo.gender
+                      : this.state.gender
+                  }
                 />
               </Form.Item>
             </div>
@@ -291,6 +332,7 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     genders: state.admin.genders,
+    patientInfo: state.user.patientInfo,
   };
 };
 

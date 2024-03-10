@@ -44,7 +44,7 @@ class DoctorPage extends Component {
   }
 
   render() {
-    const { listDoctors } = this.state;
+    const listDoctors = this.state.listDoctors.filter((item) => item.User);
     return (
       <div className="specialty-page doctor-detail-page">
         <BookingModal

@@ -5,6 +5,12 @@ import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions/appActions";
 import { withRouter } from "react-router";
+import ModalSignUp from "./Modal/ModalSignUp/ModalSignUp";
+import ModalLogIn from "./Modal/ModalLogIn/ModalLogIn";
+import { Popover } from "antd";
+import * as actions from "../../store/actions";
+import ModalEditInfo from "./Modal/ModalEditInfo/ModalEditInfo";
+import logoBooking from "../../assets/images/logo4.png";
 
 const itemMenuHeader = [
   {
@@ -25,6 +31,39 @@ const itemMenuHeader = [
 ];
 
 class HeaderHome extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalSignUp: false,
+      isModalModalLogIn: false,
+      isModalEditInfo: false,
+    };
+  }
+
+  handleShowModalSignUp = (value) => {
+    this.setState({ isModalSignUp: true });
+  };
+
+  handleCancelModalSignUp = () => {
+    this.setState({ isModalSignUp: false });
+  };
+
+  handleShowModalLogIn = (value) => {
+    this.setState({ isModalLogIn: true });
+  };
+
+  handleCancelModalLogIn = () => {
+    this.setState({ isModalLogIn: false });
+  };
+
+  handleShowModalEditInfo = (value) => {
+    this.setState({ isModalEditInfo: true });
+  };
+
+  handleCancelModalEditInfo = () => {
+    this.setState({ isModalEditInfo: false });
+  };
+
   handleViewPage = (idPage) => {
     if (idPage === 1) this.props.history.push(`/specialty-page`);
     if (idPage === 2) this.props.history.push(`/doctor-page`);
@@ -38,6 +77,20 @@ class HeaderHome extends Component {
   render() {
     return (
       <div className="header-page-container">
+        <ModalSignUp
+          isModalSignUp={this.state.isModalSignUp}
+          handleCancelModalSignUp={this.handleCancelModalSignUp}
+        />
+
+        <ModalLogIn
+          isModalLogIn={this.state.isModalLogIn}
+          handleCancelModalLogIn={this.handleCancelModalLogIn}
+        />
+
+        <ModalEditInfo
+          isModalEditInfo={this.state.isModalEditInfo}
+          handleCancelModalEditInfo={this.handleCancelModalEditInfo}
+        />
         <div className="header-page-content">
           <div className="wrapper-header-logo">
             {/* <div className="icon-bar">
@@ -48,7 +101,8 @@ class HeaderHome extends Component {
               onClick={() => this.props.history.push(`/home-page`)}
             >
               <img
-                src="https://bookingcare.vn/assets/icon/bookingcare-2020.svg"
+                // src="https://bookingcare.vn/assets/icon/bookingcare-2020.svg"
+                src={logoBooking}
                 alt="BookingCare"
               />
             </div>
@@ -102,6 +156,54 @@ class HeaderHome extends Component {
                 EN
               </span>
             </div>
+            {this.props.isPatientMainLoggedIn ||
+            this.props.isPatientLoggedIn ? (
+              <div>
+                <Popover
+                  content={
+                    <div>
+                      <div
+                        className="btn-logout"
+                        onClick={() => this.props.patientLogout()}
+                      >
+                        Đăng xuất
+                      </div>
+                      <div
+                        className="btn-logout"
+                        onClick={() => this.handleShowModalEditInfo()}
+                      >
+                        Chỉnh sửa thông tin
+                      </div>
+                    </div>
+                  }
+                  trigger="click"
+                >
+                  <span className="wrapper-info-patient">
+                    <i class="fas fa-user"></i>
+                    <span>{this.props.patientInfo.lastName}</span>
+                  </span>
+                </Popover>
+              </div>
+            ) : (
+              <div className="multi-language">
+                <span
+                  className="log-in"
+                  onClick={() => {
+                    this.handleShowModalLogIn();
+                  }}
+                >
+                  <FormattedMessage id={"homeheader.log-in"} />
+                </span>
+                <span
+                  className="sign-up"
+                  onClick={() => {
+                    this.handleShowModalSignUp();
+                  }}
+                >
+                  <FormattedMessage id={"homeheader.sign-up"} />
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -113,12 +215,16 @@ const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
     language: state.app.language,
+    isPatientMainLoggedIn: state.user.isPatientMainLoggedIn,
+    isPatientLoggedIn: state.user.isPatientLoggedIn,
+    patientInfo: state.user.patientInfo,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeLanguageRedux: (language) => dispatch(changeLanguageApp(language)),
+    patientLogout: () => dispatch(actions.patientLogout()),
   };
 };
 

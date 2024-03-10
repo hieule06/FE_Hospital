@@ -20,9 +20,17 @@ const editUser = (dataUser) => {
   return axios.post("/api/put-edit-user", dataUser);
 };
 
+const checkPatientMainLogin = (idPatient) => {
+  return axios.get(`/api/patient-main-login?idPatient=${idPatient}`);
+};
+
 const getRegulation = (type) => {
   return axios.get(`/api/get-regulation?type=${type}`);
 };
+
+/* const createPDF = (name) => {
+  return axios.get(`/generate-pdf`, name);
+}; */
 
 export {
   handleLogin,
@@ -30,5 +38,7 @@ export {
   deleteUser,
   createUser,
   editUser,
+  checkPatientMainLogin,
   getRegulation,
+  // createPDF,
 };

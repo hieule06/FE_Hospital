@@ -12,16 +12,14 @@ import { withRouter } from "react-router";
 class ProfileDoctor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      doctorName: "",
-    };
+    this.state = {};
   }
 
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  renderTimeBooking = () => {
+  renderTimeBooking = (nameDoctor) => {
     let date;
     if (this.props.objDate) {
       let time = this.props.objDate.avalableTime.timeSelected;
@@ -40,7 +38,7 @@ class ProfileDoctor extends Component {
       !this.props.isShowProfile &&
         this.props.getScheduleTimeFrame({
           scheduleTimeFrame: `${time} - ${date}`,
-          doctorName: this.state.doctorName,
+          doctorName: nameDoctor,
         });
 
       return (
@@ -157,7 +155,7 @@ class ProfileDoctor extends Component {
                     : ""}
                 </p>
               ) : (
-                <>{this.renderTimeBooking()}</>
+                <>{this.renderTimeBooking(nameDoctor)}</>
               )}
             </div>
           </div>

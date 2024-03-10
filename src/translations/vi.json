@@ -13,7 +13,10 @@
     "search": "Tìm kiếm",
     "share": "Hãy chia sẻ Đặt lịch khám Online lên Facebook và like bạn nhé!",
     "handbook": "Cẩm nang",
-    "articles-about-health": "Bài viết về sức khỏe"
+    "articles-about-health": "Bài viết về sức khỏe",
+    "log-in": "Đăng nhập",
+    "sign-up": "Đăng ký",
+    "edit": "Chỉnh sửa thông tin"
   },
   "banner": {
     "title-main": "NỀN TẢNG Y TẾ",
@@ -32,22 +35,23 @@
     "admin": {
       "setting-user": "Thiết lập người dùng",
       "manage-user": "Người dùng",
-      "manage-doctor": "Quản lí bác sĩ",
-      "manage-admin": "Quản lí admin",
-      "crud": "CRUD user",
-      "crud-redux": "CRUD user (redux)",
+      "manage-doctor": "Quản lý bác sĩ",
+      "manage-admin": "Quản lý admin",
+      "crud": "Quản lý người dùng",
+      "crud-redux": "Quản lý người dùng (redux)",
       "clinic": "Phòng khám",
-      "manage-clinic": "Quản lí phòng khám",
+      "manage-clinic": "Quản lý phòng khám",
       "specialty": "Chuyên khoa",
-      "manage-specialty": "Quản lí chuyên khoa",
+      "manage-specialty": "Quản lý chuyên khoa",
       "handbook": "Cẩm nang",
-      "manage-handbook": "Quản lí cẩm nang",
+      "manage-handbook": "Quản lý cẩm nang",
       "language": "Ngôn ngữ",
       "logout": "Đăng xuất"
     },
     "doctor": {
-      "manage-schedule": "Quản lí kế hoạch khám bệnh",
-      "manage-patient": "Quản lí bệnh nhân khám bệnh"
+      "manage-schedule": "Quản lý kế hoạch khám bệnh",
+      "manage-patient": "Quản lý bệnh nhân khám bệnh",
+      "manage-history-patient": "Quản lý lịch sử khám bệnh"
     }
   },
   "manage-user": {
@@ -85,8 +89,9 @@
     "doctor-page": "Các bác sĩ của bệnh viện"
   },
   "manage-schedule": {
-    "title": "Quản lí kế hoạch khám bệnh của bác sĩ",
+    "title": "Quản lý kế hoạch khám bệnh của bác sĩ",
     "choose-doctor": "Chọn bác sĩ",
+    "choose-patient": "Chọn bệnh nhân",
     "choose-date": "Chọn ngày",
     "save": "Lưu thông tin"
   },
@@ -140,12 +145,14 @@
     "clinic": "Chọn phòng khám",
     "img-clinic": "Ảnh phòng khám",
     "name-specialty": "Tên chuyên khoa",
+    "add-specialty": "Thêm chuyên khoa",
     "img-specialty": "Ảnh chuyên khoa",
-    "name-handbook": "Tên cẩm nang",
+    "add-handbook": "Thêm cẩm nang",
+    "name-handbook": "Chọn cẩm nang",
     "img-handbook": "Ảnh cẩm nang"
   },
   "doctor": {
-    "manage-patient": "Quản lí bệnh nhân khám bệnh",
+    "manage-patient": "Quản lý bệnh nhân khám bệnh",
     "choose-date": "Chọn ngày khám",
     "time": "Thời gian",
     "name": "Họ tên",
@@ -159,7 +166,10 @@
     "file": "Chọn file đơn thuốc",
     "send": "Gửi",
     "cancel": "Hủy",
-    "send-bill": "Gửi hóa đơn khám bệnh"
+    "send-bill": "Gửi hóa đơn khám bệnh",
+    "reExamination": "Nhắc tái khám",
+    "medicalFile": "Bệnh án",
+    "notification": "Bệnh nhân chưa có lịch sử bệnh án !"
   },
   "about": {
     "content": "Đặt lịch khám trực tuyến chính là giải pháp hiệu quả giúp người dân có lịch trình phù hợp, thay vì phải vội vàng, chen chúc đến chờ lượt đặt lịch. Bệnh viện luôn cố gắng nâng cao chất lượng dịch vụ cũng như tạo sử thoải mái khi người dân đến khám. Trước khi đặt lịch khám từ xa, người dân nên tìm hiểu trước thông tin lịch làm việc, thời gian làm việc để thuận tiện sắp xếp lịch khám."
@@ -225,6 +235,8 @@
     },
     "doctor-manage": {
       "doctor-manage": "Tạo thêm thông tin Bác Sĩ"
-    }
+    },
+    "edit-infor": "Sửa thông tin",
+    "delete-specialty": "Xóa chuyên khoa"
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./DoctorSchedule.scss";
-import { Select } from "antd";
+import { Select, notification } from "antd";
 import moment from "moment";
 import localization from "moment/locale/vi";
 import { FormattedMessage } from "react-intl";
@@ -140,11 +140,22 @@ class DoctorSchedule extends Component {
                 return (
                   <span
                     onClick={() => {
-                      this.props.handleShowModal({
-                        currentDate: this.state.currentDate,
-                        avalableTime: item,
-                        dataDoctor: this.props.dataDoctor,
-                      });
+                      if (
+                        this.props.isPatientMainLoggedIn ||
+                        this.props.isPatientLoggedIn
+                      ) {
+                        this.props.handleShowModal({
+                          currentDate: this.state.currentDate,
+                          avalableTime: item,
+                          dataDoctor: this.props.dataDoctor,
+                        });
+                      } else {
+                        notification.warning({
+                          message: `Lưu ý`,
+                          description: "Hãy đăng nhập để đặt lịch khám bệnh!",
+                          placement: "topRight",
+                        });
+                      }
                     }}
                   >
                     {item.timeSelected}
@@ -170,6 +181,9 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     times: state.admin.times,
+    isPatientMainLoggedIn: state.user.isPatientMainLoggedIn,
+    isPatientLoggedIn: state.user.isPatientLoggedIn,
+    patientInfo: state.user.patientInfo,
   };
 };
 

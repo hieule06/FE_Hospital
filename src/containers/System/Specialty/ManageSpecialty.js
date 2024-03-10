@@ -15,6 +15,7 @@ import {
   createNewSpecialty,
   getAllDataSpecialty,
   updateDataSpecialty,
+  deleteDataSpecialty,
 } from "../../../services/doctorService";
 
 const { TextArea } = Input;
@@ -29,8 +30,11 @@ class ManageSpecialty extends Component {
       imgSpecialty: "",
       descriptionHTML: "",
       descriptionMarkdown: "",
+      idSpecialty: -1,
       checkIdSpecialty: false,
       listSpecialty: [],
+      checkChangeInput: false,
+      checkSelectSpecialty: false,
     };
   }
 
@@ -47,8 +51,15 @@ class ManageSpecialty extends Component {
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
+        this.props.fetchAllSpecialtyStart();
         this.setState({
-          checkIdSpecialty: true,
+          nameSpecialty: "",
+          imgSpecialty: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          checkIdSpecialty: false,
+          checkChangeInput: false,
+          checkSelectSpecialty: false,
         });
         return message.success("Lưu thành công !");
       }
@@ -88,7 +99,7 @@ class ManageSpecialty extends Component {
         if (idx === 0 || listSpecialty[idx - 1].id !== item.id) {
           const obj = {};
           obj.label = item.name;
-          obj.value = item.id;
+          obj.value = item.name;
           result.push(obj);
         }
       });
@@ -102,7 +113,7 @@ class ManageSpecialty extends Component {
       if (allSpecialties.data.AllSpecialty) {
         const selectedSpecialty = allSpecialties.data.AllSpecialty.find(
           (item) => {
-            return item.id === value;
+            return item.name === value;
           }
         );
         if (!selectedSpecialty) {
@@ -112,6 +123,8 @@ class ManageSpecialty extends Component {
             descriptionHTML: "",
             descriptionMarkdown: "",
             checkIdSpecialty: false,
+            checkChangeInput: false,
+            checkSelectSpecialty: false,
           });
         } else {
           const img =
@@ -126,9 +139,36 @@ class ManageSpecialty extends Component {
             descriptionHTML: selectedSpecialty.descriptionHTML,
             descriptionMarkdown: selectedSpecialty.descriptionMarkdown,
             checkIdSpecialty: true,
+            checkChangeInput: true,
+            idSpecialty: selectedSpecialty.id,
           });
         }
       }
+    }
+  };
+
+  handleDeleteSpecialty = async (idSpecialty) => {
+    try {
+      const result = await deleteDataSpecialty(idSpecialty);
+      if (result.data.errCode === 1 || result.data.errCode === 2) {
+        return message.error("Thất bại !");
+      } else {
+        this.props.fetchAllSpecialtyStart();
+        this.setState({
+          nameSpecialty: "",
+          imgSpecialty: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          checkIdSpecialty: false,
+          checkChangeInput: false,
+          checkSelectSpecialty: false,
+          idSpecialty: -1,
+        });
+        return message.success("Xóa thành công !");
+      }
+    } catch (error) {
+      message.error("Thất bại!");
+      console.log(error);
     }
   };
 
@@ -155,7 +195,25 @@ class ManageSpecialty extends Component {
         <div className="wrapper-infor-doctor">
           <div className="search-user">
             <p>
-              <FormattedMessage id={"admin.name-specialty"} />
+              <FormattedMessage id={"admin.add-specialty"} />
+            </p>
+            <Input
+              disabled={this.state.checkChangeInput}
+              placeholder="Input name specialty"
+              onChange={(e) => {
+                this.setState({
+                  nameSpecialty: e.target.value,
+                  checkSelectSpecialty: true,
+                });
+              }}
+              value={this.state.nameSpecialty}
+            />
+          </div>
+        </div>
+        <div className="wrapper-infor-doctor">
+          <div className="search-user">
+            <p>
+              <FormattedMessage id={"admin.specialty"} />
             </p>
             {/* <Input
               placeholder="Select specialty"
@@ -165,11 +223,14 @@ class ManageSpecialty extends Component {
               value={this.state.nameSpecialty}
             /> */}
             <Select
+              showSearch
+              disabled={this.state.checkSelectSpecialty}
               placeholder="Select specialty"
               onChange={(value) => {
                 this.handleSelectSpecialty(value);
               }}
               options={this.state.listSpecialty}
+              value={this.state.nameSpecialty}
             />
           </div>
           <div className="upload-image search-user">
@@ -233,7 +294,20 @@ class ManageSpecialty extends Component {
               this.handleUpdateSpecialty(this.state);
             }}
           >
-            Sửa thông tin
+            <FormattedMessage id={"system.edit-infor"} />
+          </button>
+          <button
+            className={
+              this.state.checkIdSpecialty && !this.state.checkSelectSpecialty
+                ? "btn-add-user btn delete-btn"
+                : "btn-add-user btn disable"
+            }
+            onClick={() => {
+              this.handleDeleteSpecialty(this.state.idSpecialty);
+            }}
+          >
+            <i class="fas fa-trash-alt"></i>
+            <FormattedMessage id={"system.delete-specialty"} />
           </button>
         </div>
       </div>

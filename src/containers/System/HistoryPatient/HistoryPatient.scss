@@ -32,12 +32,6 @@
   }
 }
 
-.btn-re-examination {
-  border: 1px solid;
-  border-radius: 6px;
-
-  &:hover {
-    background-color: #6ccaf7;
-    color: #fff;
-  }
+.table-list-patients .ant-table-row:hover {
+  cursor: pointer;
 }

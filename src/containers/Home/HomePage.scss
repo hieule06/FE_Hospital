@@ -25,13 +25,15 @@
   margin: 0;
   justify-content: space-around;
   flex: 1;
-  padding: 0 2rem;
+  padding: 0 2rem 0 4rem;
 }
 
 .header-logo {
-  width: 150px;
+  width: 170px;
 
   img {
+    width: 100%;
+    height: 25px;
     margin-left: 16px;
   }
 
@@ -114,8 +116,117 @@
   }
 }
 
+.log-in {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 10px;
+  margin: 0 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  color: #0000009e;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ededed;
+    color: black;
+  }
+}
+
+.sign-up {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border: 1px solid rgb(0, 153, 255);
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(0, 153, 255);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(0, 121, 202);
+  }
+}
+
+.btn-logout {
+  padding: 5px 8px;
+  &:hover {
+    color: #45c3d2;
+    cursor: pointer;
+  }
+}
+
+.wrapper-info-patient {
+  margin-left: 10px;
+  color: #0040ff;
+
+  i {
+    margin-right: 4px;
+  }
+
+  span {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .wrapper-container-home-page {
   margin-top: 60px;
+}
+
+.wrapper-background-hospital {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-specialty.carousel {
+  height: 100%;
+  width: 100%;
+
+  .carousel-item.active {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.background-hospital {
+  /* height: 60vh;
+  width: 100%;
+  margin: 0 60px;
+  padding: 26px 0;
+
+  img {
+    height: 100%;
+    width: 100%;
+  } */
+  height: 70vh;
+  width: 90%;
+  margin: 40px 0;
+  border-radius: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(https://cdn.bookingcare.vn/fo/w1920/2023/11/02/134537-group-12314.png);
+  padding: 26px 0;
+}
+
+.background-hospital2 {
+  background-image: url(https://cdn.bookingcare.vn/fo/w1920/2024/01/18/105804-nx-nipt.png);
+}
+
+.background-hospital3 {
+  background-image: url(https://cdn.benhvienthucuc.vn/wp-content/uploads/2024/01/uu-dai-kham-nhi-t1-24-1920x500-1.jpg);
+}
+
+.background-hospital4 {
+  background-image: url(https://cdn.benhvienthucuc.vn/wp-content/uploads/2024/01/uu-dai-kham-dinh-duong-t1-24-1920x500-1.jpg);
+}
+
+.react-multiple-carousel__arrow.react-multiple-carousel__arrow--right {
+  z-index: 2;
 }
 
 .container-home-page {
@@ -328,5 +439,14 @@
 
   .container-home-page {
     height: 100%;
+  }
+
+  .background-hospital {
+    height: 50vh;
+    /* 
+    img {
+      height: 100%;
+      width: 100%;
+    } */
   }
 }

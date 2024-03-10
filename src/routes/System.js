@@ -10,6 +10,8 @@ import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import ManageSpecialty from "../containers/System/Specialty/ManageSpecialty";
 import ManageHandBook from "../containers/System/HandBook/ManageHandBook";
 import ManagePatient from "../containers/System/Patient/ManagePatient";
+import HistoryPatient from "../containers/System/HistoryPatient/HistoryPatient";
+import BookingReExamination from "../containers/System/BookingReExamination/BookingReExamination";
 
 class System extends Component {
   render() {
@@ -27,6 +29,11 @@ class System extends Component {
               component={ManageSpecialty}
             />
             <Route path="/system/patient-manage" component={ManagePatient} />
+            <Route path="/system/history-patient" component={HistoryPatient} />
+            <Route
+              path="/system/booking-re-examination"
+              component={BookingReExamination}
+            />
             <Route path="/system/handbook-manage" component={ManageHandBook} />
             <Route
               path="/system/register-package-group-or-account"

@@ -4,6 +4,8 @@ import {
   getAllDoctors,
   getAllDataSpecialty,
   getAllDataHandbook,
+  getAllBookingHadPatients,
+  getAllPatients,
 } from "../../services/doctorService";
 
 export const fetchDataDoctorStart = () => {
@@ -104,4 +106,63 @@ export const fetchAllHandbookSuccess = (allHandbooks) => ({
 
 export const fetchAllHandbookFail = () => ({
   type: actionTypes.FETCH_ALL_HANDBOOK_FAIL,
+});
+
+// Patient
+export const fetchAllPatientHadBookingStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const allBookingHadPatients = await getAllBookingHadPatients({
+        idDoctor: "all",
+        idPatient: "all",
+        currentDate: new Date().getTime(),
+      });
+      if (allBookingHadPatients && allBookingHadPatients.data.errCode === 0) {
+        dispatch(
+          fetchAllPatientHadBookingSuccess(
+            allBookingHadPatients.data.dataPatients
+          )
+        );
+      } else {
+        dispatch(fetchAllPatientHadBookingFail());
+      }
+    } catch (error) {
+      dispatch(fetchAllPatientHadBookingFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchAllPatientHadBookingSuccess = (allBookingHadPatients) => ({
+  type: actionTypes.FETCH_ALL_BOOKING_HAD_PATIENT_SUCCESS,
+  allBookingHadPatients: allBookingHadPatients,
+});
+
+export const fetchAllPatientHadBookingFail = () => ({
+  type: actionTypes.FETCH_ALL_BOOKING_HAD_PATIENT_FAIL,
+});
+
+export const fetchAllPatientStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      const allPatients = await getAllPatients();
+      if (allPatients && allPatients.data.errCode === 0) {
+        dispatch(fetchAllPatientSuccess(allPatients.data.listPatients));
+      } else {
+        dispatch(fetchAllPatientFail());
+      }
+    } catch (error) {
+      dispatch(fetchAllPatientFail());
+      console.log(error);
+    }
+  };
+};
+
+export const fetchAllPatientSuccess = (allPatients) => ({
+  type: actionTypes.FETCH_ALL_PATIENT_SUCCESS,
+  allPatients: allPatients,
+});
+
+export const fetchAllPatientFail = () => ({
+  type: actionTypes.FETCH_ALL_PATIENT_FAIL,
 });

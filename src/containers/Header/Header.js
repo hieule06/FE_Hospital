@@ -42,6 +42,23 @@ class Header extends Component {
       );
   };
 
+  handleViewHistoryPatient = (idPage) => {
+    if (idPage === "doctor")
+      this.props.history.push(
+        `/doctor/history-patient?idDoctor=${
+          this.props.userInfo.id
+        }&date=${new Date().getTime()}`
+      );
+    if (idPage === "patient")
+      this.props.history.push(
+        `/system/history-patient?idDoctor=all&date=${new Date().getTime()}`
+      );
+  };
+
+  handleBookingReExamination = () => {
+    this.props.history.push(`/system/booking-re-examination?patientsId=all`);
+  };
+
   changeLanguage = (language) => {
     this.props.changeLanguageRedux(language);
   };
@@ -86,6 +103,13 @@ class Header extends Component {
                 >
                   <FormattedMessage id={"menu.doctor.manage-patient"} />
                 </Menu.Item>
+                <Menu.Item
+                  className="style-title-sub"
+                  key={"home5"}
+                  onClick={() => this.handleViewHistoryPatient("doctor")}
+                >
+                  <FormattedMessage id={"menu.doctor.manage-history-patient"} />
+                </Menu.Item>
               </Menu.SubMenu>
             ) : (
               <>
@@ -115,6 +139,22 @@ class Header extends Component {
                     onClick={() => this.handleViewPatientManage("patient")}
                   >
                     <FormattedMessage id={"menu.doctor.manage-patient"} />
+                  </Menu.Item>
+                  <Menu.Item
+                    className="style-title-sub"
+                    key={"home5"}
+                    onClick={() => this.handleViewHistoryPatient("patient")}
+                  >
+                    <FormattedMessage
+                      id={"menu.doctor.manage-history-patient"}
+                    />
+                  </Menu.Item>
+                  <Menu.Item
+                    className="style-title-sub"
+                    key={"home6"}
+                    onClick={() => this.handleBookingReExamination()}
+                  >
+                    <FormattedMessage id={"doctor.reExamination"} />
                   </Menu.Item>
                 </Menu.SubMenu>
                 {/* <Menu.Item key={"clinic"} icon={<AppstoreOutlined />}>

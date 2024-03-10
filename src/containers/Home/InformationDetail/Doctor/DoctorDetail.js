@@ -156,9 +156,11 @@ class DoctorDetail extends Component {
                 ></div>
               )}
           </div>
-          <div className="comment-doctor">
-            <Comment dataHref={currentURL} width={"100%"}></Comment>
-          </div>
+          {this.props.isPatientMainLoggedIn && (
+            <div className="comment-doctor">
+              <Comment dataHref={currentURL} width={"100%"}></Comment>
+            </div>
+          )}
         </div>
         <Footer />
       </div>
@@ -169,6 +171,8 @@ class DoctorDetail extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    isPatientMainLoggedIn: state.user.isPatientMainLoggedIn,
+    isPatienLoggedIn: state.user.isPatienLoggedIn,
   };
 };
 

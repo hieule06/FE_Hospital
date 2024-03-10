@@ -1,0 +1,68 @@
+@import "../../../styles/common.scss";
+
+.modal-medical-file {
+  .ant-modal-content {
+    border-radius: 30px;
+    background: #fff !important;
+  }
+
+  .ant-modal-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: #fff !important;
+    color: black !important;
+  }
+
+  :where(.css-dev-only-do-not-override-1adbn6x).ant-form-vertical
+    .ant-form-item-label
+    > label {
+    color: black !important;
+  }
+
+  .ant-form-item.css-dev-only-do-not-override-1adbn6x {
+    flex-basis: 80% !important;
+  }
+
+  .ant-modal-close-x {
+    color: black !important;
+  }
+
+  .form-group-modal-booking {
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-sign-up {
+    border: none;
+    background-color: #fff01edc !important;
+    padding: 5px 45px;
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0068e5;
+    margin-top: 12px;
+
+    &:hover {
+      background-color: #f7d800 !important;
+    }
+  }
+}
+
+.modal-history {
+  display: block !important;
+
+  .item-history {
+    margin-bottom: 30px;
+    padding: 6px 10px;
+    border-bottom: 1px solid;
+
+    .date-history {
+      display: block;
+    }
+
+    .description-history {
+      display: block;
+    }
+  }
+}

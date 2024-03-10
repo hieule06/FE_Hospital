@@ -15,6 +15,7 @@ import {
   createNewHandbook,
   getAllDataHandbook,
   updateDataHandbook,
+  deleteDataHandbook,
 } from "../../../services/doctorService";
 
 const { TextArea } = Input;
@@ -31,6 +32,9 @@ class ManageHandbook extends Component {
       descriptionMarkdown: "",
       checkIdHandbook: false,
       listHandbook: [],
+      checkSelectHandbook: false,
+      checkChangeInput: false,
+      idHandbook: -1,
     };
   }
 
@@ -47,8 +51,15 @@ class ManageHandbook extends Component {
       if (result.data.errCode === 1) {
         return message.error("Các trường còn trống !");
       } else {
+        this.props.fetchAllHandbookStart();
         this.setState({
-          checkIdHandbook: true,
+          nameHandbook: "",
+          imgHandbook: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          checkIdHandbook: false,
+          checkSelectHandbook: false,
+          checkChangeInput: false,
         });
         return message.success("Lưu thành công !");
       }
@@ -72,6 +83,30 @@ class ManageHandbook extends Component {
     }
   };
 
+  handleDeleteHandbook = async (idHandbook) => {
+    try {
+      const result = await deleteDataHandbook(idHandbook);
+      if (result.data.errCode === 1 || result.data.errCode === 2) {
+        return message.error("Thất bại !");
+      } else {
+        this.props.fetchAllHandbookStart();
+        this.setState({
+          nameHandbook: "",
+          imgHandbook: "",
+          descriptionHTML: "",
+          descriptionMarkdown: "",
+          checkIdHandbook: false,
+          checkSelectHandbook: false,
+          checkChangeInput: false,
+        });
+        return message.success("Xóa thành công !");
+      }
+    } catch (error) {
+      message.error("Thất bại!");
+      console.log(error);
+    }
+  };
+
   handleOnchangeImage = async (e) => {
     if (e.file.status !== "removed") {
       const base64 = await CommonUtils.getBase64(e.file);
@@ -87,8 +122,8 @@ class ManageHandbook extends Component {
       listHandbook.map((item, idx) => {
         if (idx === 0 || listHandbook[idx - 1].id !== item.id) {
           const obj = {};
-          obj.label = item.name;
-          obj.value = item.id;
+          obj.label = item.nameHandbook;
+          obj.value = item.nameHandbook;
           result.push(obj);
         }
       });
@@ -102,7 +137,7 @@ class ManageHandbook extends Component {
       if (allSpecialties.data.AllHandbook) {
         const selectedHandbook = allSpecialties.data.AllHandbook.find(
           (item) => {
-            return item.id === value;
+            return item.nameHandbook === value;
           }
         );
         if (!selectedHandbook) {
@@ -112,20 +147,27 @@ class ManageHandbook extends Component {
             descriptionHTML: "",
             descriptionMarkdown: "",
             checkIdHandbook: false,
+            checkSelectHandbook: false,
+            checkChangeInput: false,
+            idHandbook: -1,
           });
         } else {
           const img =
-            selectedHandbook.image &&
-            selectedHandbook.image.data.length >= 0 &&
-            selectedHandbook.image.type === "Buffer"
-              ? new Buffer(selectedHandbook.image, "base64").toString("binary")
+            selectedHandbook.imageHandbook &&
+            selectedHandbook.imageHandbook.data.length >= 0 &&
+            selectedHandbook.imageHandbook.type === "Buffer"
+              ? new Buffer(selectedHandbook.imageHandbook, "base64").toString(
+                  "binary"
+                )
               : "";
           this.setState({
-            nameHandbook: selectedHandbook.name,
+            nameHandbook: selectedHandbook.nameHandbook,
             imgHandbook: img,
             descriptionHTML: selectedHandbook.descriptionHTML,
             descriptionMarkdown: selectedHandbook.descriptionMarkdown,
             checkIdHandbook: true,
+            checkChangeInput: true,
+            idHandbook: selectedHandbook.id,
           });
         }
       }
@@ -147,7 +189,6 @@ class ManageHandbook extends Component {
     }
   }
   render() {
-    console.log("123: ", this.props.allDataHandbook);
     return (
       <div className="wrapper-page-doctor-manage">
         <h2 className="title-page">
@@ -156,9 +197,27 @@ class ManageHandbook extends Component {
         <div className="wrapper-infor-doctor">
           <div className="search-user">
             <p>
-              <FormattedMessage id={"admin.name-handbook"} />
+              <FormattedMessage id={"admin.add-handbook"} />
             </p>
             <Input
+              disabled={this.state.checkChangeInput}
+              placeholder="Select handbook"
+              onChange={(e) => {
+                this.setState({
+                  nameHandbook: e.target.value,
+                  checkSelectHandbook: true,
+                });
+              }}
+              value={this.state.nameHandbook}
+            />
+          </div>
+        </div>
+        <div className="wrapper-infor-doctor">
+          <div className="search-user">
+            <p>
+              <FormattedMessage id={"admin.name-handbook"} />
+            </p>
+            {/* <Input
               placeholder="Select handbook"
               onChange={(e) => {
                 this.setState({
@@ -167,14 +226,17 @@ class ManageHandbook extends Component {
                 });
               }}
               value={this.state.nameHandbook}
-            />
-            {/* <Select
+            /> */}
+            <Select
+              showSearch
+              disabled={this.state.checkSelectHandbook}
               placeholder="Select handbook"
               onChange={(value) => {
                 this.handleSelectHandbook(value);
               }}
               options={this.state.listHandbook}
-            /> */}
+              value={this.state.nameHandbook}
+            />
           </div>
           <div className="upload-image search-user">
             <p>
@@ -187,6 +249,15 @@ class ManageHandbook extends Component {
                 return false;
               }}
               maxCount={1}
+              fileList={
+                this.state.imgHandbook === ""
+                  ? []
+                  : [
+                      {
+                        thumbUrl: this.state.imgHandbook,
+                      },
+                    ]
+              }
               onChange={(e) => this.handleOnchangeImage(e)}
             >
               <Button icon={<UploadOutlined />}>Upload Avatar</Button>
@@ -228,7 +299,20 @@ class ManageHandbook extends Component {
               this.handleUpdateHandbook(this.state);
             }}
           >
-            Sửa thông tin
+            <FormattedMessage id={"system.edit-infor"} />
+          </button>
+          <button
+            className={
+              this.state.checkIdHandbook
+                ? "btn-add-user btn delete-btn"
+                : "btn-add-user btn disable"
+            }
+            onClick={() => {
+              this.handleDeleteHandbook(this.state.idHandbook);
+            }}
+          >
+            <i class="fas fa-trash-alt"></i>
+            <FormattedMessage id={"system.delete-specialty"} />
           </button>
         </div>
       </div>

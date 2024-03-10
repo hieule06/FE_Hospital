@@ -3,8 +3,10 @@ import actionTypes from "../actions/actionTypes";
 const initialState = {
   dataDoctors: [],
   allDoctors: [],
+  allBookingHadPatients: [],
   allDataSpecialty: [],
   allDataHandbook: [],
+  allPatients: [],
 };
 
 const doctorReducer = (state = initialState, action) => {
@@ -48,6 +50,26 @@ const doctorReducer = (state = initialState, action) => {
       return {
         ...state,
         allDataHandbook: [],
+      };
+    case actionTypes.FETCH_ALL_BOOKING_HAD_PATIENT_SUCCESS:
+      return {
+        ...state,
+        allBookingHadPatients: action.allBookingHadPatients,
+      };
+    case actionTypes.FETCH_ALL_BOOKING_HAD_PATIENT_FAIL:
+      return {
+        ...state,
+        allBookingHadPatients: [],
+      };
+    case actionTypes.FETCH_ALL_PATIENT_SUCCESS:
+      return {
+        ...state,
+        allPatients: action.allPatients,
+      };
+    case actionTypes.FETCH_ALL_PATIENT_FAIL:
+      return {
+        ...state,
+        allPatients: [],
       };
     default:
       return state;

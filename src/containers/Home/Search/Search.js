@@ -54,6 +54,8 @@ function Search() {
 
   const handleChangeSearch = (e) => {
     const searchValue = e.target.value;
+    console.log("searchValue: ", searchValue);
+    console.log("showResult: ", showResult);
     if (!searchValue.startsWith(" ")) {
       setSearchValue(searchValue);
     }
@@ -97,7 +99,6 @@ function Search() {
             spellCheck={false}
             onChange={(e) => {
               handleChangeSearch(e);
-              console.log(123);
             }}
             onFocus={() => setShowResult(true)}
           />

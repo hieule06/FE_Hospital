@@ -75,7 +75,18 @@ class DoctorManage extends Component {
   };
 
   handleSelectDoctor = async (value) => {
-    const inforDoctor = await getdataDoctor(value);
+    let { language } = this.props;
+    const doctorSelect = this.props.allDoctors.find((item, idx) => {
+      if (idx === 0 || this.props.allDoctors[idx - 1].id !== item.id) {
+        const nameDoctor =
+          language === LANGUAGES.VI
+            ? `${item.lastName} ${item.firstName}`
+            : `${item.firstName} ${item.lastName}`;
+
+        return nameDoctor === value;
+      }
+    });
+    const inforDoctor = await getdataDoctor(doctorSelect.id);
     if (!inforDoctor.data.inforDoctor) {
       this.setState({
         priceSelect: "",
@@ -87,7 +98,7 @@ class DoctorManage extends Component {
         selectDoctor: "",
         checkIdDoctor: false,
       });
-      return this.setState({ selectDoctor: value });
+      return this.setState({ selectDoctor: doctorSelect.id });
     } else {
       this.setState({
         contentMarkDown: inforDoctor.data.inforDoctor.contentMarkdown,
@@ -124,7 +135,7 @@ class DoctorManage extends Component {
               ? `${item.lastName} ${item.firstName}`
               : `${item.firstName} ${item.lastName}`;
           obj.label = nameDoctor;
-          obj.value = item.id;
+          obj.value = nameDoctor;
           result.push(obj);
         }
       });
@@ -198,6 +209,7 @@ class DoctorManage extends Component {
               <FormattedMessage id={"admin.select-doctor"} />
             </p>
             <Select
+              showSearch
               placeholder="Select a person"
               onChange={(value) => this.handleSelectDoctor(value)}
               options={this.state.listDoctors}

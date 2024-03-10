@@ -66,9 +66,20 @@ class ManageSchedule extends Component {
   };
 
   handleSelectDoctor = async (value) => {
-    this.setState({ selectedDoctor: value });
+    let { language } = this.props;
+    const doctorSelect = this.props.allDoctors.find((item, idx) => {
+      if (idx === 0 || this.props.allDoctors[idx - 1].id !== item.id) {
+        const nameDoctor =
+          language === LANGUAGES.VI
+            ? `${item.lastName} ${item.firstName}`
+            : `${item.firstName} ${item.lastName}`;
+
+        return nameDoctor === value;
+      }
+    });
+    this.setState({ selectedDoctor: doctorSelect.id });
     const inforDoctorSchedule = await getdataDoctorSchedule({
-      idDoctorSelect: value,
+      idDoctorSelect: doctorSelect.id,
       dateSelect: this.state.currentDate,
     });
     if (inforDoctorSchedule && inforDoctorSchedule.data.errCode === 0) {
@@ -124,7 +135,7 @@ class ManageSchedule extends Component {
             ? `${item.lastName} ${item.firstName}`
             : `${item.firstName} ${item.lastName}`;
         obj.label = nameDoctor;
-        obj.value = item.id;
+        obj.value = nameDoctor;
         result.push(obj);
       });
     }
@@ -134,6 +145,24 @@ class ManageSchedule extends Component {
   async componentDidMount() {
     this.props.fetchAllDoctorStart();
     this.props.fetchScheduleHourStart();
+
+    if (this.props.userInfo && this.props.userInfo.roleId === "R2") {
+      const inforDoctorSchedule = await getdataDoctorSchedule({
+        idDoctorSelect: this.props.userInfo.id,
+        dateSelect: this.state.currentDate,
+      });
+      if (inforDoctorSchedule && inforDoctorSchedule.data.errCode === 0) {
+        const listTimeType = map(inforDoctorSchedule.data.result, "timeType");
+        if (listTimeType && listTimeType.length > 0) {
+          this.setState({
+            rangeTime: listTimeType,
+            selectedDoctor: this.props.userInfo.id,
+          });
+        }
+      } else {
+        this.setState({ rangeTime: [] });
+      }
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -156,16 +185,21 @@ class ManageSchedule extends Component {
           <FormattedMessage id={"manage-schedule.title"} />
         </h2>
         <div className="wrapper-infor-doctor wrapper-schedule-doctor">
-          <div className="search-user">
-            <p>
-              <FormattedMessage id={"admin.select-doctor"} />
-            </p>
-            <Select
-              placeholder="Select a person"
-              onChange={(value) => this.handleSelectDoctor(value)}
-              options={this.state.listDoctors}
-            />
-          </div>
+          {this.props.userInfo && this.props.userInfo.roleId === "R1" ? (
+            <div className="search-user">
+              <p>
+                <FormattedMessage id={"admin.select-doctor"} />
+              </p>
+              <Select
+                showSearch
+                placeholder="Select a person"
+                onChange={(value) => this.handleSelectDoctor(value)}
+                options={this.state.listDoctors}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <div className="add-infor-doctor add-calendar-doctor">
             <p>
               <FormattedMessage id={"manage-schedule.choose-date"} />
@@ -237,6 +271,7 @@ const mapStateToProps = (state) => {
   return {
     allDoctors: state.doctor.allDoctors,
     language: state.app.language,
+    userInfo: state.user.userInfo,
     times: state.admin.times,
   };
 };

@@ -13,7 +13,10 @@
     "search": "Search",
     "share": "Please share Book an online appointment on Facebook and like!",
     "handbook": "Handbook",
-    "articles-about-health": "Articles about health"
+    "articles-about-health": "Articles about health",
+    "log-in": "Log in",
+    "sign-up": "Sign up",
+    "edit": "Edit Information"
   },
   "banner": {
     "title-main": "MEDICAL BACKGROUND",
@@ -47,7 +50,8 @@
     },
     "doctor": {
       "manage-schedule": "Manage Doctor's schedule",
-      "manage-patient": "Manage Doctor's patient"
+      "manage-patient": "Manage Doctor's patient",
+      "manage-history-patient": "Manage Patient's history"
     }
   },
   "manage-user": {
@@ -87,6 +91,7 @@
   "manage-schedule": {
     "title": "Manage doctor's examination plan",
     "choose-doctor": "Choose a doctor",
+    "choose-patient": "Choose a patient",
     "choose-date": "Choose a date",
     "save": "Save Info"
   },
@@ -140,8 +145,10 @@
     "clinic": "Choose clinic",
     "img-clinic": "Clinic photo",
     "name-specialty": "Specialist name",
+    "add-specialty": "Add Specialist",
     "img-specialty": "Professional photo",
-    "name-handbook": "Handbook name",
+    "add-handbook": "Add Handbook",
+    "name-handbook": "Select Handbook",
     "img-handbook": "Handbook photo"
   },
   "doctor": {
@@ -159,7 +166,10 @@
     "file": "Select the prescription file",
     "send": "Send",
     "cancel": "Cancel",
-    "send-bill": "Send medical bills"
+    "send-bill": "Send medical bills",
+    "reExamination": "Reminder for re-examination",
+    "medicalFile": "File medical",
+    "notification": "The patient has no medical history !"
   },
   "about": {
     "content": "Booking an appointment online is an effective solution to help people have a suitable schedule, instead of having to rush to wait for an appointment. The hospital always tries to improve the quality of service as well as create comfort when people come to visit. Before booking a telemedicine appointment, people should find out in advance the working schedule and working time to conveniently arrange the examination schedule."
@@ -225,6 +235,8 @@
     },
     "doctor-manage": {
       "doctor-manage": "Create additional Doctor information"
-    }
+    },
+    "edit-infor": "Edit Information",
+    "delete-specialty": "Delete Specialty"
   }
 }
